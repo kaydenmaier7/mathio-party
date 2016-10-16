@@ -13,3 +13,21 @@
  *= require_tree .
  *= require_self
  */
+
+ body {
+  margin: 0;
+  background-color: #e0e0e0;
+ }
+
+.navBar {
+  background-color: #636363;
+  color: white;
+  font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+  text-align: center;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+.title {
+  margin: 0;
+}
