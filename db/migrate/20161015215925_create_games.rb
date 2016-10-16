@@ -2,7 +2,10 @@ class CreateGames < ActiveRecord::Migration[5.0]
   def change
     create_table :games do |t|
       t.string :name
-
+      t.string :src
+      t.text 	 :description
+      t.text	 :directions
+      
       t.timestamps
     end
   end
