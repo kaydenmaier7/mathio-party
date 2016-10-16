@@ -17,8 +17,11 @@ ActiveRecord::Schema.define(version: 20161016011428) do
 
   create_table "games", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "src"
+    t.text     "description"
+    t.text     "directions"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "results", force: :cascade do |t|
