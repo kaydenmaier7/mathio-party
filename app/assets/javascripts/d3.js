@@ -1,14 +1,16 @@
 $(document).ready(function(){
+
   var width = $('.games-main').width();
   var height = $('.games-main').height();
   var games = [
-      ['flappy bird', 'http://files.gamebanana.com/img/ico/sprays/538578b593b47.gif'], 
+      ['flappy_bird', 'http://files.gamebanana.com/img/ico/sprays/538578b593b47.gif'], 
       ['frogger', 'http://andyluvsdonna.com/wp-content/uploads/2015/02/frogger-1.png'], 
       ['othergame', 'http://www.pngmart.com/files/3/Spaceship-PNG-Pic.png'], 
       ['othergame', 'http://vignette3.wikia.nocookie.net/metalslug/images/d/d7/192064fb7b55d9f8569231678ee1e333.jpg.gif/revision/latest?cb=20160109031801&path-prefix=es'], 
       ['othergame', 'http://www.retrogamenetwork.com/wp-content/uploads/2012/05/rand-avatar.png']
     ]
 
+  // generate svg element
   d3.select('.games-main').selectAll('svg')
     .data([null])
     .enter()
@@ -18,11 +20,10 @@ $(document).ready(function(){
 
   var svg = d3.select("svg");
 
+  // add game-images
   function makeImage() {
-    var image = svg.selectAll("image")
-      .data(games);
-    
-    image
+    svg.selectAll("image")
+      .data(games)
       .enter()
       .append("image")
       .attr("y", 100)
@@ -35,6 +36,7 @@ $(document).ready(function(){
       .style('fill', 'red');
   };
 
+  // move the images onto the screen
   function moveImageRight() {
     svg.selectAll('.game')
       .transition()
@@ -43,6 +45,7 @@ $(document).ready(function(){
       .attr('x', function(d, i){ return width - ((i + 0.5) * (width / games.length)) });
   }
 
+  // move the images down to their final positions
   function moveImageDown() {
     svg.selectAll('.game')
       .transition()
