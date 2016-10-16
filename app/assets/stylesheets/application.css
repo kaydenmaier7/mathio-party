@@ -38,6 +38,11 @@ body {
   margin: 0;
 }
 
+.title a {
+  color: inherit;
+  text-decoration: none;
+}
+
 #equation_text_div {
   width: 50%;
   margin: auto;
