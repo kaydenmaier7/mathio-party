@@ -1,19 +1,20 @@
 var mainState= {
   preload: function(){
-    game.load.image('bird', 'assets/bird2.png');
-    game.load.image('blueBird', 'assets/blueBird.png');
-    game.load.image('pipe', 'assets/pipe.png');
-    game.load.image('circle', 'assets/circle.png');
-    game.load.image('cloud', 'assets/cloud.png')
+    game.load.audio('jump', '/assets/flappy_math/jump.wav');
+    game.load.image('bird', '/assets/flappy_math/bird.png');
+    game.load.image('blueBird', '/assets/flappy_math/blueBird.png');
+    game.load.image('pipe', '/assets/flappy_math/pipe.png');
+    game.load.image('circle', '/assets/flappy_math/circle.png');
+    game.load.image('cloud', '/assets/flappy_math/cloud.png');
+    game.load.start();
   },
   create: function(){
-
+    this.jumpSound = game.add.audio('jump');
     this.p1score = 0;
     this.p2score = 0;
 
     this.player1score = game.add.text(20,20,"0", { font: '30px Arial', fill: '#ff5733#' });
     this.player2score = game.add.text(20,60,"0", { font: '30px Arial', fill: '#4933ff#' });
-
 
     this.pipes = game.add.group();
     this.correct = game.add.group();
@@ -46,6 +47,13 @@ var mainState= {
   },
 
   update: function(){
+    if (this.bird.angle < 20){
+       this.bird.angle += 1;
+    }
+    if (this.blueBird.angle < 20){
+       this.blueBird.angle += 1;
+    }
+
     if (this.bird.y < 0 || this.bird.y > 900){
       this.takeDamage(1)
     }
@@ -67,6 +75,9 @@ var mainState= {
       this.bird.alpha = 0.5;
       this.bird.y = 500;
       this.bird.body.velocity.y = -350;
+      setTimeout(function(){
+
+    }, 250);
     } else if (player === 2){
       this.blueBird.alpha = 0.5;
       this.blueBird.y = 500;
@@ -75,10 +86,18 @@ var mainState= {
   },
 
   jump: function(){
+    var animation = game.add.tween(this.bird);
+    animation.to({angle: -20}, 100);
+    animation.start();
+    this.jumpSound.play();
     this.bird.body.velocity.y = -350;
   },
 
   leap: function(){
+    var bbanimation = game.add.tween(this.blueBird);
+    bbanimation.to({angle: -20}, 100);
+    bbanimation.start();
+    this.jumpSound.play();
     this.blueBird.body.velocity.y = -350;
   },
 
@@ -88,8 +107,11 @@ var mainState= {
 
   spawnCloud:function(){
     var cloud = game.add.sprite(1000,Math.floor(Math.random()*900), 'cloud');
+    var multiplier = Math.floor(Math.random()*3)
+    cloud.height *= multiplier;
+    cloud.width *= multiplier;
     game.physics.arcade.enable(cloud);
-    cloud.body.velocity.x = -50;
+    cloud.body.velocity.x = Math.floor(Math.random()*50)-75;
   },
 
   plusOne: function(player){
