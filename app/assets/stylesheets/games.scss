@@ -9,3 +9,31 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.game-info-container, .game-stats {
+  height: 83%;
+  margin: 2.5%;
+  display: inline-block;
+}
+
+.display {
+  border-radius: 4px;
+  border: 2px solid white;
+}
+
+.game-info-container {
+  width: 55%;
+  margin-right: 0;
+  border-right: 2px solid #635B53;
+}
+
+.game-info {
+  height: 100%;
+  width: 95%;
+  background-color: #00BBD5;
+}
+
+.game-stats {
+  width: 36%;
+  background-color: red;
+}
