@@ -14,8 +14,8 @@ cancel_user_registration GET    /users/cancel(.:format)        devise/registrati
                          PATCH  /users(.:format)               devise/registrations#update
                          PUT    /users(.:format)               devise/registrations#update
                          DELETE /users(.:format)               devise/registrations#destroy
-             users_index GET    /users/index(.:format)         users#index
-              users_show GET    /users/show(.:format)          users#show
-             games_index GET    /games/index(.:format)         games#index
-              games_show GET    /games/show(.:format)          games#show
-                    root GET    /                              game#index
+                   users GET    /users(.:format)               users#index
+                         GET    /users/:id(.:format)           users#show
+                   games GET    /games(.:format)               games#index
+                         GET    /games/:id(.:format)           games#show
+                    root GET    /                              games#index
