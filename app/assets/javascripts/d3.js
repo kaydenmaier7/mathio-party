@@ -2,6 +2,8 @@ $(document).ready(function(){
 
   var width = $('.games-main').width();
   var height = $('.games-main').height();
+  var buttonSize = 80;
+  var buttonY = height * 0.77;
   var games = [
       ['flappy_bird', 'http://files.gamebanana.com/img/ico/sprays/538578b593b47.gif'], 
       ['frogger', 'http://andyluvsdonna.com/wp-content/uploads/2015/02/frogger-1.png'], 
@@ -31,8 +33,8 @@ $(document).ready(function(){
       .attr("class", function(d){ return d[0] })
       .classed('game', true)
       .attr('xlink:href', function(d){ return d[1] })
-      .attr('height', 80)
-      .attr('width', 80)
+      .attr('height', buttonSize)
+      .attr('width', buttonSize)
       .style('fill', 'red');
   };
 
@@ -51,11 +53,33 @@ $(document).ready(function(){
       .transition()
       .delay( function(d, i){ return 50 * i })
       .duration(1000)
-      .attr('y', height * 0.77);
+      .attr('y', buttonY);
   }
+
+  function magnify(){
+    svg.selectAll('.game')
+      .on("mouseover", function(){
+        d3.select(this)
+          .transition()
+          .duration(300)
+          .attr('y', buttonY - buttonSize/2)
+          .attr('height', buttonSize * 1.5)
+          .attr('width', buttonSize * 1.5);
+      })
+      .on("mouseout", function(){
+        d3.select(this)
+          .transition()
+          .duration(300)
+          .attr('y', buttonY)
+          .attr('height', buttonSize)
+          .attr('width', buttonSize);
+      });
+  };
 
   makeImage(games);
   moveImageRight()
   setTimeout(moveImageDown, 1500);
+  setTimeout(magnify, 2000);
+
 
 });
