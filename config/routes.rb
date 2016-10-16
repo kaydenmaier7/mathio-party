@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users
-  get 'users/index'
-	get 'users/show'
+  get 'users' => 'users#index'
+	get 'users/:id' => 'users#show'
 
-  get 'games/index'
-  get 'games/show'
+  get 'games' => 'games#index'
+  get 'games/:id' => 'games#show'
 
   root 'games#index'
 end
