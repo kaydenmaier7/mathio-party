@@ -19,7 +19,7 @@ html, body {
   height: 100%;
 }
 
- 
+
 body {
   margin: 0;
   background-color: #e0e0e0;
@@ -41,4 +41,14 @@ body {
 .title a {
   color: inherit;
   text-decoration: none;
+}
+
+#equation_text_div {
+  width: 50%;
+  margin: auto;
+  padding: 30px;
+  font-size: 3em;
+  font-weight: bold;
+  text-align: center;
+  background-color: whitesmoke;
 }
