@@ -6,5 +6,5 @@ Rails.application.routes.draw do
   get 'games/index'
   get 'games/show'
 
-  root 'game#index'
+  root 'games#index'
 end
