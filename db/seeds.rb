@@ -10,3 +10,7 @@ game1 = {
 	description: 'Frogger with Math!',
 	directions: 'You do the thing and stuff happens!'
 }
+
+
+User.create(user1)
+Game.create(game1)
