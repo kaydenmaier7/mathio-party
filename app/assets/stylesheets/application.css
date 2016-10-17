@@ -58,8 +58,9 @@ body {
   width: 1000px;
   height: 600px;
   background-color: white;
-  margin: 30px auto;
+  margin: 50px auto;
   text-align: center;
+  box-shadow: 10px 10px 10px #888888;
 }
 
 #flappy-bird {
@@ -78,5 +79,5 @@ body {
 
 #frogger-button:hover {
   font-weight: bold;
-  box-shadow: 10px 10px 5px #888888 inset;
+  box-shadow: 5px 5px 5px #888888;
 }

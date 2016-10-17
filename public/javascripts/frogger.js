@@ -7,7 +7,6 @@ $(document).ready(function(){
 
 var froggerButtonClick = function(){
   $('#frogger-button').on('click', function(){
-    console.log('clicked')
     $(this).remove()
     game = new Phaser.Game(1000, 600, Phaser.AUTO, 'frogger', { preload: preload, create: create, update: update });
   })
