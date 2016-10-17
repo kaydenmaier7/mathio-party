@@ -47,6 +47,10 @@ var current_equation
 
 var playerOneScore = 0;
 var playerTwoScore = 0;
+var playerOneCorrect = 0;
+var playerOneWrong = 0;
+var playerTwoCorrect = 0;
+var playerTwoWrong = 0;
 
 function preload() {
   game.load.image('tux', '/assets/frog.png');
@@ -64,45 +68,65 @@ function create(){
     game.add.tileSprite(0, 0, 1000, 600, 'background');
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
+    // Players
     players = game.add.group();
     players.enableBody = true;
     createPlayer(400, 10, 1);
     createPlayer(200, 200, 2);
 
+    // Keyboard
     one = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
     two = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
     three = game.input.keyboard.addKey(Phaser.Keyboard.THREE);
     four = game.input.keyboard.addKey(Phaser.Keyboard.FOUR);
     cursors = game.input.keyboard.createCursorKeys();
 
+    // Cars
     cars = game.add.group();
     cars.enableBody = true;
     createCar(game.width/2, 250, 'police1', -200)
     createCar(game.width + 300, 0, 'police1', -200)
 
+    // Math problems
     current_equation = equations[Math.floor(Math.random()*(equations.length - 0))]
     questionTimer = 0;
 
+    // Bugs
     bugs = game.add.group();
     bugs.enableBody = true;
     createBug(Math.random()*(game.width - 20), Math.random()*(game.height - 20))
 
+    // Sounds and screen
     game.input.onDown.add(go_fullscreen, this);
-
     hornSound = game.add.audio('carhorn1')
     croakSound = game.add.audio('croak1')
 
-
+    // Text
     playerOneText = game.add.text(32, 550, 'Player 1: ' + playerOneScore, { font: '20px Arial', fill: '#ffffff', align: 'left'});
     playerTwoText = game.add.text(32, 500, 'Player 2: ' + playerTwoScore, { font: '20px Arial', fill: '#ffffff', align: 'left'});
     finalScoreText = game.add.text(200, 400, '', { font: '50px Arial', fill: '#ffffff', align: 'left'});
-    // MathQuestionText = game.add.text(400, 40, current_equation.problem, { font: '50px Arial', fill: '#ffffff', align: 'left', fontStyle: 'bold'});
 }
 
+// Create Sprites
 function createBug(x, y){
   var bug = bugs.create(x, y, 'bug')
 }
 
+function createPlayer(x, y, id){
+  var player = players.create(x, y, 'tux');
+  player.player_id = id;
+  player.health = 'true';
+  player.body.collideWorldBounds = true;
+}
+
+function createCar(x, y, image, velocity){
+  var car = cars.create(x, y, image)
+  car.body.immovable = true;
+  car.velocity = velocity
+}
+
+
+// Update
 function update(){
   playerUpdate();
   carUpdate();
@@ -117,14 +141,64 @@ function update(){
   if (questionTimer >= 250){
     questionTimer = 0
     current_equation = equations[Math.floor(Math.random()*(equations.length - 0))]
-    // MathQuestionText.text = current_equation.problem
   }
+
   hornTimer += 1
   if (hornTimer >= 80){
     hornNotPlaying = true
   }
 }
 
+function playerUpdate(){
+  players.forEach(function(p){
+    if (p.player_id === 1){
+          p.body.velocity.x = 0;
+                if(cursors.left.isDown){
+                  p.body.velocity.x = -200*p.alpha;
+                }else if(cursors.right.isDown){
+                  p.body.velocity.x = 200*p.alpha;
+                }
+                if(cursors.up.isDown){
+                  p.body.velocity.y = -200*p.alpha;
+                }else if(cursors.down.isDown){
+                  p.body.velocity.y = 200*p.alpha;
+                } else {
+                  p.body.velocity.y = 0;
+                }
+    }
+    if (p.player_id === 2){
+          p.body.velocity.x = 0;
+                if(one.isDown){
+                  p.body.velocity.x = -200*p.alpha;
+                }else if(four.isDown){
+                  p.body.velocity.x = 200*p.alpha;
+                }
+                if(three.isDown){
+                  p.body.velocity.y = -200*p.alpha;
+                }else if(two.isDown){
+                  p.body.velocity.y = 200*p.alpha;
+                } else {
+                  p.body.velocity.y = 0;
+                }
+    }
+  })
+}
+
+function carUpdate(){
+  cars.forEach(function(c){
+    c.body.velocity.x = c.velocity;
+    if (c.x < -400 ){
+      var rand = (Math.floor(Math.random()*(3)))
+      var heights = [0, 150, 300]
+      c.x = game.width + 400;
+      c.y = heights[rand]
+    } else if (c.x > game.width + 600){
+        c.x = -400
+    }
+  })
+}
+
+// Collision Handlers
 function carBugCollisionHandler(car, bug){
   bug.x = Math.random()*(game.width - 20)
   bug.y = Math.random()*(game.height - 20)
@@ -162,17 +236,21 @@ function playerBugCollisionHandler(player, bug){
       if (player.player_id === 1){
         playerOneScore += 1;
         playerOneText.text = 'Player 1: ' + playerOneScore
+        playerOneCorrect += 1
       } else if (player.player_id === 2) {
         playerTwoScore += 1;
         playerTwoText.text = 'Player 2: ' + playerTwoScore
+        playerTwoCorrect += 1
       }
   } else {
     if (player.player_id === 1){
         playerTwoScore += 1;
         playerTwoText.text = 'Player 2: ' + playerTwoScore;
+        playerOneWrong += 1
     } else if (player.player_id === 2){
         playerOneScore += 1;
         playerOneText.text = 'Player 1: ' + playerOneScore;
+        playerTwoWrong += 1
     }
     if (playerOneScore === 1 || playerTwoScore === 1){
       createCar(1000, 225, 'hummer1', 200);
@@ -185,100 +263,35 @@ function playerBugCollisionHandler(player, bug){
   questionTimer = 0
 }
 
-
-
-
-function createPlayer(x, y, id){
-  var player = players.create(x, y, 'tux');
-  player.player_id = id;
-  player.health = 'true';
-  player.body.collideWorldBounds = true;
-  console.log(player.player_id)
-}
-
-function playerUpdate(){
-
-  players.forEach(function(p){
-    if (p.player_id === 1){
-          p.body.velocity.x = 0;
-                if(cursors.left.isDown){
-                  p.body.velocity.x = -200*p.alpha;
-                }else if(cursors.right.isDown){
-                  p.body.velocity.x = 200*p.alpha;
-                }
-                if(cursors.up.isDown){
-                  p.body.velocity.y = -200*p.alpha;
-                }else if(cursors.down.isDown){
-                  p.body.velocity.y = 200*p.alpha;
-                } else {
-                  p.body.velocity.y = 0;
-                }
-    }
-    if (p.player_id === 2){
-          p.body.velocity.x = 0;
-                if(one.isDown){
-                  console.log('one pressed')
-                  p.body.velocity.x = -200*p.alpha;
-                }else if(four.isDown){
-                  p.body.velocity.x = 200*p.alpha;
-                }
-                if(three.isDown){
-                  p.body.velocity.y = -200*p.alpha;
-                }else if(two.isDown){
-                  p.body.velocity.y = 200*p.alpha;
-                } else {
-                  p.body.velocity.y = 0;
-                }
-    }
-
-  })
-}
-
-function gameOver(){
-  if (playerOneScore >= 5 || playerTwoScore >= 5){
-    gameIsOver = true;
-    players.forEach(function(p){
-      p.kill();
-    })
-    cars.forEach(function(c){
-      c.kill();
-    })
-    var winner;
-    if (playerOneScore > playerTwoScore){
-      winner = 'Player 1'
-    } else {
-      winner = 'Player 2'
-    }
-    finalScoreText.text = 'Game over, ' + winner +  ' wins!'
-    froggerAjaxCall();
-  }
-}
-
-function createCar(x, y, image, velocity){
-  var car = cars.create(x, y, image)
-  car.body.immovable = true;
-  car.velocity = velocity
-}
-
-function carUpdate(){
-  cars.forEach(function(c){
-    c.body.velocity.x = c.velocity;
-    if (c.x < -400 ){
-      var rand = (Math.floor(Math.random()*(3)))
-      var heights = [0, 150, 300]
-      c.x = game.width + 400;
-      c.y = heights[rand]
-    } else if (c.x > game.width + 600){
-        c.x = -400
-    }
-  })
-}
-
 function go_fullscreen(){
   game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
   game.scale.startFullScreen();
 }
 
+// End game
+function gameOver(){
+  if (!gameIsOver){
+    if (playerOneScore >= 5 || playerTwoScore >= 5){
+      gameIsOver = true;
+      players.forEach(function(p){
+        p.kill();
+      })
+      cars.forEach(function(c){
+        c.kill();
+      })
+      var winner;
+      if (playerOneScore > playerTwoScore){
+        winner = 'Player 1'
+      } else {
+        winner = 'Player 2'
+      }
+      finalScoreText.text = 'Game over, ' + winner +  ' wins!'
+      froggerAjaxCall();
+    }
+  }
+}
+
 function froggerAjaxCall(){
-  console.log('ajax call to controller with results goes here')
+  console.log('player 1 had ' + playerOneCorrect + ' correct answers and ' + playerOneWrong + ' incorrect answers.')
+  console.log('player 2 had ' + playerTwoCorrect + ' correct answers and ' + playerTwoWrong + ' incorrect answers.')
 }
