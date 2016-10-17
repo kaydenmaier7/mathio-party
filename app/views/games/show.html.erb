@@ -3,7 +3,10 @@
 </div>
 <div class="game-stats display"></div>
 
-    <script type="text/javascript" src="/flappy_math/main.js"></script>
+    <!-- <script type="text/javascript" src="/flappy_math/main.js"></script> -->
+    <h1>Welcome to <%= @game.name %></h1>
+    <p><%= @game.directions %></p>
+    <script type="text/javascript" src="<%= @game.src %>"></script>
 
 <!--
 
