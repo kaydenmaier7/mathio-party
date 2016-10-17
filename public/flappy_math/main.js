@@ -6,7 +6,6 @@ var mainState= {
     game.load.image('pipe', '/assets/flappy_math/pipe.png');
     game.load.image('circle', '/assets/flappy_math/circle.png');
     game.load.image('cloud', '/assets/flappy_math/cloud.png');
-    game.load.start();
   },
   create: function(){
     this.jumpSound = game.add.audio('jump');
@@ -44,6 +43,8 @@ var mainState= {
     this.timer = game.time.events.loop(2000, this.addRowOfPipes, this);
     this.timer = game.time.events.loop(3000, this.spawnCloud, this);
 
+    this.bird.anchor.setTo(-0.2, 0.5);
+    this.blueBird.anchor.setTo(-0.2, 0.5);
   },
 
   update: function(){
@@ -65,9 +66,15 @@ var mainState= {
 
     game.physics.arcade.overlap(this.bluebird, this.correct, this.plusOne, null, this);
 
-    game.physics.arcade.overlap(this.bird, this.pipes, this.restartGame, null, this);
-    game.physics.arcade.overlap(this.blueBird, this.pipes, this.restartGame, null, this);
+    game.physics.arcade.overlap(this.bird, this.pipes, this.hitPipe, null, this);
+    game.physics.arcade.overlap(this.blueBird, this.pipes, this.hitPipe, null, this);
 
+  },
+  hitPipe: function(){
+    if (this.bird.alive == false){
+      return;
+    }
+    this.bird.alive = false;
   },
 
   takeDamage: function(player){
@@ -86,6 +93,9 @@ var mainState= {
   },
 
   jump: function(){
+    if (this.bird.alive === false){
+      return;
+    }
     var animation = game.add.tween(this.bird);
     animation.to({angle: -20}, 100);
     animation.start();
@@ -197,39 +207,32 @@ var mainState= {
       }
     },
 
+  currentConfig: function(){
+    var configs = [[1,0,2,0,1,1,0,2,0,1,1,0,2,0,1],
+      [0,2,1,1,1,0,2,0,2,0,1,1,1,2,0],
+      [2,0,0,0,2,1,1,1,1,1,1,1,1,1,1],
+      [1,1,1,1,1,1,1,1,1,1,2,0,0,0,2],
+      [0,2,0,1,1,1,1,2,1,1,1,1,0,2,0],
+      [1,1,0,2,0,1,1,1,1,1,0,2,0,1,1]];
+
+    return configs[Math.floor(Math.random()*configs.length)];
+  },
+
   addRowOfPipes: function() {
-    var obsticle = Math.floor(Math.random()*2)+2;
-    answer = this.spawnQuestion(985, (obsticle+1)*60+15);
+    var config = this.currentConfig();
 
-    answerAry = [];
-    if (Math.floor(Math.random()*2) === 0){
-      answerAry.push(answer);
-      answerAry.push(Math.floor(Math.random()*50));
-    }
-    else{
-      answerAry.push(Math.floor(Math.random()*50));
-      answerAry.push(answer);
-    }
-    var circle1 = Math.floor(Math.random()*2);
-    var circle2 = Math.floor(Math.random()*2) + obsticle +3;
-
-    showAnswer = answerAry.pop();
-    this.spawnAnswer(990, (circle1)*60+15, showAnswer, showAnswer === answer);
-    showAnswer = answerAry.pop();
-    this.spawnAnswer(990, (circle2)*60+15, showAnswer, showAnswer === answer);
-
-    for (var i=0 ; i<8 ; i++){
-        if (i === obsticle){
-          this.addOnePipe(1000, i * 60 + 10);
-          this.addOnePipe(1000, (i+1) * 60 + 10);
-
-          this.addOnePipe(1000, (i+2) * 60 + 10);
-        }
+    for (var i=0 ; i<config.length ; i++){
+      if (config[i] === 1){
+        this.addOnePipe(1000, i * 60 + 10);
+      }
+      else if(config[i] === 2){
+        this.spawnAnswer(1005, i*60+15, "10", true);
+      }
     }
   },
 };
 
-var game = new Phaser.Game(1000,900);
+var game = new Phaser.Game(1000,910);
 
 game.state.add('main', mainState);
 
