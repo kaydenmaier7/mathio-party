@@ -10,7 +10,7 @@ var updateEquationText = function(){
   }
 }
 
-var game = new Phaser.Game(1000, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(1000, 600, Phaser.AUTO, 'frogger', { preload: preload, create: create, update: update });
 
 var cursors;
 var one;
@@ -20,6 +20,8 @@ var four;
 var questionTimer;
 var gameIsOver = false
 var hummerSpawned = false
+var hornNotPlaying = true
+var hornTimer = 0
 
 function problem(problem, truth){
   this.problem = problem;
@@ -54,6 +56,8 @@ function preload() {
   game.load.image('car3', '/assets/car3.png');
   game.load.image('police1', '/assets/police1.png')
   game.load.image('hummer1', '/assets/limo1.png')
+  game.load.audio('carhorn1', '/assets/carhorn1.wav')
+  game.load.audio('croak1', '/assets/croak1.wav')
 }
 
 function create(){
@@ -85,6 +89,9 @@ function create(){
 
     game.input.onDown.add(go_fullscreen, this);
 
+    hornSound = game.add.audio('carhorn1')
+    croakSound = game.add.audio('croak1')
+
 
     playerOneText = game.add.text(32, 550, 'Player 1: ' + playerOneScore, { font: '20px Arial', fill: '#ffffff', align: 'left'});
     playerTwoText = game.add.text(32, 500, 'Player 2: ' + playerTwoScore, { font: '20px Arial', fill: '#ffffff', align: 'left'});
@@ -112,6 +119,10 @@ function update(){
     current_equation = equations[Math.floor(Math.random()*(equations.length - 0))]
     // MathQuestionText.text = current_equation.problem
   }
+  hornTimer += 1
+  if (hornTimer >= 80){
+    hornNotPlaying = true
+  }
 }
 
 function carBugCollisionHandler(car, bug){
@@ -120,11 +131,20 @@ function carBugCollisionHandler(car, bug){
 }
 
 function playerCarCollisionHandler(player, car){
+  playerCarSoundAffect();
   player.alpha = .5
   player.health = 'false';
   setTimeout(function(){
     updatePlayerHealth(player);
   }, 5000);
+}
+
+function playerCarSoundAffect(){
+  if (hornNotPlaying === true){
+      hornSound.play()
+      hornNotPlaying = false
+      hornTimer = 0
+  }
 }
 
 function updatePlayerHealth(player){
@@ -134,6 +154,7 @@ function updatePlayerHealth(player){
 
 function playerBugCollisionHandler(player, bug){
   bug.kill();
+  croakSound.play();
   createBug(Math.random()*(game.width - 20), Math.random()*(game.height - 20))
 
   if (current_equation.truth === 'true'){
@@ -153,10 +174,8 @@ function playerBugCollisionHandler(player, bug){
         playerOneScore += 1;
         playerOneText.text = 'Player 1: ' + playerOneScore;
     }
-    console.log(playerOneScore)
     if (playerOneScore === 1 || playerTwoScore === 1){
       createCar(1000, 225, 'hummer1', 200);
-      console.log('hummer created')
     }
     player.x = 0
     player.y = 0
@@ -231,6 +250,7 @@ function gameOver(){
       winner = 'Player 2'
     }
     finalScoreText.text = 'Game over, ' + winner +  ' wins!'
+    froggerAjaxCall();
   }
 }
 
@@ -254,11 +274,11 @@ function carUpdate(){
   })
 }
 
-
-
-
-
 function go_fullscreen(){
   game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
   game.scale.startFullScreen();
+}
+
+function froggerAjaxCall(){
+  console.log('ajax call to controller with results goes here')
 }
