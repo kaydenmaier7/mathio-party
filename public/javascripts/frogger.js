@@ -252,7 +252,7 @@ function playerBugCollisionHandler(player, bug){
         playerOneText.text = 'Player 1: ' + playerOneScore;
         playerTwoWrong += 1
     }
-    if (playerOneScore === 1 || playerTwoScore === 1){
+    if (playerOneScore === 2 || playerTwoScore === 2){
       createCar(1000, 225, 'hummer1', 200);
     }
     player.x = 0
@@ -271,7 +271,7 @@ function go_fullscreen(){
 // End game
 function gameOver(){
   if (!gameIsOver){
-    if (playerOneScore >= 1 || playerTwoScore >= 1){
+    if (playerOneScore >= 5 || playerTwoScore >= 5){
       gameIsOver = true;
       players.forEach(function(p){
         p.kill();
