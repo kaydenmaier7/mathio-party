@@ -243,6 +243,7 @@ function playerUpdate(){
 }
 
 function gameOver(){
+  if (!gameIsOver){
   if (playerOneScore >= 5 || playerTwoScore >= 5){
     gameIsOver = true;
     players.forEach(function(p){
@@ -260,6 +261,7 @@ function gameOver(){
     finalScoreText.text = 'Game over, ' + winner +  ' wins!'
     froggerAjaxCall();
   }
+}
 }
 
 function createCar(x, y, image, velocity){
