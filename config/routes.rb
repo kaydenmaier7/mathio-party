@@ -6,5 +6,7 @@ Rails.application.routes.draw do
   get 'games' => 'games#index'
   get 'games/:id' => 'games#show'
 
+  post 'results' => 'results#create'
+
   root 'games#index'
 end

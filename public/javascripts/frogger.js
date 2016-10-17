@@ -252,7 +252,7 @@ function playerBugCollisionHandler(player, bug){
         playerOneText.text = 'Player 1: ' + playerOneScore;
         playerTwoWrong += 1
     }
-    if (playerOneScore === 1 || playerTwoScore === 1){
+    if (playerOneScore === 2 || playerTwoScore === 2){
       createCar(1000, 225, 'hummer1', 200);
     }
     player.x = 0
@@ -294,4 +294,16 @@ function gameOver(){
 function froggerAjaxCall(){
   console.log('player 1 had ' + playerOneCorrect + ' correct answers and ' + playerOneWrong + ' incorrect answers.')
   console.log('player 2 had ' + playerTwoCorrect + ' correct answers and ' + playerTwoWrong + ' incorrect answers.')
+
+  var player2_form = document.getElementById('player_2_id')
+  var player2 = $(player2_form).attr('value')
+  console.log(player2)
+
+  var data = { player1: 'player1', player2: player2, player1correct: playerOneCorrect, player1wrong: playerOneWrong, player2correct: playerTwoCorrect, player2wrong: playerTwoWrong, game_id: 1}
+
+  var request = $.ajax({
+    url: '/results',
+    type: 'post',
+    data: data
+  })
 }
