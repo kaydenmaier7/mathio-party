@@ -294,4 +294,5 @@ function gameOver(){
 function froggerAjaxCall(){
   console.log('player 1 had ' + playerOneCorrect + ' correct answers and ' + playerOneWrong + ' incorrect answers.')
   console.log('player 2 had ' + playerTwoCorrect + ' correct answers and ' + playerTwoWrong + ' incorrect answers.')
+
 }
