@@ -58,3 +58,8 @@ body {
   margin: auto;
   padding: 25px;
 }
+
+#flappy-bird {
+  width: 1000px;
+  margin: auto;
+}
