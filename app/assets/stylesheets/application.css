@@ -46,6 +46,7 @@ body {
 #equation_text_div {
   width: 50%;
   margin: auto;
+  height: 50px;
   padding: 30px;
   font-size: 3em;
   font-weight: bold;
@@ -55,11 +56,28 @@ body {
 
 #frogger {
   width: 1000px;
-  margin: auto;
-  padding: 25px;
+  height: 600px;
+  background-color: white;
+  margin: 50px auto;
+  text-align: center;
+  box-shadow: 10px 10px 10px #888888;
 }
 
 #flappy-bird {
   width: 1000px;
   margin: auto;
+}
+
+#frogger-button {
+  width: 25%;
+  margin-top: 300px;
+  padding: 10px 20px;
+  font-size: 2em;
+  border-radius: 5px;
+
+}
+
+#frogger-button:hover {
+  font-weight: bold;
+  box-shadow: 5px 5px 5px #888888;
 }
