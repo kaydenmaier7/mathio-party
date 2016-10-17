@@ -271,7 +271,7 @@ function go_fullscreen(){
 // End game
 function gameOver(){
   if (!gameIsOver){
-    if (playerOneScore >= 5 || playerTwoScore >= 5){
+    if (playerOneScore >= 1 || playerTwoScore >= 1){
       gameIsOver = true;
       players.forEach(function(p){
         p.kill();
@@ -295,4 +295,12 @@ function froggerAjaxCall(){
   console.log('player 1 had ' + playerOneCorrect + ' correct answers and ' + playerOneWrong + ' incorrect answers.')
   console.log('player 2 had ' + playerTwoCorrect + ' correct answers and ' + playerTwoWrong + ' incorrect answers.')
 
+
+  var data = { player1: 'player1', player2: 'player2', player1correct: playerOneCorrect, player1wrong: playerOneWrong, player2correct: playerTwoCorrect, player2wrong: playerTwoWrong, game_id: 1}
+
+  var request = $.ajax({
+    url: '/results',
+    type: 'post',
+    data: data
+  })
 }
