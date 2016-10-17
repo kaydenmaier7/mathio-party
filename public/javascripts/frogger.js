@@ -1,16 +1,25 @@
 $(document).ready(function(){
+  froggerButtonClick()
   window.setInterval(function(){
     updateEquationText();
   }, 200);
 })
 
+var froggerButtonClick = function(){
+  $('#frogger-button').on('click', function(){
+    console.log('clicked')
+    $(this).remove()
+    game = new Phaser.Game(1000, 600, Phaser.AUTO, 'frogger', { preload: preload, create: create, update: update });
+  })
+}
+
 var updateEquationText = function(){
-  if (!gameIsOver){
+  if (!gameIsOver && current_equation){
   $('#equation_text_div').html(current_equation.problem)
   }
 }
 
-var game = new Phaser.Game(1000, 600, Phaser.AUTO, 'frogger', { preload: preload, create: create, update: update });
+
 
 var cursors;
 var one;
