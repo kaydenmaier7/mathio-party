@@ -120,7 +120,6 @@ function update(){
     // MathQuestionText.text = current_equation.problem
   }
   hornTimer += 1
-  console.log(hornTimer)
   if (hornTimer >= 80){
     hornNotPlaying = true
   }
@@ -175,10 +174,8 @@ function playerBugCollisionHandler(player, bug){
         playerOneScore += 1;
         playerOneText.text = 'Player 1: ' + playerOneScore;
     }
-    console.log(playerOneScore)
     if (playerOneScore === 1 || playerTwoScore === 1){
       createCar(1000, 225, 'hummer1', 200);
-      console.log('hummer created')
     }
     player.x = 0
     player.y = 0
@@ -253,6 +250,7 @@ function gameOver(){
       winner = 'Player 2'
     }
     finalScoreText.text = 'Game over, ' + winner +  ' wins!'
+    froggerAjaxCall();
   }
 }
 
@@ -276,11 +274,11 @@ function carUpdate(){
   })
 }
 
-
-
-
-
 function go_fullscreen(){
   game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
   game.scale.startFullScreen();
+}
+
+function froggerAjaxCall(){
+  console.log('ajax call to controller with results goes here')
 }
