@@ -68,44 +68,68 @@ function create(){
     game.add.tileSprite(0, 0, 1000, 600, 'background');
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
+    // Players
     players = game.add.group();
     players.enableBody = true;
     createPlayer(400, 10, 1);
     createPlayer(200, 200, 2);
 
+    // Keyboard inputs
     one = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
     two = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
     three = game.input.keyboard.addKey(Phaser.Keyboard.THREE);
     four = game.input.keyboard.addKey(Phaser.Keyboard.FOUR);
     cursors = game.input.keyboard.createCursorKeys();
 
+    // Cars
     cars = game.add.group();
     cars.enableBody = true;
     createCar(game.width/2, 250, 'police1', -200)
     createCar(game.width + 300, 0, 'police1', -200)
 
+    // Math problems
     current_equation = equations[Math.floor(Math.random()*(equations.length - 0))]
     questionTimer = 0;
 
+    // Bugs
     bugs = game.add.group();
     bugs.enableBody = true;
     createBug(Math.random()*(game.width - 20), Math.random()*(game.height - 20))
 
+    // Full screen and sound affects
     game.input.onDown.add(go_fullscreen, this);
-
     hornSound = game.add.audio('carhorn1')
     croakSound = game.add.audio('croak1')
 
-
+    // Text
     playerOneText = game.add.text(32, 550, 'Player 1: ' + playerOneScore, { font: '20px Arial', fill: '#ffffff', align: 'left'});
     playerTwoText = game.add.text(32, 500, 'Player 2: ' + playerTwoScore, { font: '20px Arial', fill: '#ffffff', align: 'left'});
     finalScoreText = game.add.text(200, 400, '', { font: '50px Arial', fill: '#ffffff', align: 'left'});
-    // MathQuestionText = game.add.text(400, 40, current_equation.problem, { font: '50px Arial', fill: '#ffffff', align: 'left', fontStyle: 'bold'});
+}
+
+
+// Create Sprites
+
+function createPlayer(x, y, id){
+  var player = players.create(x, y, 'tux');
+  player.player_id = id;
+  player.health = 'true';
+  player.body.collideWorldBounds = true;
+  console.log(player.player_id)
 }
 
 function createBug(x, y){
   var bug = bugs.create(x, y, 'bug')
 }
+
+function createCar(x, y, image, velocity){
+  var car = cars.create(x, y, image)
+  car.body.immovable = true;
+  car.velocity = velocity
+}
+
+
+
 
 function update(){
   playerUpdate();
@@ -129,6 +153,8 @@ function update(){
   }
 }
 
+
+// Collision Handlers
 function carBugCollisionHandler(car, bug){
   bug.x = Math.random()*(game.width - 20)
   bug.y = Math.random()*(game.height - 20)
@@ -189,20 +215,13 @@ function playerBugCollisionHandler(player, bug){
     player.y = 0
   }
   current_equation = equations[Math.floor(Math.random()*(equations.length - 0))]
-  // MathQuestionText.text = current_equation.problem
   questionTimer = 0
 }
 
 
 
 
-function createPlayer(x, y, id){
-  var player = players.create(x, y, 'tux');
-  player.player_id = id;
-  player.health = 'true';
-  player.body.collideWorldBounds = true;
-  console.log(player.player_id)
-}
+
 
 function playerUpdate(){
 
@@ -264,11 +283,7 @@ function gameOver(){
 }
 }
 
-function createCar(x, y, image, velocity){
-  var car = cars.create(x, y, image)
-  car.body.immovable = true;
-  car.velocity = velocity
-}
+
 
 function carUpdate(){
   cars.forEach(function(c){
