@@ -12,15 +12,13 @@ var mainState= {
     this.p1score = 0;
     this.p2score = 0;
 
-    this.player1score = game.add.text(20,20,"0", { font: '30px Arial', fill: '#ff5733#' });
-    this.player2score = game.add.text(20,60,"0", { font: '30px Arial', fill: '#4933ff#' });
+    this.player1score = game.add.text(20,20,"Player 1: "+this.p1score, { font: '30px Arial', fill: '#ff5733' });
+    this.player2score = game.add.text(20,60,"Player 2: "+this.p2score, { font: '30px Arial', fill: '#4933ff' });
 
     this.pipes = game.add.group();
     this.correct = game.add.group();
     game.stage.backgroundColor = '#37edf8';
     game.physics.startSystem(Phaser.Physics.ARCADE);
-
-    var style = { font: "65px Arial", fill: "#ff0044", align: "center"};
 
     this.bird = game.add.sprite(100, 245, 'bird');
     game.physics.arcade.enable(this.bird);
@@ -40,7 +38,7 @@ var mainState= {
     this.bird.canScore = true;
     this.blueBird.canScore = true;
 
-    this.timer = game.time.events.loop(2000, this.addRowOfPipes, this);
+    this.timer = game.time.events.loop(4000, this.addRowOfPipes, this);
     this.timer = game.time.events.loop(3000, this.spawnCloud, this);
 
     this.bird.anchor.setTo(-0.2, 0.5);
@@ -55,19 +53,19 @@ var mainState= {
        this.blueBird.angle += 1;
     }
 
-    if (this.bird.y < 0 || this.bird.y > 900){
+    if (this.bird.y < 0 || this.bird.y > 910){
       this.takeDamage(1)
     }
-    if (this.blueBird.y < 0 || this.blueBird.y > 900){
+    if (this.blueBird.y < 0 || this.blueBird.y > 910){
       this.takeDamage(2);
     }
 
-    game.physics.arcade.overlap(this.bird, this.correct, this.plusOne, null,this);
+    //score on correct answer
+    game.physics.arcade.overlap(this.bird, this.correct, this.p1Score, null,this);
+    game.physics.arcade.overlap(this.blueBird, this.correct, this.p2Score, null, this);
 
-    game.physics.arcade.overlap(this.bluebird, this.correct, this.plusOne, null, this);
-
-    game.physics.arcade.overlap(this.bird, this.pipes, this.hitPipe, null, this);
-    game.physics.arcade.overlap(this.blueBird, this.pipes, this.hitPipe, null, this);
+    // game.physics.arcade.overlap(this.bird, this.pipes, this.hitPipe, null, this);
+    // game.physics.arcade.overlap(this.blueBird, this.pipes, this.hitPipe, null, this);
 
   },
   hitPipe: function(){
@@ -124,31 +122,31 @@ var mainState= {
     cloud.body.velocity.x = Math.floor(Math.random()*50)-75;
   },
 
-  plusOne: function(player){
-    console.log(arguments);
-    if (player === 1){
-      if ( this.bird.canScore ){
-        this.bird.canScore = false;
-        this.p1score  += 1;
-        this.player1score.text = this.p1score;
-        game.time.events.add(250, this.restoreScore, this);
-      }
-    else if (player === 2){
-        if ( this.blueBird.canScore ){
-          this.blueBird.canScore = false;
-          this.p2score  += 1;
-          this.player2score.text = this.p2score;
-           game.time.events.add(250, this.restoreScore, this);
-        }
-      }
+  p1Score: function(){
+    if ( this.bird.canScore ){
+      this.bird.canScore = false;
+      this.p1score  += 1;
+      this.player1score.text = "player 1: "+this.p1score;
+      setTimeout(this.restore1Score, 1000);
     }
   },
 
-  restoreScore: function(player){
-    // console.log("restoreScore");
-    // if (player === 1 ){
-      this.bird.canScore=true;
-    // }
+  p2Score: function(){
+    console.log(this.blueBird.canScore);
+    if ( this.blueBird.canScore ){
+      this.blueBird.canScore = false;
+      this.p2score  += 1;
+      this.player2score.text = "player 2: "+this.p2score;
+      setTimeout(this.restore2Score, 1000);
+    }
+  },
+
+  restore1Score: function(){
+    this.bird.canScore1=true;
+  },
+
+  restore2Score: function(){
+    this.blueBird.canScore2=true;
   },
 
   spawnQuestion: function (x,y){
