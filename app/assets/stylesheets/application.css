@@ -52,3 +52,9 @@ body {
   text-align: center;
   background-color: whitesmoke;
 }
+
+#frogger {
+  width: 1000px;
+  margin: auto;
+  padding: 25px;
+}
