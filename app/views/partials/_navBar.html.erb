@@ -2,6 +2,11 @@
   <h1 class="title"><a href="/">Mathio Party</a></h1>
   <% if current_user %>
   	<%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+  	<% if !current_player2 %>
+  		<%= link_to 'Player 2 Login', players_new_path %>
+  	<% else %>
+  		<%= link_to 'Player 2 Logout' %>	
+  	<% end %>
   <% else %>
   	<%= link_to 'Login', new_user_session_path %>
   <% end %>
