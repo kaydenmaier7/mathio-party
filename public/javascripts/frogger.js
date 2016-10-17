@@ -47,6 +47,10 @@ var current_equation
 
 var playerOneScore = 0;
 var playerTwoScore = 0;
+var playerOneCorrect = 0;
+var playerOneWrong = 0;
+var playerTwoCorrect = 0;
+var playerTwoWrong = 0;
 
 function preload() {
   game.load.image('tux', '/assets/frog.png');
@@ -162,17 +166,21 @@ function playerBugCollisionHandler(player, bug){
       if (player.player_id === 1){
         playerOneScore += 1;
         playerOneText.text = 'Player 1: ' + playerOneScore
+        playerOneCorrect += 1
       } else if (player.player_id === 2) {
         playerTwoScore += 1;
         playerTwoText.text = 'Player 2: ' + playerTwoScore
+        playerTwoCorrect += 1
       }
   } else {
     if (player.player_id === 1){
         playerTwoScore += 1;
         playerTwoText.text = 'Player 2: ' + playerTwoScore;
+        playerOneWrong += 1
     } else if (player.player_id === 2){
         playerOneScore += 1;
         playerOneText.text = 'Player 1: ' + playerOneScore;
+        playerTwoWrong += 1
     }
     if (playerOneScore === 1 || playerTwoScore === 1){
       createCar(1000, 225, 'hummer1', 200);
@@ -281,4 +289,6 @@ function go_fullscreen(){
 
 function froggerAjaxCall(){
   console.log('ajax call to controller with results goes here')
+  console.log('player 1 had ' + playerOneCorrect + ' correct answers and ' + playerOneWrong + ' incorrect answers.')
+  console.log('player 2 had ' + playerTwoCorrect + ' correct answers and ' + playerTwoWrong + ' incorrect answers.')
 }
