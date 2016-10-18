@@ -76,7 +76,6 @@ body {
 
 #frogger-button {
   width: 25%;
-  margin-top: 300px;
   padding: 10px 20px;
   font-size: 2em;
   border-radius: 5px;
@@ -86,4 +85,10 @@ body {
 #frogger-button:hover {
   font-weight: bold;
   box-shadow: 5px 5px 5px #888888;
+}
+
+#mode {
+  margin-top: 25%;
+  margin-bottom: 5px;
+  font-size: 1.5em;
 }
