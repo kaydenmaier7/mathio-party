@@ -3,7 +3,7 @@ $(document).ready(function(){
 })
 
 // declare all object types
-var cow, players;
+var cow, players, beams;
 
 // cow movement parameters
 var startingCows = 4;
@@ -61,14 +61,19 @@ function create(){
   createPlayer1(400, 10, 'ufo1');
   createPlayer2(200, 10, 'ufo2');
 
+  // add beams group
+  beams = game.add.group();
+
   //keyboard input
   keyboardInput = game.input.keyboard.createCursorKeys();
   one = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+  two = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
   three = game.input.keyboard.addKey(Phaser.Keyboard.THREE);
 };
 
 function update(){
   playerMovement();
+  playerBeam();
   moveCow();
 };
 
@@ -112,11 +117,34 @@ function playerMovement(){
   });
 };
 
+function playerBeam(){
+  players.forEach(function(p){
+    if (p.player_id === 'ufo1'){
+      if(keyboardInput.down.isDown){
+        shootBeam(p.position.x, p.player_id)
+      }
+    };
+    if (p.player_id === 'ufo2'){
+      if(two.isDown){
+        shootBeam(p.position.x, p.player_id)
+      }
+    };
+  });
+};
+
+function shootBeam(x, id){
+  if (id === 'ufo1'){
+    beams.create(x - 15, 120, 'beam');
+  } else if (id === 'ufo2'){
+    beams.create(x + 10, 150, 'beam');
+  };
+};
+
 function moveCow(){
   cow.forEach(function(c){
     c.body.velocity.x = 0;
     if (timer % c.interval == 0) {
       c.body.velocity.x = c.speed;
-    }
+    };
   });
 };
