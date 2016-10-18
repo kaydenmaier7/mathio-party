@@ -13,7 +13,7 @@ game1 = {
 
 game2 = {
   name: 'Other Game',
-  src: '/javascripts/game2',
+  src: '/flappy_math/main.js',
   description: 'A second game!',
   directions: 'Like the other game but completely different'
 }
