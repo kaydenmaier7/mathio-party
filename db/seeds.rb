@@ -26,7 +26,7 @@ game3 = {
 }
 
 game3 = {
-  name: 'Math Hunt',
+  name: 'Duck Hunt',
   src: '/math_hunt/ducks.js',
   description: 'Duck hunt....with MATH!!',
   directions: 'The ducks had it coming'
