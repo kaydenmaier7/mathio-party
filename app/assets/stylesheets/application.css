@@ -14,6 +14,7 @@
  *= require_self
  */
 html, body {
+  font: 10px sans-serif;
   margin: 0;
   padding: 0;
   height: 100%;
@@ -94,6 +95,43 @@ body {
   font-size: 1.5em;
 }
 
+
+/*Line graph styling*/
+path.line {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1.5px;
+}
+
+path.area {
+  fill: #e7e7e7;
+}
+
+.axis {
+  shape-rendering: crispEdges;
+}
+
+.x.axis line {
+  stroke: #fff;
+}
+
+.x.axis .minor {
+  stroke-opacity: .5;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.y.axis line, .y.axis path {
+  fill: none;
+  stroke: #000;
+}
+.guideline {
+  margin-right: 100px;
+  float: right;
+}
+
 #hidden_match_button {
   padding: 10px 30px;
   border-radius: 10px;
@@ -113,3 +151,5 @@ body {
 #hidden_match_button:hover{
   box-shadow: 2px 2px 2px #888888;
 }
+
+

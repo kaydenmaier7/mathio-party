@@ -1,0 +1,41 @@
+<div class="LineBarChart">
+
+<script>
+<%dataset = []%>
+<% SubSkill.where(skill_name: "addition").each do |skill| %>
+  <%p "$"*50 %>
+  <%p skill %>
+  <% dataset << User.find(1).percent('correct', skill.skill_name, skill.name, 1)*10 %>
+<% end %>
+//Width and height
+var w = 500;
+var h = 300;
+//Create SVG element
+var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+
+var bars = svg.selectAll("rect")
+   .data(<%=dataset%>)
+   .enter()
+   .append("rect")
+   .attr("fill", "teal")
+   .attr("x", function(d, i) {
+    return i * (w /<%=dataset.length%>);
+})
+   .attr("y", h - 1)
+   .attr("width", 25)
+   .attr("height", 1);
+
+bars.transition()
+  .duration(1000)
+  .delay(100)
+  .attr("y", function(d) {
+    return h - (d * 4);  //Height minus data value
+})
+   .attr("height", function(d) {
+    return d * 4;
+})
+</script>
+</div>

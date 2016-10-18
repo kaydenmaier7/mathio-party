@@ -134,15 +134,15 @@ var playerTwoCorrect = [];
 var playerTwoWrong = [];
 
 function preload() {
-  game.load.image('tux', '/images/frog.png');
-  game.load.image("background", "/images/street.jpg");
-  game.load.image('bug', '/images/bug.png')
-  game.load.image('car1', '/images/car1.png');
-  game.load.image('car3', '/images/car3.png');
-  game.load.image('police1', '/images/police1.png')
-  game.load.image('hummer1', '/images/limo1.png')
-  game.load.audio('carhorn1', '/sounds/carhorn1.wav')
-  game.load.audio('croak1', '/sounds/croak1.wav')
+  game.load.image('tux', '/images/frogger/frog.png');
+  game.load.image("background", "/images/frogger/street.jpg");
+  game.load.image('bug', '/images/frogger/bug.png')
+  game.load.image('car1', '/images/frogger/car1.png');
+  game.load.image('car3', '/images/frogger/car3.png');
+  game.load.image('police1', '/images/frogger/police1.png')
+  game.load.image('hummer1', '/images/frogger/limo1.png')
+  game.load.audio('carhorn1', '/sounds/frogger_sounds/carhorn1.wav')
+  game.load.audio('croak1', '/sounds/frogger_sounds/croak1.wav')
 }
 
 function create(){
