@@ -8,9 +8,39 @@ $(document).ready(function(){
 var froggerButtonClick = function(){
   $('#frogger-button').on('click', function(){
     $(this).remove()
-    game = new Phaser.Game(1000, 600, Phaser.AUTO, 'frogger', { preload: preload, create: create, update: update });
+
+      load3()
+
   })
 }
+
+var load3 = function(){
+  $('#frogger').css('background', 'black').html('<h1>3</h1>')
+  setTimeout(function(){
+      load2()
+    }, 1000)
+}
+
+var load2 = function(){
+  $('#frogger').html('<h1>2</h1>')
+  setTimeout(function(){
+      load1()
+    }, 1000)
+}
+
+var load1 = function(){
+  $('#frogger').html('<h1>1</h1>')
+  setTimeout(function(){
+      loadGame()
+    }, 1000)
+}
+
+var loadGame = function(){
+  $('#frogger').html('')
+  game = new Phaser.Game(1000, 600, Phaser.AUTO, 'frogger', { preload: preload, create: create, update: update });
+}
+
+
 
 var updateEquationText = function(){
   if (!gameIsOver && current_equation){
