@@ -1,11 +1,11 @@
 $(document).ready(function(){
-  loadGame()
+  loadGame();
 })
 
 
 var loadGame = function(){
   $('#invasion').html('')
-  game = new Phaser.Game(1000, 600, Phaser.AUTO, 'invasion');
+  game = new Phaser.Game(1000, 600, Phaser.AUTO, 'invasion', {preload: preload, create: create});
 }
 
 function preload() {
@@ -15,3 +15,9 @@ function preload() {
   game.load.image('ufo2', '/assets/invasion/ufo2.png');
   game.load.image('beam', '/assets/invasion/beam.png');
 }
+
+function create(){
+    game.add.tileSprite(0, 0, 1000, 600, 'background');
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+}
+
