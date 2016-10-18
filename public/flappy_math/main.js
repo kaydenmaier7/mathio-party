@@ -16,7 +16,8 @@ var mainState= {
     this.player2score = game.add.text(20,100,"Player 2: "+this.p2score, { font: '30px Arial', fill: '#4933ff' });
 
     this.pipes = game.add.group();
-    this.correct = game.add.group();
+    this.correct1 = game.add.group();
+    this.correct2 = game.add.group();
     game.stage.backgroundColor = '#37edf8';
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -38,7 +39,7 @@ var mainState= {
     this.bird.canScore = true;
     this.blueBird.canScore = true;
 
-    this.timer = game.time.events.loop(4000, this.addRowOfPipes, this);
+    this.timer = game.time.events.loop(4500, this.addRowOfPipes, this);
     this.timer = game.time.events.loop(3000, this.spawnCloud, this);
 
     this.bird.anchor.setTo(-0.2, 0.5);
@@ -63,10 +64,10 @@ var mainState= {
     }
     //score on correct answer
 
-      game.physics.arcade.overlap(this.bird, this.correct, this.p1Score, null,this);
+      game.physics.arcade.overlap(this.bird, this.correct1, this.p1Score, null,this);
       game.physics.arcade.overlap(this.bird, this.pipes, this.hitPipe1, null, this);
 
-      game.physics.arcade.overlap(this.blueBird, this.correct, this.p2Score, null, this);
+      game.physics.arcade.overlap(this.blueBird, this.correct2, this.p2Score, null, this);
       game.physics.arcade.overlap(this.blueBird, this.pipes, this.hitPipe2, null, this);
   },
   hitPipe1: function(){
@@ -178,7 +179,7 @@ var mainState= {
     problem.text = param1.toString() + " + " + param2.toString()
 
     that = this;
-    setTimeout(function(){problem.kill()}, 4000);
+    setTimeout(function(){problem.kill()}, 4500);
     return (param1 + param2);
   },
 
@@ -191,7 +192,7 @@ var mainState= {
     problem.text = param2.toString() + " - " + param1.toString()
 
     that = this;
-    setTimeout(function(){problem.kill()}, 4000);
+    setTimeout(function(){problem.kill()}, 4500);
     return (param2 - param1);
   },
   addOnePipe: function (x,y){
@@ -207,14 +208,15 @@ var mainState= {
       pipe.outOfBoundsKill = true;
     },
 
-  spawnAnswer: function (x, y, num, correct){
+  spawnAnswer: function (x, y, num, correct1, correct2){
       var answer = game.add.text(x,y, num, { font: '30px Arial', fill: '#ffffff#' });
       game.physics.arcade.enable(answer);
       answer.body.velocity.x = -200;
 
-      if (correct){
-        this.correct.add(answer);
-
+      if (correct1){
+        this.correct1.add(answer)
+      } else if (correct2) {
+        this.correct2.add(answer)
       }
     },
 
@@ -232,6 +234,7 @@ var mainState= {
   addRowOfPipes: function() {
     a1 = this.spawnQuestion1();
     a2 = this.spawnQuestion2();
+    console.log(a1)
 
     var config = this.currentConfig();
 
@@ -254,12 +257,15 @@ var mainState= {
       }
     }
 
+    console.log(answers)
+
     for (var i=0 ; i<config.length ; i++){
       if (config[i] === 1){
         this.addOnePipe(1000, i * 60 + 10);
       }
-      else if(config[i] === 2){
-        this.spawnAnswer(1005, i*60+15, answers.pop(), true);
+      else if(config[i] !== 0){
+        config[i] = answers.pop()
+        this.spawnAnswer(1005, i*60+15, config[i], config[i]===a1, config[i]===a2 );
       }
     }
   }
