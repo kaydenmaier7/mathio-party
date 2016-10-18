@@ -8,12 +8,19 @@
 
   // Data
   var data = [
-        [//history
+        [//match 1
         <% 8.times do |num| %>
-          <% val = User.find(1).percent('correct', "#{num}times_table")%>
+          <% val = User.find(1).percent('correct', 'multiplication', "#{num} times tables", 1)%>
           {axis:<%= num %>,value:<%= val %>},
         <% end %>
-        {axis:"9",value:<%=User.find(1).percent('correct', '9times_table')%>}
+        {axis:"9",value:<%=User.find(1).percent('correct', 'multiplication', "9 times tables", 1)%>}
+        ],
+        [//match 2
+        <% 8.times do |num| %>
+          <% val = User.find(1).percent('correct', 'multiplication', "#{num} times tables", 2)%>
+          {axis:<%= num %>,value:<%= val %>},
+        <% end %>
+        {axis:"9",value:<%=User.find(1).percent('correct', 'multiplication', "9 times tables", 2)%>}
         ]
       ];
 

@@ -47,8 +47,10 @@ ActiveRecord::Schema.define(version: 20161018020256) do
     t.integer  "incorrect"
     t.string   "skill_name"
     t.integer  "result_id"
+    t.integer  "match_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_sub_skills_on_match_id", using: :btree
     t.index ["result_id"], name: "index_sub_skills_on_result_id", using: :btree
   end
 
@@ -72,5 +74,6 @@ ActiveRecord::Schema.define(version: 20161018020256) do
   end
 
   add_foreign_key "matches", "games"
+  add_foreign_key "sub_skills", "matches"
   add_foreign_key "sub_skills", "results"
 end
