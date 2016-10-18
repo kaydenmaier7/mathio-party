@@ -12,16 +12,30 @@ game1 = {
 }
 
 game2 = {
-  name: 'flappy_math',
+  name: 'Flappy Math',
   src: '/flappy_math/main.js',
   description: 'A second game!',
   directions: 'fly through the answer!'
 }
 
+game3 = {
+  name: 'invasion',
+  src: '/javascripts/invasion.js',
+  description: 'Collect cows for your queen!',
+  directions: 'Gather the cows you need!'
+}
+
+game3 = {
+  name: 'Math Hunt',
+  src: '/math_hunt/ducks.js',
+  description: 'Duck hunt....with MATH!!',
+  directions: 'The ducks had it coming'
+}
 
 User.create(user1)
 Game.create(game1)
 Game.create(game2)
+Game.create(game3)
 
 2.times do
   Match.create({game_id: 1})
