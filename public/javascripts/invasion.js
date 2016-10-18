@@ -17,6 +17,10 @@ var assets = [
   ['beam', '/assets/invasion/beam.png']
 ];
 
+// make an array to track current cows
+var herd = [];
+var cow;
+
 // load static assets
 function preload() {
   assets.forEach(function(asset){
@@ -26,7 +30,17 @@ function preload() {
   });
 };
 
-// add background to the game
 function create(){
-    game.add.tileSprite(0, 0, 1000, 600, 'background');
+  // add background to the game
+  game.add.tileSprite(0, 0, 1000, 600, 'background');
+
+  // create cow group
+  cow = game.add.group();
+  spawnCow(Math.random()*(game.width - 100) , Math.random()*(game.height/2) + game.height* 0.3);
+};
+
+// create a cow
+function spawnCow(x, y){
+  var value = Math.floor( Math.random() * 11 )
+  cow.create(x, y, 'cow', value)
 };
