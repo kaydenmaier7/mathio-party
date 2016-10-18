@@ -127,7 +127,7 @@ var mainState= {
       this.bird.canScore = false;
       this.p1score  += 1;
       this.player1score.text = "player 1: "+this.p1score;
-      setTimeout(this.restore1Score, 1000);
+      setTimeout(function(){restore1Score()}, 1000);
     }
   },
 
@@ -137,7 +137,7 @@ var mainState= {
       this.blueBird.canScore = false;
       this.p2score  += 1;
       this.player2score.text = "player 2: "+this.p2score;
-      setTimeout(this.restore2Score, 1000);
+      setTimeout(function(){restore2Score()}, 1000);
     }
   },
 
