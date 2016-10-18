@@ -7,10 +7,6 @@
     <h1>Welcome to <%= @game.name %></h1>
     <p><%= @game.directions %></p>
 
-    <% if @player2 %>
-      <input id='player_2_id' type='hidden' value=<% @player2.id %>>
-    <% end %>
-
 		<% if @game.id == 1 %>
 			<div id='equation_text_div'>Frogger</div>
       <div id='frogger'><button id='frogger-button'>start</button></div>
