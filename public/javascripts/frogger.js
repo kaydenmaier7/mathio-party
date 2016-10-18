@@ -328,6 +328,9 @@ function playerBugCollisionHandler(player, bug){
 
       if (player.player_id === 1){
         playerOneScore += 1;
+        if (playerOneScore === 2){
+            createCar(1000, 225, 'hummer1', 200);
+           }
         playerOneText.text = 'Player 1: ' + playerOneScore
         playerOneCorrect += 1
       } else if (player.player_id === 2) {
@@ -344,9 +347,6 @@ function playerBugCollisionHandler(player, bug){
         playerOneScore += 1;
         playerOneText.text = 'Player 1: ' + playerOneScore;
         playerTwoWrong += 1
-    }
-    if (playerOneScore === 2 || playerTwoScore === 2){
-      createCar(1000, 225, 'hummer1', 200);
     }
     player.x = 0
     player.y = 0
@@ -393,6 +393,7 @@ function froggerAjaxCall(){
     player1wrong: playerOneWrong,
     player2correct: playerTwoCorrect,
     player2wrong: playerTwoWrong,
+    skill: selectedMode,
     game_id: 1
   }
 
