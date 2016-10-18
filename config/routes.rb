@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'players/new' => 'players#new'
+
+  post 'players' => 'players#create'
+
+  delete 'players/:id' => 'players#destroy'
+
   devise_for :users
   get 'users' => 'users#index'
 	get 'users/:id' => 'users#show'
