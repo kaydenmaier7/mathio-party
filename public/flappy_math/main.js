@@ -20,6 +20,7 @@ var mainState= {
     this.correct2 = game.add.group();
     game.stage.backgroundColor = '#37edf8';
     game.physics.startSystem(Phaser.Physics.ARCADE);
+    this.speed = 0;
 
     this.bird = game.add.sprite(100, 245, 'bird');
     game.physics.arcade.enable(this.bird);
@@ -39,8 +40,13 @@ var mainState= {
     this.bird.canScore = true;
     this.blueBird.canScore = true;
 
-    this.timer = game.time.events.loop(4500, this.addRowOfPipes, this);
+    this.timer = game.time.events.loop(4500-this.speed, this.addRowOfPipes, this);
     this.timer = game.time.events.loop(3000, this.spawnCloud, this);
+    this.time = 900
+    this.timer = game.add.text(800,20, this.time, { font: "64px Arial", fill: "#ffffff", align: "center" });
+
+    game.time.events.loop(1, this.updateCounter, this);
+
 
     this.bird.anchor.setTo(-0.2, 0.5);
     this.blueBird.anchor.setTo(-0.2, 0.5);
@@ -70,6 +76,28 @@ var mainState= {
       game.physics.arcade.overlap(this.blueBird, this.correct2, this.p2Score, null, this);
       game.physics.arcade.overlap(this.blueBird, this.pipes, this.hitPipe2, null, this);
   },
+
+  updateCounter: function() {
+    this.time--;
+    this.speed++;
+    this.timer.setText(this.time);
+    if (this.time <= 0){
+      this.endGame()
+    }
+  },
+
+  endGame: function(){
+    gotext = game.add.text(game.world.centerX, game.world.centerY, "", { font: "64px Arial", fill: "#ffffff", align: "center" });
+    if (this.p1score > this.p2score){
+      gotext.text = "Player 1 Wins!"
+    } else if (this.p2Score > this.p1score){
+      gotext.text = "Player 2 Wins!"
+    } else {
+      gotext.text = "Tie Game!"
+    }
+    game.destroy()
+  },
+
   hitPipe1: function(){
       if (this.bird.alive === false){
         return;
@@ -179,7 +207,7 @@ var mainState= {
     problem.text = param1.toString() + " + " + param2.toString()
 
     that = this;
-    setTimeout(function(){problem.kill()}, 4500);
+    setTimeout(function(){problem.kill()}, 4500-this.speed);
     return (param1 + param2);
   },
 
@@ -270,6 +298,7 @@ var mainState= {
     }
   }
 };
+
 
 var game = new Phaser.Game(1000,910, Phaser.AUTO, 'flappy-bird');
 
