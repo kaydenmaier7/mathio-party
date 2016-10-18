@@ -2,11 +2,19 @@ $(document).ready(function(){
   loadGame();
 })
 
-// add game window to page
-var loadGame = function(){
-  $('#invasion').html('');
-  game = new Phaser.Game(1000, 600, Phaser.AUTO, 'invasion', {preload: preload, create: create, update: update});
-};
+// declare all object types
+var cow, players;
+
+// cow movement parameters
+var startingCows = 4;
+var timer = 0;
+setInterval(function(){ timer = timer + 1 }, 1000);
+var cowSpeedOptions = [100, -100, 150, -150];
+var cowMovementIntervals = [2, 3, 4];
+function setCowSpeed(){
+  cow.forEach(function(c){ c.speed = cowSpeedOptions[Math.floor(Math.random()*cowSpeedOptions.length)] })
+}
+setInterval(setCowSpeed, 1000);
 
 // declare static assets
 var assets = [
@@ -17,8 +25,11 @@ var assets = [
   ['beam', '/assets/invasion/beam.png']
 ];
 
-// declare all object types
-var cow, players;
+// add game window to page
+var loadGame = function(){
+  $('#invasion').html('');
+  game = new Phaser.Game(1000, 600, Phaser.AUTO, 'invasion', {preload: preload, create: create, update: update});
+};
 
 // load static assets
 function preload() {
@@ -38,9 +49,13 @@ function create(){
 
   // create cow group
   cow = game.add.group();
-  spawnCow(Math.random()*(game.width - 100) , Math.random()*(game.height/2) + game.height* 0.3);
+  cow.enableBody = true;
+  // spawn starting cows
+  for (var i = 0; i < startingCows; i++){
+    spawnCow(Math.random()*(game.width - 100) , Math.random()*(game.height/2) + game.height* 0.3);
+  }
 
-  // Player 1
+  // create the players
   players = game.add.group();
   players.enableBody = true;
   createPlayer1(400, 10, 'ufo1');
@@ -53,13 +68,17 @@ function create(){
 };
 
 function update(){
-  playerUpdate();
+  playerMovement();
+  moveCow();
 };
 
 // create a cow
 function spawnCow(x, y){
   var newCow = cow.create(x, y, 'cow');
   newCow.value = Math.floor( Math.random() * 11 );
+  newCow.speed = cowSpeedOptions[Math.floor(Math.random()*cowSpeedOptions.length)];
+  newCow.interval = cowMovementIntervals[Math.floor(Math.random()*cowMovementIntervals.length)];
+  newCow.body.collideWorldBounds = true;
 };
 
 function createPlayer1(x, y, id){
@@ -72,23 +91,32 @@ function createPlayer2(x, y, id){
   player.player_id = id;
 }
 
-function playerUpdate(){
+function playerMovement(){
   players.forEach(function(p){
     if (p.player_id === 'ufo1'){
       p.body.velocity.x = 0;
       if(keyboardInput.left.isDown){
-        p.body.velocity.x = -200*p.alpha;
+        p.body.velocity.x = -200;
       }else if(keyboardInput.right.isDown){
-        p.body.velocity.x = 200*p.alpha;
+        p.body.velocity.x = 200;
       };
     };
     if (p.player_id === 'ufo2'){
       p.body.velocity.x = 0;
       if(one.isDown){
-        p.body.velocity.x = -200*p.alpha;
+        p.body.velocity.x = -200;
       }else if(three.isDown){
-        p.body.velocity.x = 200*p.alpha;
+        p.body.velocity.x = 200;
       };
     };
+  });
+};
+
+function moveCow(){
+  cow.forEach(function(c){
+    c.body.velocity.x = 0;
+    if (timer % c.interval == 0) {
+      c.body.velocity.x = c.speed;
+    }
   });
 };
