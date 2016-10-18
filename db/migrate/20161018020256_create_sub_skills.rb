@@ -6,6 +6,7 @@ class CreateSubSkills < ActiveRecord::Migration[5.0]
       t.integer :incorrect
       t.string  :skill_name
       t.references :result, foreign_key: true
+      t.references :match, foreign_key: true
 
       t.timestamps
     end

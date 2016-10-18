@@ -8,9 +8,11 @@ class User < ApplicationRecord
   has_many :games, through: :matches
   has_many :sub_skills, through: :results
 
-  def percent(result, skill, sub_skill)
-    # fetch the sub_skills with the skill: 'skill' and name: 'sub_skill'
-    results = self.sub_skills.where(skill_name: skill).where(name: sub_skill)
+  def percent(result, skill, sub_skill, match)
+    results = self.sub_skills
+      .where(skill_name: skill)
+      .where(name: sub_skill)
+      .where(match: match)
     correct = results.pluck(:correct).inject { |sum, n| sum + n }.to_f
     incorrect = results.pluck(:incorrect).inject { |sum, n| sum + n }.to_f
     total = correct + incorrect

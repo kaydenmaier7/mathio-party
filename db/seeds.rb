@@ -23,7 +23,9 @@ User.create(user1)
 Game.create(game1)
 Game.create(game2)
 
-Match.create({game_id: 1})
+2.times do
+  Match.create({game_id: 1})
+end
 
 # create results for 2 matches
 2.times do |num|
@@ -32,16 +34,21 @@ Match.create({game_id: 1})
     match_id: num,
     score: 5
   })
+end
 
-  # create sub_skills
+possible_correct = [100, 72, 30, 50]
+possible_incorrect = [50, 20]
+
+# create sub_skills
+2.times do |num|
   10.times do |integer|
     SubSkill.create({
-      result_id: num + 1,
+      result_id: 1,
       name: "#{integer} times tables",
       skill_name: "multiplication",
-      correct: integer * 10,
-      incorrect: 10
+      correct: possible_correct.sample,
+      incorrect: possible_incorrect.sample,
+      match_id: num + 1
     })
   end
 end
-
