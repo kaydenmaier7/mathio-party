@@ -405,4 +405,16 @@ function froggerAjaxCall(){
     type: 'post',
     data: data
   })
+
+  request.done(function(response){
+    console.log(response)
+    console.log('success')
+  })
+
+  request.fail(function(response){
+    console.log(response)
+    console.log('failed')
+  })
+
+
 }
