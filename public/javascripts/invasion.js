@@ -5,7 +5,7 @@ $(document).ready(function(){
 // add game window to page
 var loadGame = function(){
   $('#invasion').html('');
-  game = new Phaser.Game(1000, 600, Phaser.AUTO, 'invasion', {preload: preload, create: create});
+  game = new Phaser.Game(1000, 600, Phaser.AUTO, 'invasion', {preload: preload, create: create, update: update});
 };
 
 // declare static assets
@@ -17,9 +17,8 @@ var assets = [
   ['beam', '/assets/invasion/beam.png']
 ];
 
-// make an array to track current cows
-var herd = [];
-var cow, player1, player2;
+// declare all object types
+var cow, players;
 
 // load static assets
 function preload() {
@@ -34,31 +33,62 @@ function create(){
   // add background to the game
   game.add.tileSprite(0, 0, 1000, 600, 'background');
 
+  // add physics engine
+  game.physics.startSystem(Phaser.Physics.ARCADE);
+
   // create cow group
   cow = game.add.group();
   spawnCow(Math.random()*(game.width - 100) , Math.random()*(game.height/2) + game.height* 0.3);
 
   // Player 1
-  player1 = game.add.group();
+  players = game.add.group();
+  players.enableBody = true;
   createPlayer1(400, 10, 'ufo1');
-
-  // Player 2
-  player2 = game.add.group();
   createPlayer2(200, 10, 'ufo2');
+
+  //keyboard input
+  keyboardInput = game.input.keyboard.createCursorKeys();
+  one = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+  three = game.input.keyboard.addKey(Phaser.Keyboard.THREE);
+};
+
+function update(){
+  playerUpdate();
 };
 
 // create a cow
 function spawnCow(x, y){
-  var value = Math.floor( Math.random() * 11 )
-  cow.create(x, y, 'cow', value)
+  var newCow = cow.create(x, y, 'cow');
+  newCow.value = Math.floor( Math.random() * 11 );
 };
 
 function createPlayer1(x, y, id){
-  var player = player1.create(x, y, id);
+  var player = players.create(x, y, id);
   player.player_id = id;
 }
 
 function createPlayer2(x, y, id){
-  var player = player2.create(x, y, id);
+  var player = players.create(x, y, id);
   player.player_id = id;
 }
+
+function playerUpdate(){
+  players.forEach(function(p){
+    if (p.player_id === 'ufo1'){
+      p.body.velocity.x = 0;
+      if(keyboardInput.left.isDown){
+        p.body.velocity.x = -200*p.alpha;
+      }else if(keyboardInput.right.isDown){
+        p.body.velocity.x = 200*p.alpha;
+      };
+    };
+    if (p.player_id === 'ufo2'){
+      p.body.velocity.x = 0;
+      if(one.isDown){
+        p.body.velocity.x = -200*p.alpha;
+      }else if(three.isDown){
+        p.body.velocity.x = 200*p.alpha;
+      };
+    };
+  });
+};
