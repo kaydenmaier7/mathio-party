@@ -333,11 +333,7 @@ function froggerAjaxCall(){
   console.log('player 1 had ' + playerOneCorrect + ' correct answers and ' + playerOneWrong + ' incorrect answers.')
   console.log('player 2 had ' + playerTwoCorrect + ' correct answers and ' + playerTwoWrong + ' incorrect answers.')
 
-  var player2_form = document.getElementById('player_2_id')
-  var player2 = $(player2_form).attr('value')
-  console.log(player2)
-
-  var data = { player1: 'player1', player2: player2, player1correct: playerOneCorrect, player1wrong: playerOneWrong, player2correct: playerTwoCorrect, player2wrong: playerTwoWrong, game_id: 1}
+  var data = { player1correct: playerOneCorrect, player1wrong: playerOneWrong, player2correct: playerTwoCorrect, player2wrong: playerTwoWrong, game_id: 1}
 
   var request = $.ajax({
     url: '/results',
