@@ -19,7 +19,7 @@ game2 = {
 }
 
 game3 = {
-  name: 'invasion',
+  name: 'Invasion',
   src: '/javascripts/invasion.js',
   description: 'Collect cows for your queen!',
   directions: 'Gather the cows you need!'
