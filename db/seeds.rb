@@ -13,20 +13,20 @@ game1 = {
 
 game2 = {
   name: 'Flappy Math',
-  src: '/flappy_math/main.js',
+  src: '/javascripts/flappy_math.js',
   description: 'A second game!',
   directions: 'fly through the answer!'
 }
 
 game3 = {
-  name: 'invasion',
+  name: 'Invasion',
   src: '/javascripts/invasion.js',
   description: 'Collect cows for your queen!',
   directions: 'Gather the cows you need!'
 }
 
 game3 = {
-  name: 'Math Hunt',
+  name: 'Duck Hunt',
   src: '/math_hunt/ducks.js',
   description: 'Duck hunt....with MATH!!',
   directions: 'The ducks had it coming'
