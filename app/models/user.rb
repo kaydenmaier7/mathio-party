@@ -13,9 +13,9 @@ class User < ApplicationRecord
     total = correct + incorrect
 
     if result == 'correct'
-      (correct / total * 100).round / 100.0
+      (correct / total).round(2)
     else
-      (incorrect / total * 100).round / 100.0
+      (incorrect / total).round(2)
     end
   end
 end
