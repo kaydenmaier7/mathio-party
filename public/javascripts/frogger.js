@@ -1,9 +1,16 @@
 $(document).ready(function(){
   froggerButtonClick()
+  modeListener()
   window.setInterval(function(){
     updateEquationText();
   }, 200);
 })
+
+var modeListener = function(){
+  $('#mode').on('change', function(){
+    selectedMode = $('#mode option:selected').text()
+  })
+}
 
 var froggerButtonClick = function(){
   $('#frogger-button').on('click', function(){
@@ -49,7 +56,6 @@ var updateEquationText = function(){
 }
 
 
-
 var cursors;
 var one;
 var two;
@@ -66,20 +72,53 @@ function problem(problem, truth){
   this.truth = truth;
 }
 
-var equations = [
+
+var equations;
+
+var additionEquations = [
 new problem('2 + 2 = 4', 'true'),
 new problem('1 + 1 = 8', 'false'),
-new problem('10 / 2 = 5', 'true'),
-new problem('12 + 4 = 18', 'false'),
-new problem('6 * 2 = 12', 'true'),
-new problem('9 + 6 = 13', 'false'),
-new problem('1 + 5 = 6', 'true'),
-new problem('3 * 4 = 16', 'false'),
-new problem('2 / 2 = 1', 'true'),
-new problem('4 + 4 = 16', 'false'),
-new problem('1 * 8 = 8', 'true'),
-new problem('128 + 1 = 128', 'false')
+new problem('4 + 6 = 10', 'true'),
+new problem('5 + 7 = 15', 'false'),
+new problem('1 + 8 = 9', 'true'),
+new problem('3 + 5 = 5', 'false'),
+new problem('9 + 12 = 21', 'true'),
+new problem('4 + 8 = 16', 'false')
 ]
+
+var subtractionEquations = [
+new problem('6 - 2 = 4', 'true'),
+new problem('8 - 1 = 8', 'false'),
+new problem('14 - 4 = 10', 'true'),
+new problem('7 - 6 = 1', 'false'),
+new problem('100 - 48 = 52', 'true'),
+new problem('17 - 8 = 11', 'false'),
+new problem('11 - 5 = 6', 'true'),
+new problem('20 - 12 = 6', 'false')
+]
+
+var multiplicationEquations = [
+new problem('2 * 2 = 4', 'true'),
+new problem('7 * 1 = 8', 'false'),
+new problem('5 * 5 = 25', 'true'),
+new problem('3 * 5 = 25', 'false'),
+new problem('12 * 3 = 36', 'true'),
+new problem('9 * 3 = 36', 'false'),
+new problem('12 * 10 = 120', 'true'),
+new problem('3 * 7 = 24', 'false')
+]
+
+var divisionEquations = [
+new problem('12 / 4 = 3', 'true'),
+new problem('8 / 1 = 1', 'false'),
+new problem('20 / 4 = 5', 'true'),
+new problem('15 / 3 = 3', 'false'),
+new problem('24 / 8 = 3', 'true'),
+new problem('40 / 8 = 6', 'false'),
+new problem('35 / 7 = 5', 'true'),
+new problem('18 / 9 = 3', 'false')
+]
+
 
 var current_equation
 
@@ -126,6 +165,7 @@ function create(){
     createCar(game.width + 300, 0, 'police1', -200)
 
     // Math problems
+    determineMode()
     current_equation = equations[Math.floor(Math.random()*(equations.length - 0))]
     questionTimer = 0;
 
@@ -143,6 +183,21 @@ function create(){
     playerOneText = game.add.text(32, 550, 'Player 1: ' + playerOneScore, { font: '20px Arial', fill: '#ffffff', align: 'left'});
     playerTwoText = game.add.text(32, 500, 'Player 2: ' + playerTwoScore, { font: '20px Arial', fill: '#ffffff', align: 'left'});
     finalScoreText = game.add.text(200, 400, '', { font: '50px Arial', fill: '#ffffff', align: 'left'});
+}
+
+function determineMode(){
+  console.log(selectedMode)
+  if (selectedMode === 'Addition'){
+    equations = additionEquations
+  } else if (selectedMode === 'Subtraction'){
+    equations = subtractionEquations
+  } else if (selectedMode === 'Multiplication'){
+    equations = multiplicationEquations
+  } else if (selectedMode === 'Division'){
+    equations = divisionEquations
+  } else {
+    equations = additionEquations.concat(subtractionEquations).concat(multiplicationEquations).concat(divisionEquations)
+  }
 }
 
 // Create Sprites
@@ -333,11 +388,11 @@ function froggerAjaxCall(){
   console.log('player 1 had ' + playerOneCorrect + ' correct answers and ' + playerOneWrong + ' incorrect answers.')
   console.log('player 2 had ' + playerTwoCorrect + ' correct answers and ' + playerTwoWrong + ' incorrect answers.')
 
-  var data = { 
-    player1correct: playerOneCorrect, 
-    player1wrong: playerOneWrong, 
-    player2correct: playerTwoCorrect, 
-    player2wrong: playerTwoWrong, 
+  var data = {
+    player1correct: playerOneCorrect,
+    player1wrong: playerOneWrong,
+    player2correct: playerTwoCorrect,
+    player2wrong: playerTwoWrong,
     game_id: 1
   }
 

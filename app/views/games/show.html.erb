@@ -9,7 +9,18 @@
 
 		<% if @game.id == 1 %>
 			<div id='equation_text_div'>Frogger</div>
-      <div id='frogger'><button id='frogger-button'>start</button></div>
+      <div id='frogger'>
+      <select id='mode'>
+        <option value="addition">Addition</option>
+        <option value="subtraction">Subtraction</option>
+        <option value="multiplication">Multiplication</option>
+        <option value="division">Division</option>
+        <option value='all'>All</option>
+      </select>
+      <br>
+
+
+      <button id='frogger-button'>start</button></div>
 
     <% elsif @game.id == 2 %>
     <div id='flappy-bird'></div>
