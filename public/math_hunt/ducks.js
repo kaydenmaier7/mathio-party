@@ -6,7 +6,17 @@ var mainState= {
     game.load.image('inner2', '/assets/duckassets/p2_inner.png');
     game.load.image('p1', '/assets/duckassets/p1crosshairs.png');
     game.load.image('p2', '/assets/duckassets/p2crosshairs.png');
-
+    //numbers
+    game.load.image('one', '/assets/duckassets/1.png')
+    game.load.image('two', '/assets/duckassets/2.png')
+    game.load.image('three', '/assets/duckassets/3.png')
+    game.load.image('four', '/assets/duckassets/4.png')
+    game.load.image('five', '/assets/duckassets/5.png')
+    game.load.image('six', '/assets/duckassets/6.png')
+    game.load.image('seven', '/assets/duckassets/7.png')
+    game.load.image('eight', '/assets/duckassets/8.png')
+    game.load.image('nine', '/assets/duckassets/9.png')
+    game.load.image('ten', '/assets/duckassets/10.png')
   },
   create: function(){
     //set stage
@@ -66,7 +76,9 @@ var mainState= {
     else if (this.p2left.isDown) { this.p2.x -= 3; }
   },
 
-  shoot:function
+  shoot:function(){
+
+  }
 
 
 
