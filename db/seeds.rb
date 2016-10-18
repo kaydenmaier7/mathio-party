@@ -52,3 +52,16 @@ possible_incorrect = [50, 20]
     })
   end
 end
+
+2.times do |num|
+  10.times do |integer|
+    SubSkill.create({
+      result_id: 1,
+      name: "Addends of #{integer}",
+      skill_name: "addition",
+      correct: possible_correct.sample,
+      incorrect: possible_incorrect.sample,
+      match_id: num + 1
+    })
+  end
+end
