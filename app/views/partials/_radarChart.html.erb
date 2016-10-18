@@ -9,15 +9,10 @@
   // Data
   var data = [
         [//history
-        {axis:"0",value:<%=User.find(1).percent('correct', '0times_table')%>},
-        {axis:"1",value:<%=User.find(1).percent('correct', '1times_table')%>},
-        {axis:"2",value:<%=User.find(1).percent('correct', '2times_table')%>},
-        {axis:"3",value:<%=User.find(1).percent('correct', '3times_table')%>},
-        {axis:"4",value:<%=User.find(1).percent('correct', '4times_table')%>},
-        {axis:"5",value:<%=User.find(1).percent('correct', '5times_table')%>},
-        {axis:"6",value:<%=User.find(1).percent('correct', '6times_table')%>},
-        {axis:"7",value:<%=User.find(1).percent('correct', '7times_table')%>},
-        {axis:"8",value:<%=User.find(1).percent('correct', '8times_table')%>},
+        <% 8.times do |num| %>
+          <% val = User.find(1).percent('correct', "#{num}times_table")%>
+          {axis:<%= num %>,value:<%= val %>},
+        <% end %>
         {axis:"9",value:<%=User.find(1).percent('correct', '9times_table')%>}
         ]
       ];

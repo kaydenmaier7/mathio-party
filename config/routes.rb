@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   post 'players' => 'players#create'
 
-  delete 'players/:id' => 'players#destroy'
+  delete 'players/logout' => 'players#destroy'
 
   devise_for :users
   get 'users' => 'users#index'
