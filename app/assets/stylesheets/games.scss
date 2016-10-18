@@ -3,11 +3,10 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .games-main {
-  min-height: 800px;
-  min-width: 10px;
+  height: 100%;
   background-image: url("http://wallpaper.zone/img/282768.jpg");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 100% 100%;
 }
 
 .game-info-container, .game-stats {

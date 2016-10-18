@@ -230,7 +230,7 @@ var mainState= {
   },
 };
 
-var game = new Phaser.Game(1000,910);
+var game = new Phaser.Game(1000,910, Phaser.AUTO, 'flappy-bird');
 
 game.state.add('main', mainState);
 

@@ -1,10 +1,18 @@
 Rails.application.routes.draw do
-  devise_for :users
-  get 'users/index'
-	get 'users/show'
+  get 'players/new' => 'players#new'
 
-  get 'games/index'
-  get 'games/show'
+  post 'players' => 'players#create'
+
+  delete 'players/logout' => 'players#destroy'
+
+  devise_for :users
+  get 'users' => 'users#index'
+	get 'users/:id' => 'users#show'
+
+  get 'games' => 'games#index'
+  get 'games/:id' => 'games#show'
+
+  post 'results' => 'results#create'
 
   root 'games#index'
 end

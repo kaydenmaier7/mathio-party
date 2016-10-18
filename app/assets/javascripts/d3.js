@@ -3,7 +3,7 @@ $(document).ready(function(){
   var width = $('.games-main').width();
   var height = $('.games-main').height();
   var buttonSize = 80;
-  var buttonY = height * 0.77;
+  var buttonY = height * 0.68;
   var games = [
       ['flappy_bird', 'http://files.gamebanana.com/img/ico/sprays/538578b593b47.gif'], 
       ['frogger', 'http://andyluvsdonna.com/wp-content/uploads/2015/02/frogger-1.png'], 
@@ -56,12 +56,13 @@ $(document).ready(function(){
       .attr('y', buttonY);
   }
 
+  // enlarge game images when the user has their mouse over them
   function magnify(){
     svg.selectAll('.game')
       .on("mouseover", function(){
         d3.select(this)
           .transition()
-          .duration(300)
+          .duration(200)
           .attr('y', buttonY - buttonSize/2)
           .attr('height', buttonSize * 1.5)
           .attr('width', buttonSize * 1.5);
@@ -69,10 +70,32 @@ $(document).ready(function(){
       .on("mouseout", function(){
         d3.select(this)
           .transition()
-          .duration(300)
+          .duration(200)
           .attr('y', buttonY)
           .attr('height', buttonSize)
           .attr('width', buttonSize);
+      });
+  };
+
+  // navigate to the game represented by the image
+    // when the user clicks on them
+  function navigate() {
+    svg.selectAll('.game')
+      .on("click", function(){
+        if ($(this).hasClass("frogger")) {
+          var gameUrl = '/games/1'
+        } else if ($(this).hasClass("flappy_bird")) {
+          var gameUrl = 'games/2'
+        }
+        // add in more conditionals for future games
+        $.ajax({
+          method: "get",
+          url: gameUrl
+        })
+          .done(function(data){
+            // This is just replacing the body content, not really redirecting
+            $("body").empty().append(data);
+          });
       });
   };
 
@@ -80,6 +103,6 @@ $(document).ready(function(){
   moveImageRight()
   setTimeout(moveImageDown, 1500);
   setTimeout(magnify, 2000);
-
+  navigate();
 
 });

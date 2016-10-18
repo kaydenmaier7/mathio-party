@@ -3,15 +3,16 @@
 </div>
 <div class="game-stats display"></div>
 
-    <script type="text/javascript" src="/flappy_math/main.js"></script>
 
-<!--
+    <h1>Welcome to <%= @game.name %></h1>
+    <p><%= @game.directions %></p>
 
-source code for multiplayer frogger game
+		<% if @game.id == 1 %>
+			<div id='equation_text_div'>Frogger</div>
+      <div id='frogger'><button id='frogger-button'>start</button></div>
 
-<div id='equation_text_div'></div>
+    <% elsif @game.id == 2 %>
+    <div id='flappy-bird'></div>
 
-<script type='text/javascript' src='/javascripts/frogger.js'></script>
-
-
- -->
+		<% end %>
+    <script type="text/javascript" src="<%= @game.src %>"></script>
