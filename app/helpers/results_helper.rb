@@ -20,6 +20,7 @@ module ResultsHelper
 
     result = Result.create(match_id: match_id, user_id: user_id)
 
+          if equations
             equations.each do |p|
             p = p.split(' ')
 
@@ -46,7 +47,8 @@ module ResultsHelper
                 end
 
             end
-
+        end
+        if wrongEquations
             wrongEquations.each do |p|
             p = p.split(' ')
 
@@ -73,6 +75,7 @@ module ResultsHelper
                 end
 
             end
+        end
     # end of create_results method
     end
 
