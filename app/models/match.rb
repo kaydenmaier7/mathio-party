@@ -1,4 +1,4 @@
 class Match < ApplicationRecord
+  has_many 	 :results
   belongs_to :game
-  belongs_to :skill
 end
