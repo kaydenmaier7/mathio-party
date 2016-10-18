@@ -156,10 +156,10 @@ function create(){
     createPlayer(200, 200, 2);
 
     // Keyboard
-    one = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
-    two = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
-    three = game.input.keyboard.addKey(Phaser.Keyboard.THREE);
-    four = game.input.keyboard.addKey(Phaser.Keyboard.FOUR);
+    one = game.input.keyboard.addKey(Phaser.Keyboard.A);
+    two = game.input.keyboard.addKey(Phaser.Keyboard.S);
+    three = game.input.keyboard.addKey(Phaser.Keyboard.W);
+    four = game.input.keyboard.addKey(Phaser.Keyboard.D);
     cursors = game.input.keyboard.createCursorKeys();
 
     // Cars
@@ -405,4 +405,17 @@ function froggerAjaxCall(){
     type: 'post',
     data: data
   })
+
+  request.done(function(response){
+    console.log(response)
+    console.log('success')
+    $('#equation_text_div').html('').append($('#hidden_match_button').slideToggle(1000))
+  })
+
+  request.fail(function(response){
+    console.log(response)
+    console.log('failed')
+  })
+
+
 }
