@@ -13,7 +13,7 @@ var mainState= {
     this.p2score = 0;
 
     this.player1score = game.add.text(20,20,"Player 1: "+this.p1score, { font: '30px Arial', fill: '#ff5733' });
-    this.player2score = game.add.text(20,60,"Player 2: "+this.p2score, { font: '30px Arial', fill: '#4933ff' });
+    this.player2score = game.add.text(20,100,"Player 2: "+this.p2score, { font: '30px Arial', fill: '#4933ff' });
 
     this.pipes = game.add.group();
     this.correct = game.add.group();
@@ -54,13 +54,12 @@ var mainState= {
     }
 
     if (this.bird.y < 0 || this.bird.y > 910){
-      this.bird.alive = false;
+      // this.bird.alive = false;
       this.takeDamage(1)
     }
     if (this.blueBird.y < 0 || this.blueBird.y > 910){
-      this.blueBird.alive = false;
+      // this.blueBird.alive = false;
       this.takeDamage(2);
-      console.log("blueBird dead")
     }
     //score on correct answer
 
@@ -74,7 +73,7 @@ var mainState= {
       if (this.bird.alive === false){
         return;
       }
-      this.bird.alive = false;
+      // this.bird.alive = false;
       this.takeDamage(1);
   },
 
@@ -82,12 +81,12 @@ var mainState= {
       if (this.blueBird.alive === false){
         return;
       }
-      this.blueBird.alive = false;
+      // this.blueBird.alive = false;
       this.takeDamage(2);
   },
 
   takeDamage: function(player){
-    if (player === 1 ){
+    if (player === 1 && this.bird.alive){
       that = this;
       this.bird.alpha = 0.5;
       this.bird.alive = false;
@@ -97,19 +96,21 @@ var mainState= {
         that.bird.body.velocity.y = -350;
         that.bird.alive = true;
         that.bird.alpha = 1;
-    }, 2000);
-    } else if (player === 2){
+      }, 2000);
+
+    } else if (player === 2 && this.blueBird.alive){
       that = this;
       this.blueBird.alpha = 0.5;
+
       this.blueBird.alive = false;
 
       setTimeout(function(){
-        console.log("bluebird alive)")
         that.blueBird.y = 500;
         that.blueBird.body.velocity.y = -350;
         that.blueBird.alive = true;
         that.blueBird.alpha = 1;
-    }, 2000);
+      }, 2000);
+
     }
   },
 
@@ -128,7 +129,6 @@ var mainState= {
     if (this.blueBird.alive === false){
       return;
     }
-    console.log("blueBird jumping");
     var bbanimation = game.add.tween(this.blueBird);
     bbanimation.to({angle: -20}, 100);
     bbanimation.start();
@@ -153,55 +153,47 @@ var mainState= {
     if ( this.bird.canScore ){
       this.bird.canScore = false;
       this.p1score  += 1;
-      this.player1score.text = "player 1: "+this.p1score;
+      this.player1score.text = "Player 1: "+this.p1score;
       that = this;
       setTimeout(function(){that.bird.canScore=true}, 1000);
     }
   },
 
   p2Score: function(){
-    console.log(this.blueBird.canScore);
     if ( this.blueBird.canScore ){
       this.blueBird.canScore = false;
       this.p2score  += 1;
-      this.player2score.text = "player 2: "+this.p2score;
+      this.player2score.text = "Player 2: "+this.p2score;
       that = this;
       setTimeout(function(){that.blueBird.canScore=true}, 1000);
     }
   },
 
-  spawnQuestion: function (x,y){
-    var problem = game.add.text(x,y, "", { font: '30px Arial', fill: '#ffffff#' });
-    game.physics.arcade.enable(problem);
-    problem.body.velocity.x = -200;
-    param1 = Math.floor(Math.random()*15);
-    param2 = Math.floor(Math.random()*15);
+  spawnQuestion1: function (skill){
+    var problem = game.add.text(20,60, "", { font: '30px Arial', fill: '#ffffff#' });
+
+    param1 = Math.floor(Math.random()*10);
+    param2 = Math.floor(Math.random()*10);
+
     problem.text = param1.toString() + " + " + param2.toString()
+
+    that = this;
+    setTimeout(function(){problem.kill()}, 4000);
     return (param1 + param2);
   },
 
-  addOnePipe: function (x,y){
-      var pipe = game.add.sprite(x,y, 'pipe');
+  spawnQuestion2: function (skill){
+    var problem = game.add.text(20,130, "", { font: '30px Arial', fill: '#ffffff#' });
 
-      this.pipes.add(pipe);
+    param1 = Math.floor(Math.random()*10);
+    param2 = param1 + Math.floor(Math.random()*10);
 
-      game.physics.arcade.enable(pipe);
+    problem.text = param2.toString() + " - " + param1.toString()
 
-      pipe.body.velocity.x = -200
-
-      pipe.checkWorldsBounds = true;
-      pipe.outOfBoundsKill = true;
-    },
-
-  // addCircle: function (x,y){
-  //     var circle = game.add.sprite(x,y, 'circle');
-
-  //     game.physics.arcade.enable(circle);
-  //     circle.body.velocity.x = -200
-  //     circle.checkWorldsBounds = true;
-  //     circle.outOfBoundsKill = true;
-  //   },
-
+    that = this;
+    setTimeout(function(){problem.kill()}, 4000);
+    return (param2 - param1);
+  },
   addOnePipe: function (x,y){
       var pipe = game.add.sprite(x,y, 'pipe');
 
@@ -238,17 +230,39 @@ var mainState= {
   },
 
   addRowOfPipes: function() {
+    a1 = this.spawnQuestion1();
+    a2 = this.spawnQuestion2();
+
     var config = this.currentConfig();
+
+    var count = 0;
+    for(var i = 0; i < config.length; ++i){
+      if(config[i] == 2) count++;
+    }
+    var loc1 =  Math.floor(Math.random()*count)
+    var loc2 =  Math.floor(Math.random()*count)
+
+    var answers = []
+
+    for (var i=0 ; i < count ; ++i){
+      if (i === loc1){
+        answers.push(a1)
+      } else if (i === loc2){
+        answers.push(a2)
+      } else {
+        answers.push(2)
+      }
+    }
 
     for (var i=0 ; i<config.length ; i++){
       if (config[i] === 1){
         this.addOnePipe(1000, i * 60 + 10);
       }
       else if(config[i] === 2){
-        this.spawnAnswer(1005, i*60+15, "10", true);
+        this.spawnAnswer(1005, i*60+15, answers.pop(), true);
       }
     }
-  },
+  }
 };
 
 var game = new Phaser.Game(1000,910, Phaser.AUTO, 'flappy-bird');
