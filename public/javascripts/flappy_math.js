@@ -1,11 +1,10 @@
 var mainState= {
   preload: function(){
-    game.load.audio('jump', '/assets/flappy_math/jump.wav');
-    game.load.image('bird', '/assets/flappy_math/bird.png');
-    game.load.image('blueBird', '/assets/flappy_math/blueBird.png');
-    game.load.image('pipe', '/assets/flappy_math/pipe.png');
-    game.load.image('circle', '/assets/flappy_math/circle.png');
-    game.load.image('cloud', '/assets/flappy_math/cloud.png');
+    game.load.audio('jump', '/sounds/flappy_math/jump.wav');
+    game.load.image('bird', '/images/flappy_math/bird.png');
+    game.load.image('blueBird', '/images/flappy_math/blueBird.png');
+    game.load.image('pipe', '/images/flappy_math/pipe.png');
+    game.load.image('cloud', '/images/flappy_math/cloud.png');
   },
   create: function(){
     this.jumpSound = game.add.audio('jump');
