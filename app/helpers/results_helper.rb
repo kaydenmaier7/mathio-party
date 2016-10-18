@@ -10,7 +10,7 @@ module ResultsHelper
     if player2_id
       create_results(params, player2_id, match.id, 'player2')
     end
-
+    return match.id
   end
 
 

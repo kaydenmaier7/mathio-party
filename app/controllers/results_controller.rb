@@ -4,11 +4,8 @@ class ResultsController < ApplicationController
 
   def create
     if request.xhr?
-
       create_match(params)
-
     end
-
   end
 
 
