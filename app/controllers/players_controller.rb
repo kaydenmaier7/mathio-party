@@ -14,6 +14,8 @@ class PlayersController < ApplicationController
   end
 
   def destroy
+  	session[:player2] = nil
+  	redirect_to root_path
   end
 
   private
