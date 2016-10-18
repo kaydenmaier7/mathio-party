@@ -9,6 +9,10 @@ $(document).ready(function(){
 var modeListener = function(){
   $('#mode').on('change', function(){
     selectedMode = $('#mode option:selected').text()
+    $('#mode :first-child').attr('disabled', 'disabled')
+    if (! $('#frogger-button').is(':visible')){
+      $('#frogger-button').slideToggle(1000)
+    }
   })
 }
 
@@ -124,10 +128,10 @@ var current_equation
 
 var playerOneScore = 0;
 var playerTwoScore = 0;
-var playerOneCorrect = 0;
-var playerOneWrong = 0;
-var playerTwoCorrect = 0;
-var playerTwoWrong = 0;
+var playerOneCorrect = [];
+var playerOneWrong = [];
+var playerTwoCorrect = [];
+var playerTwoWrong = [];
 
 function preload() {
   game.load.image('tux', '/assets/frog.png');
@@ -332,27 +336,26 @@ function playerBugCollisionHandler(player, bug){
             createCar(1000, 225, 'hummer1', 200);
            }
         playerOneText.text = 'Player 1: ' + playerOneScore
-        playerOneCorrect += 1
+        playerOneCorrect.push(current_equation.problem)
       } else if (player.player_id === 2) {
         playerTwoScore += 1;
         playerTwoText.text = 'Player 2: ' + playerTwoScore
-        playerTwoCorrect += 1
+        playerTwoCorrect.push(current_equation.problem)
       }
   } else {
     if (player.player_id === 1){
         playerTwoScore += 1;
         playerTwoText.text = 'Player 2: ' + playerTwoScore;
-        playerOneWrong += 1
+        playerOneWrong.push(current_equation.problem)
     } else if (player.player_id === 2){
         playerOneScore += 1;
         playerOneText.text = 'Player 1: ' + playerOneScore;
-        playerTwoWrong += 1
+        playerTwoWrong.push(current_equation.problem)
     }
     player.x = 0
     player.y = 0
   }
   current_equation = equations[Math.floor(Math.random()*(equations.length - 0))]
-  // MathQuestionText.text = current_equation.problem
   questionTimer = 0
 }
 
