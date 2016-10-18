@@ -54,39 +54,62 @@ var mainState= {
     }
 
     if (this.bird.y < 0 || this.bird.y > 910){
+      this.bird.alive = false;
       this.takeDamage(1)
     }
     if (this.blueBird.y < 0 || this.blueBird.y > 910){
+      this.blueBird.alive = false;
       this.takeDamage(2);
+      console.log("blueBird dead")
     }
-
     //score on correct answer
-    game.physics.arcade.overlap(this.bird, this.correct, this.p1Score, null,this);
-    game.physics.arcade.overlap(this.blueBird, this.correct, this.p2Score, null, this);
 
-    // game.physics.arcade.overlap(this.bird, this.pipes, this.hitPipe, null, this);
-    // game.physics.arcade.overlap(this.blueBird, this.pipes, this.hitPipe, null, this);
+      game.physics.arcade.overlap(this.bird, this.correct, this.p1Score, null,this);
+      game.physics.arcade.overlap(this.bird, this.pipes, this.hitPipe1, null, this);
 
+      game.physics.arcade.overlap(this.blueBird, this.correct, this.p2Score, null, this);
+      game.physics.arcade.overlap(this.blueBird, this.pipes, this.hitPipe2, null, this);
   },
-  hitPipe: function(){
-    if (this.bird.alive == false){
-      return;
-    }
-    this.bird.alive = false;
+  hitPipe1: function(){
+      if (this.bird.alive === false){
+        return;
+      }
+      this.bird.alive = false;
+      this.takeDamage(1);
+  },
+
+  hitPipe2: function(){
+      if (this.blueBird.alive === false){
+        return;
+      }
+      this.blueBird.alive = false;
+      this.takeDamage(2);
   },
 
   takeDamage: function(player){
     if (player === 1 ){
+      that = this;
       this.bird.alpha = 0.5;
-      this.bird.y = 500;
-      this.bird.body.velocity.y = -350;
-      setTimeout(function(){
+      this.bird.alive = false;
 
-    }, 250);
+      setTimeout(function(){
+        that.bird.y = 500;
+        that.bird.body.velocity.y = -350;
+        that.bird.alive = true;
+        that.bird.alpha = 1;
+    }, 2000);
     } else if (player === 2){
+      that = this;
       this.blueBird.alpha = 0.5;
-      this.blueBird.y = 500;
-      this.blueBird.body.velocity.y = -350;
+      this.blueBird.alive = false;
+
+      setTimeout(function(){
+        console.log("bluebird alive)")
+        that.blueBird.y = 500;
+        that.blueBird.body.velocity.y = -350;
+        that.blueBird.alive = true;
+        that.blueBird.alpha = 1;
+    }, 2000);
     }
   },
 
@@ -102,6 +125,10 @@ var mainState= {
   },
 
   leap: function(){
+    if (this.blueBird.alive === false){
+      return;
+    }
+    console.log("blueBird jumping");
     var bbanimation = game.add.tween(this.blueBird);
     bbanimation.to({angle: -20}, 100);
     bbanimation.start();
@@ -127,7 +154,8 @@ var mainState= {
       this.bird.canScore = false;
       this.p1score  += 1;
       this.player1score.text = "player 1: "+this.p1score;
-      setTimeout(function(){restore1Score()}, 1000);
+      that = this;
+      setTimeout(function(){that.bird.canScore=true}, 1000);
     }
   },
 
@@ -137,16 +165,9 @@ var mainState= {
       this.blueBird.canScore = false;
       this.p2score  += 1;
       this.player2score.text = "player 2: "+this.p2score;
-      setTimeout(function(){restore2Score()}, 1000);
+      that = this;
+      setTimeout(function(){that.blueBird.canScore=true}, 1000);
     }
-  },
-
-  restore1Score: function(){
-    this.bird.canScore1=true;
-  },
-
-  restore2Score: function(){
-    this.blueBird.canScore2=true;
   },
 
   spawnQuestion: function (x,y){
@@ -172,14 +193,14 @@ var mainState= {
       pipe.outOfBoundsKill = true;
     },
 
-  addCircle: function (x,y){
-      var circle = game.add.sprite(x,y, 'circle');
+  // addCircle: function (x,y){
+  //     var circle = game.add.sprite(x,y, 'circle');
 
-      game.physics.arcade.enable(circle);
-      circle.body.velocity.x = -200
-      circle.checkWorldsBounds = true;
-      circle.outOfBoundsKill = true;
-    },
+  //     game.physics.arcade.enable(circle);
+  //     circle.body.velocity.x = -200
+  //     circle.checkWorldsBounds = true;
+  //     circle.outOfBoundsKill = true;
+  //   },
 
   addOnePipe: function (x,y){
       var pipe = game.add.sprite(x,y, 'pipe');
