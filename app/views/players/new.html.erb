@@ -1,6 +1,16 @@
 <h1>Welcome Player 2! Login here...</h1>
 
 <%= form_for :player, url: players_path do |f| %>
+	<% if @errors %>
+		<ul>
+			<% @errors.each do |error| %>
+				<li>
+					<%= error %>
+				</li>
+				<% end %>
+		</ul>
+	<% end %>
+
 	<p>
 		<%= f.label :Email %><br>
 		<%= f.text_field :email %>
