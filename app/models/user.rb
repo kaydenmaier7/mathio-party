@@ -4,7 +4,9 @@ class User < ApplicationRecord
   devise 	 :database_authenticatable, :registerable,
          	 :recoverable, :rememberable, :trackable, :validatable
   has_many :results
-  has_many :games, through: :results
+  has_many :matches, through: :results
+  has_many :games, through: :matches
+  has_many :sub_skills, through: :results 
 
   def percent(result, skill)
     results = self.results.where(skill: skill)

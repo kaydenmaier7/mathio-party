@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161016011428) do
+ActiveRecord::Schema.define(version: 20161018020256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,16 +24,32 @@ ActiveRecord::Schema.define(version: 20161016011428) do
     t.datetime "updated_at",  null: false
   end
 
-  create_table "results", force: :cascade do |t|
-    t.string   "skill"
-    t.integer  "correct"
-    t.integer  "incorrect"
-    t.integer  "user_id"
+  create_table "matches", force: :cascade do |t|
     t.integer  "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["game_id"], name: "index_results_on_game_id", using: :btree
+    t.index ["game_id"], name: "index_matches_on_game_id", using: :btree
+  end
+
+  create_table "results", force: :cascade do |t|
+    t.integer  "score"
+    t.integer  "user_id"
+    t.integer  "match_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_results_on_match_id", using: :btree
     t.index ["user_id"], name: "index_results_on_user_id", using: :btree
+  end
+
+  create_table "sub_skills", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "correct"
+    t.integer  "incorrect"
+    t.string   "skill_name"
+    t.integer  "result_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["result_id"], name: "index_sub_skills_on_result_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -55,4 +71,6 @@ ActiveRecord::Schema.define(version: 20161016011428) do
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 
+  add_foreign_key "matches", "games"
+  add_foreign_key "sub_skills", "results"
 end
