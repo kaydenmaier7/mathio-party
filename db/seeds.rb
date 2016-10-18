@@ -12,10 +12,10 @@ game1 = {
 }
 
 game2 = {
-  name: 'Other Game',
+  name: 'flappy_math',
   src: '/flappy_math/main.js',
   description: 'A second game!',
-  directions: 'Like the other game but completely different'
+  directions: 'fly through the answer!'
 }
 
 
@@ -23,26 +23,25 @@ User.create(user1)
 Game.create(game1)
 Game.create(game2)
 
-10.times do |num|
-  10.times do
-    Result.create({skill: "#{num}times_table",
-        correct: rand(2..30),
-        incorrect: rand(2..30),
-        user_id: 1,
-        game_id: 1
-     })
+Match.create({game_id: 1})
+
+# create results for 2 matches
+2.times do |num|
+  Result.create({
+    user_id: 1,
+    match_id: num,
+    score: 5
+  })
+
+  # create sub_skills
+  10.times do |integer|
+    SubSkill.create({
+      result_id: num + 1,
+      name: "#{integer} times tables",
+      skill_name: "multiplication",
+      correct: integer * 10,
+      incorrect: 10
+    })
   end
 end
-
-10.times do |num|
-  10.times do
-    Result.create({skill: "#{num}times_table",
-        correct: rand(2..30),
-        incorrect: rand(2..30),
-        user_id: 2,
-        game_id: 1
-     })
-  end
-end
-
 
