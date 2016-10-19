@@ -71,56 +71,184 @@ var hummerSpawned = false
 var hornNotPlaying = true
 var hornTimer = 0
 
-function problem(problem, truth){
-  this.problem = problem;
-  this.truth = truth;
-}
+// function problem(problem, truth){
+//   this.problem = problem;
+//   this.truth = truth;
+// }
 
 
 var equations;
 
+var randEquation = function(type, truth){
+
+  var x = Math.floor(Math.random()*15);
+  var y = Math.floor(Math.random()*10);
+  var operation;
+  var answer;
+  var equation;
+
+  if (type === 'addition'){
+    operation = '+';
+  } else if (type === 'subtraction'){
+    operation = '-';
+  } else if (type === 'multiplication'){
+    operation = '*';
+  } else if (type === 'division'){
+    operation = '/';
+  } else {
+    var operations = ['+', '*', '-', '/'];
+    operation = operations[Math.floor(Math.random()*(operations.length - 0))];
+  }
+
+  if (operation === '+'){
+    answer = x + y;
+  } else if (operation === '/'){
+    x += 1;
+    y += 1;
+    var z = x*y;
+    answer = y;
+
+    if (truth === true){
+      equation = z.toString() + ' ' + operation + ' ' + x.toString() + ' = ' + answer;
+      return equation;
+    } else {
+      answer += Math.floor(Math.random()*5 + 1);
+      equation = z.toString() + ' ' + operation + ' ' + x.toString() + ' = ' + answer;
+    return equation;
+    }
+
+  } else if (operation === '-'){
+    answer = x - y;
+  } else {
+    answer = x * y;
+  }
+  if (truth === true){
+    equation = x.toString() + ' ' + operation + ' ' + y.toString() + ' = ' + answer;
+      return equation;
+  } else {
+    answer += Math.floor(Math.random()*6 + 1);
+    equation = x.toString() + ' ' + operation + ' ' + y.toString() + ' = ' + answer;
+      return equation;
+  }
+
+};
+
+
+function problem(type, truth){
+  this.type = type;
+  this.truth = truth === true ? true : false;
+  this.problem = randEquation(this.type, this.truth);
+}
+
 var additionEquations = [
-new problem('2 + 2 = 4', 'true'),
-new problem('1 + 1 = 8', 'false'),
-new problem('4 + 6 = 10', 'true'),
-new problem('5 + 7 = 15', 'false'),
-new problem('1 + 8 = 9', 'true'),
-new problem('3 + 5 = 5', 'false'),
-new problem('9 + 12 = 21', 'true'),
-new problem('4 + 8 = 16', 'false')
+new problem('addition', true),
+new problem('addition', true),
+new problem('addition', true),
+new problem('addition', true),
+new problem('addition', true),
+new problem('addition', true),
+new problem('addition', true),
+new problem('addition', true),
+new problem('addition', true),
+new problem('addition', true),
+new problem('addition', true),
+new problem('addition', true),
+new problem('addition', true),
+new problem('addition', true),
+new problem('addition', true),
+new problem('addition', true),
+new problem('addition', false),
+new problem('addition', false),
+new problem('addition', false),
+new problem('addition', false),
+new problem('addition', false),
+new problem('addition', false),
+new problem('addition', false),
+new problem('addition', false),
+new problem('addition', false),
+new problem('addition', false),
+new problem('addition', false)
 ]
 
 var subtractionEquations = [
-new problem('6 - 2 = 4', 'true'),
-new problem('8 - 1 = 8', 'false'),
-new problem('14 - 4 = 10', 'true'),
-new problem('7 - 6 = 6', 'false'),
-new problem('100 - 48 = 52', 'true'),
-new problem('17 - 8 = 11', 'false'),
-new problem('11 - 5 = 6', 'true'),
-new problem('20 - 12 = 6', 'false')
+new problem('subtraction', true),
+new problem('subtraction', true),
+new problem('subtraction', true),
+new problem('subtraction', true),
+new problem('subtraction', true),
+new problem('subtraction', true),
+new problem('subtraction', true),
+new problem('subtraction', true),
+new problem('subtraction', true),
+new problem('subtraction', true),
+new problem('subtraction', true),
+new problem('subtraction', true),
+new problem('subtraction', true),
+new problem('subtraction', true),
+new problem('subtraction', true),
+new problem('subtraction', true),
+new problem('subtraction', false),
+new problem('subtraction', false),
+new problem('subtraction', false),
+new problem('subtraction', false),
+new problem('subtraction', false),
+new problem('subtraction', false),
+new problem('subtraction', false),
+new problem('subtraction', false),
+new problem('subtraction', false),
+new problem('subtraction', false),
+new problem('subtraction', false)
 ]
 
 var multiplicationEquations = [
-new problem('2 * 2 = 4', 'true'),
-new problem('7 * 1 = 8', 'false'),
-new problem('5 * 5 = 25', 'true'),
-new problem('3 * 5 = 25', 'false'),
-new problem('12 * 3 = 36', 'true'),
-new problem('9 * 3 = 36', 'false'),
-new problem('12 * 10 = 120', 'true'),
-new problem('3 * 7 = 24', 'false')
+new problem('multiplication', true),
+new problem('multiplication', true),
+new problem('multiplication', true),
+new problem('multiplication', true),
+new problem('multiplication', true),
+new problem('multiplication', true),
+new problem('multiplication', true),
+new problem('multiplication', true),
+new problem('multiplication', true),
+new problem('multiplication', true),
+new problem('multiplication', true),
+new problem('multiplication', true),
+new problem('multiplication', true),
+new problem('multiplication', true),
+new problem('multiplication', true),
+new problem('multiplication', true),
+new problem('multiplication', false),
+new problem('multiplication', false),
+new problem('multiplication', false),
+new problem('multiplication', false),
+new problem('multiplication', false),
+new problem('multiplication', false),
+new problem('multiplication', false),
+new problem('multiplication', false)
 ]
 
 var divisionEquations = [
-new problem('12 / 4 = 3', 'true'),
-new problem('8 / 1 = 1', 'false'),
-new problem('20 / 4 = 5', 'true'),
-new problem('15 / 3 = 3', 'false'),
-new problem('24 / 8 = 3', 'true'),
-new problem('40 / 8 = 6', 'false'),
-new problem('35 / 7 = 5', 'true'),
-new problem('18 / 9 = 3', 'false')
+new problem('division', true),
+new problem('division', true),
+new problem('division', true),
+new problem('division', true),
+new problem('division', true),
+new problem('division', true),
+new problem('division', true),
+new problem('division', true),
+new problem('division', true),
+new problem('division', true),
+new problem('division', true),
+new problem('division', true),
+new problem('division', true),
+new problem('division', false),
+new problem('division', false),
+new problem('division', false),
+new problem('division', false),
+new problem('division', false),
+new problem('division', false),
+new problem('division', false),
+new problem('division', false)
 ]
 
 
@@ -332,7 +460,7 @@ function playerBugCollisionHandler(player, bug){
 
   createBug(Math.random()*(game.width - 20), Math.random()*(game.height - 20))
 
-  if (current_equation.truth === 'true'){
+  if (current_equation.truth === true){
     croakSound.play();
       if (player.player_id === 1){
         playerOneScore += 1;
@@ -413,13 +541,11 @@ function froggerAjaxCall(){
   })
 
   request.done(function(response){
-    console.log(response)
     console.log('success')
     $('#equation_text_div').html('').append($('#hidden_match_button').slideToggle(1000))
   })
 
   request.fail(function(response){
-    console.log(response)
     console.log('failed')
   })
 
