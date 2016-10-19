@@ -231,7 +231,6 @@ var mainState= {
 
       game.physics.arcade.enable(pipe);
 
-      pipe.body.velocity.x = -200
 
       pipe.checkWorldsBounds = true;
       pipe.outOfBoundsKill = true;
