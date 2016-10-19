@@ -5,6 +5,7 @@ function Duck() {
   this.xMove = 0;
   this.yMove = 0;
   this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, 'ten');
+  this.area = this.sprite.getBounds();
   this.sprite.anchor.setTo( 0.5, 0.5 );
   this.init = function(){
     game.physics.arcade.enable(this);
@@ -30,7 +31,9 @@ function Duck() {
   };
   this.move = function(){
     this.sprite.x += this.xMove;
+    this.area.x = this.sprite.x;
     this.sprite.y -= this.yMove;
+    this.area.y = this.sprite.y;
   }.bind(this);
 };
 
@@ -82,7 +85,7 @@ var mainState= {
     this.fall = game.add.audio('fall');
 
     //set up ducks
-    this.ducks = game.add.group();
+    this.ducks = [];
 
     //set players
     this.p1 = game.add.sprite( 250, 250, 'p1');
@@ -113,6 +116,7 @@ var mainState= {
     this.p2left  = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     this.p2shoot = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
 
+    var print = true;
     //initialize bullets
     this.reload();
 
@@ -124,12 +128,28 @@ var mainState= {
     this.centerTarget();
     this.move();
     this.shoot();
+
+    if(this.p1shoot.isDown){ this.checkOverlap(this.inner1, this.ducks[0])}
+    // if (this.ducks.length >0) {
+    //   console.log(this.inner1.getBounds().x - this.ducks[0].area.x);
+    //   if (this.checkOverlap(this.inner1, this.ducks[0])){
+    //       console.log('duck1');
+    //     } else if (this.checkOverlap(this.inner1, this.ducks[1])){
+    //       console.log('duck2')
+    //     } else if (this.checkOverlap(this.inner1, this.ducks[1])){
+    //       console.log('duck3')
+    //     }
+    //   }
   },
 
-  checkOverlap: function(spriteA, spriteB) {
+  checkOverlap: function(spriteA, duck) {
     var boundsA = spriteA.getBounds();
-    var boundsB = spriteB.getBounds();
-    return Phaser.Rectangle.intersects(boundsA, boundsB);
+    var boundsB = duck.area;
+    console.log(boundsA);
+    console.log(boundsB);
+
+    if(Phaser.Rectangle.intersects(boundsA, boundsB)){console.log("overlap!")};
+    // return Phaser.Rectangle.intersects(boundsA, boundsB);
   },
 
   reload: function(){
@@ -146,7 +166,6 @@ var mainState= {
   },
 
   fireBullets: function(player){
-    // console.log(this.duck1.getBounds());
     if ( player === 1 ){
       if(this.p1bullets.length === 3){
         this.p1b3.destroy();
@@ -208,9 +227,13 @@ var mainState= {
       game.physics.arcade.enable(this.shot1);
       setTimeout(function(){that.shot1.kill()},100);
       this.shotSound.play();
-      if (this.checkOverlap(this.inner1, this.duck.sprite)){this.hitBird1(this.duck2)}
-      if (this.checkOverlap(this.inner1, this.duck2.sprite)){this.hitBird1(this.duck2)}
-      if (this.checkOverlap(this.inner1, this.duck2.sprite)){this.hitBird1(this.duck2)}
+
+      if (this.checkOverlap(this.inner1, this.ducks[0])){
+        this.hitBird1(this.ducks[0])
+      } else if (this.checkOverlap(this.inner1, this.ducks[1])){
+        this.hitBird1(this.ducks[1])
+      } else if (this.checkOverlap(this.inner1, this.ducks[1])){
+        this.hitBird1(this.ducks[2])}
     }
     if (this.p2shoot.isDown && this.p2.canShoot && this.fireBullets(2)){
       this.p2.canShoot = false;
@@ -226,7 +249,6 @@ var mainState= {
   },
 
   hitBird1: function(duck){
-    console.log(duck);
     xCord = this.inner1.x;
     yCord = this.inner1.y;
     var dedDuck = game.add.sprite(xCord, yCord, 'dedDuck');
@@ -274,15 +296,16 @@ var mainState= {
   spawnDucks: function(){
     this.quacks.play()
     var that = this
-    for(var i=0 ; i<3 ; i++){
-      setTimeout(function(){that.oneDuck(i)},2000);
-    }
+    // for(var i=0 ; i<3 ; i++){
+      setTimeout(function(){that.oneDuck()},2000);
+    // }
   },
 
   oneDuck: function(count){
     // if (count === 0) {
       this.duck = new Duck();
       this.duck.init();
+      this.ducks.push(this.duck);
       game.time.events.loop(1, this.duck.move, this);
     // }
     // else if (count === 1) {
