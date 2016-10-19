@@ -35,6 +35,10 @@ body {
   padding-bottom: 1em;
 }
 
+.login {
+  font-size: medium;
+}
+
 .title {
   margin: 0;
 }
