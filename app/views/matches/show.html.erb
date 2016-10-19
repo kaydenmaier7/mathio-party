@@ -3,14 +3,16 @@
 
 <% @match.results.each do |result| %>
 
-  <table class='frogger-results-table'>
+
+<div class='frogger-user-results-div'>
+
+<h1><%= result.user.username %></h1>
+  <table class='frogger-results-table correct-answers'>
+
       <tr>
-      <th><%= result.user.username %></th>
+        <th colspan='3'>Correct answers</th>
       </tr>
-      <tr>
-        <th>Correct answers:</th>
-      </tr>
-      <tr>
+      <tr class='skill-header'>
       <td>Skill Type</td><td>Sub Skill</td><td>Count</td>
       </tr>
       <% vals = {} %>
@@ -19,7 +21,7 @@
             <% vals[[skill.name, skill.skill_name]] ? vals[[skill.name, skill.skill_name]] += 1 : vals[[skill.name, skill.skill_name]] = 1 %>
         <% end %>
       <% end %>
-
+      <% vals = vals.sort_by { |k, v| } %>
       <% vals.each do |skill, count| %>
         <tr>
           <td><%= skill[1] %></td><td><%= skill[0] %></td><td><%= count %></td>
@@ -27,15 +29,13 @@
       <% end %>
   </table>
 
-<br>
-       <table class='frogger-results-table'>
+
+       <table class='frogger-results-table incorrect-answers'>
+
       <tr>
-      <th><%= result.user.username %></th>
+        <th colspan='3'>Incorrect answers</th>
       </tr>
-      <tr>
-        <th>Incorrect answers:</th>
-      </tr>
-      <tr>
+      <tr class='skill-header'>
       <td>Skill Type</td><td>Sub Skill</td><td>Count</td>
       </tr>
       <% vals = {} %>
@@ -45,16 +45,16 @@
         <% end %>
       <% end %>
 
+      <% vals = vals.sort_by { |k, v| } %>
       <% vals.each do |skill, count| %>
         <tr>
           <td><%= skill[1] %></td><td><%= skill[0] %></td><td><%= count %></td>
         </tr>
       <% end %>
   </table>
-  <br>
 
 
-
+</div>
 
 <% end %>
 

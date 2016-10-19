@@ -2,6 +2,52 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
+
+.correct-answers {
+  color: green;
+}
+
+.incorrect-answers {
+  color: red;
+}
+
 .frogger-results-table {
+
+  margin: 10px auto;
+  border: 1px solid green;
+  background: white;
+  padding: 10px 20px;
+  text-align: center;
+  width: 75%;
+
+  th {
+    color: black;
+    font-size: 2.5em;
+  }
+
+  td {
+    width: 25%;
+    font-size: 2em;
+    padding: 2px;
+  }
+
+  .skill-header {
+    color: black;
+    text-decoration: underline;
+  }
+
+}
+
+.frogger-user-results-div {
+  text-align: center;
+  border: 1px solid red;
+  width: 75%;
+  margin: auto;
+}
+
+.frogger-results-table:hover {
+  box-shadow: 2px 2px 2px black;
+
 
 }

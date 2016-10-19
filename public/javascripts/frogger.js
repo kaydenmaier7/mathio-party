@@ -367,7 +367,7 @@ function go_fullscreen(){
 // End game
 function gameOver(){
   if (!gameIsOver){
-    if (playerOneScore >= 5 || playerTwoScore >= 5){
+    if (playerOneScore >= 10 || playerTwoScore >= 10){
       gameIsOver = true;
       players.forEach(function(p){
         p.kill();

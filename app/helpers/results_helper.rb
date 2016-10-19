@@ -15,8 +15,8 @@ module ResultsHelper
 
 
   def create_results(params, user_id, match_id, player_id)
-    player_id = 'player1' ? equations = params[:player1correct] : equations = params[:player2correct]
-    player_id = 'player1' ? wrongEquations = params[:player1wrong] : wrongEquations = params[:player2wrong]
+    player_id == 'player1' ? equations = params[:player1correct] : equations = params[:player2correct]
+    player_id == 'player1' ? wrongEquations = params[:player1wrong] : wrongEquations = params[:player2wrong]
 
     result = Result.create(match_id: match_id, user_id: user_id)
 
