@@ -11,11 +11,9 @@ function Duck() {
     this.randomDirection();
   };
   this.randomDirection =  function(){
-
+    console.log("called");
     this.setXMove();
     this.setYMove();
-    var that = this;
-    setTimeout(function(){ console.log("rando"); this.randomDirection }, Math.floor(Math.random()*800));
   };
   this.setXMove = function(){
     this.xMove = Math.random()<0.5 ? -1: 1;
@@ -229,6 +227,8 @@ var mainState= {
     var duck = new Duck();
     duck.init();
     game.time.events.loop(1, duck.move, this);
+    var that = this;
+    // game.time.events.loop(Math.random()*800, that.randomDirection, this );
   }
 
 };
