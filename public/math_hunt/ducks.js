@@ -1,35 +1,38 @@
 var mainState= {
   preload: function(){
-    game.load.image('stage', '/assets/duckassets/duck_background.png');
+    game.load.image('stage', '/images/duck_hunt/duck_background.png');
     //crosshairs
-    game.load.image('inner1', '/assets/duckassets/p1_inner.png');
-    game.load.image('inner2', '/assets/duckassets/p2_inner.png');
-    game.load.image('p1', '/assets/duckassets/p1crosshairs.png');
-    game.load.image('p2', '/assets/duckassets/p2crosshairs.png');
-    game.load.image('shot', '/assets/duckassets/shotCrosshairs.png');
+    game.load.image('inner1', '/images/duck_hunt/p1_inner.png');
+    game.load.image('inner2', '/images/duck_hunt/p2_inner.png');
+    game.load.image('p1', '/images/duck_hunt/p1crosshairs.png');
+    game.load.image('p2', '/images/duck_hunt/p2crosshairs.png');
+    game.load.image('shot', '/images/duck_hunt/shotCrosshairs.png');
     //numbers
-    game.load.image('one', '/assets/duckassets/1.png')
-    game.load.image('two', '/assets/duckassets/2.png')
-    game.load.image('three', '/assets/duckassets/3.png')
-    game.load.image('four', '/assets/duckassets/4.png')
-    game.load.image('five', '/assets/duckassets/5.png')
-    game.load.image('six', '/assets/duckassets/6.png')
-    game.load.image('seven', '/assets/duckassets/7.png')
-    game.load.image('eight', '/assets/duckassets/8.png')
-    game.load.image('nine', '/assets/duckassets/9.png')
-    game.load.image('ten', '/assets/duckassets/10.png')
+    game.load.image('one', '/images/duck_hunt/1.png')
+    game.load.image('two', '/images/duck_hunt/2.png')
+    game.load.image('three', '/images/duck_hunt/3.png')
+    game.load.image('four', '/images/duck_hunt/4.png')
+    game.load.image('five', '/images/duck_hunt/5.png')
+    game.load.image('six', '/images/duck_hunt/6.png')
+    game.load.image('seven', '/images/duck_hunt/7.png')
+    game.load.image('eight', '/images/duck_hunt/8.png')
+    game.load.image('nine', '/images/duck_hunt/9.png')
+    game.load.image('ten', '/images/duck_hunt/10.png')
     //sounds
-    game.load.audio('shotSound', '/assets/duckassets/shot.wav')
-    game.load.audio('quacks', '/assets/duckassets/quacks.wav')
-    game.load.audio('hit', '/assets/duckassets/hit.wav')
-    game.load.audio('fall', '/assets/duckassets/fall.wav')
+    game.load.audio('shotSound', '/sounds/duck_hunt/shot.wav')
+    game.load.audio('quacks', '/sounds/duck_hunt/quacks.wav')
+    game.load.audio('hit', '/sounds/duck_hunt/hit.wav')
+    game.load.audio('fall', '/sounds/duck_hunt/fall.wav')
   },
   create: function(){
     //set stage
     game.stage.backgroundColor = '#40bdff';
     this.background = game.add.sprite( 0, 0, 'stage');
 
+    //enable physics
     game.physics.startSystem(Phaser.Physics.ARCADE);
+
+    this.shotSound = game.add.audio('shotSound');
 
     //set players
     this.p1 = game.add.sprite( 250, 250, 'p1');
@@ -67,7 +70,7 @@ var mainState= {
   reload: function(){
     this.p1bullets =[1,1,1];
     this.p2bullets =[1,1,1];
-  }
+  },
 
   // player 1 movement
   move: function(){
@@ -84,11 +87,11 @@ var mainState= {
 
   shoot:function(){
     if (p1shoot){
-
+      shot = game.add.sprite(this.p1.x, this.p1.y, 'shot')
+      setTimeout(function(){shot.kill},100);
+      this.shotSound.play();
     }
-  }
-
-
+  },
 
   centerTarget: function(){
     this.inner1.x = this.p1.x;
