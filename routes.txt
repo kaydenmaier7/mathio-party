@@ -1,4 +1,7 @@
                   Prefix Verb   URI Pattern                    Controller#Action
+             players_new GET    /players/new(.:format)         players#new
+                 players POST   /players(.:format)             players#create
+          players_logout DELETE /players/logout(.:format)      players#destroy
         new_user_session GET    /users/sign_in(.:format)       devise/sessions#new
             user_session POST   /users/sign_in(.:format)       devise/sessions#create
     destroy_user_session DELETE /users/sign_out(.:format)      devise/sessions#destroy
@@ -18,4 +21,5 @@ cancel_user_registration GET    /users/cancel(.:format)        devise/registrati
                          GET    /users/:id(.:format)           users#show
                    games GET    /games(.:format)               games#index
                          GET    /games/:id(.:format)           games#show
+                 results POST   /results(.:format)             results#create
                     root GET    /                              games#index
