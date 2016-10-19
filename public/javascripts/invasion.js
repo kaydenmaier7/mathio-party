@@ -143,10 +143,11 @@ function removeBeams(){
 
 function shootBeam(x, id){
   if (id === 'ufo1'){
-    beams.create(x - 39, 120, 'beam');
+    var beam = beams.create(x - 39, 120, 'beam');
   } else if (id === 'ufo2'){
-    beams.create(x -11, 145, 'beam');
+    var beam = beams.create(x -11, 145, 'beam');
   };
+  beam.alpha = 0.4;
 };
 
 function moveCow(){
