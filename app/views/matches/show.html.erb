@@ -1,38 +1,39 @@
-<p>this is match show</p>
-
-
-
-
 
 <% @match.results.each do |result| %>
 
+      <div class='frogger-user-results-div'>
 
+      <h1><%= result.user.username %></h1>
 
-<div class='frogger-user-results-div'>
+        <table class='frogger-results-table'>
 
-<h1><%= result.user.username %></h1>
-  <table class='frogger-results-table'>
+            <tr class='skill-header'>
+              <th>Skill Type</th>
+              <th>Sub Skill</th>
+              <th>Correct</th>
+              <th>Incorrect</th>
+              <th>+ / -</th>
+            </tr>
 
+            <% names = [] %>
+            <% result.sub_skills.each do |skill| %>
+              <% names << skill %>
+            <% end %>
 
-      <tr class='skill-header'>
-      <th>Skill Type</th><th>Sub Skill</th><th>Correct</th><th>Incorrect</th><th>+ / -</th>
-      </tr>
-      <% names = [] %>
-      <% result.sub_skills.each do |skill| %>
-        <% names << skill %>
-      <% end %>
-      <% names = names.uniq { |n| n.name }.sort_by { |n| SubSkill.where(match_id: @match.id, result_id: result.id, name: n.name, skill_name: n.skill_name, correct: 1).count - SubSkill.where(match_id: @match.id, result_id: result.id, name: n.name, skill_name: n.skill_name, incorrect: 1).count }.reverse! %>
+            <% names = names.uniq { |n| n.name }.sort_by { |n| SubSkill.where(match_id: @match.id, result_id: result.id, name: n.name, skill_name: n.skill_name, correct: 1).count - SubSkill.where(match_id: @match.id, result_id: result.id, name: n.name, skill_name: n.skill_name, incorrect: 1).count }.reverse! %>
 
-      <% names.each do |n| %>
-        <tr>
-          <td><%= n.skill_name %></td><td><%= n.name %></td><td><%= SubSkill.where(match_id: @match.id, result_id: result.id, name: n.name, skill_name: n.skill_name, correct: 1).count %></td><td><%= SubSkill.where(match_id: @match.id, result_id: result.id, name: n.name, skill_name: n.skill_name, incorrect: 1).count %></td><td><%= SubSkill.where(match_id: @match.id, result_id: result.id, name: n.name, skill_name: n.skill_name, correct: 1).count - SubSkill.where(match_id: @match.id, result_id: result.id, name: n.name, skill_name: n.skill_name, incorrect: 1).count %></td>
-        </tr>
-      <% end %>
-  </table>
+            <% names.each do |n| %>
+              <tr>
+                <td><%= n.skill_name %></td>
+                <td><%= n.name %></td>
+                <td><%= SubSkill.where(match_id: @match.id, result_id: result.id, name: n.name, skill_name: n.skill_name, correct: 1).count %></td>
+                <td><%= SubSkill.where(match_id: @match.id, result_id: result.id, name: n.name, skill_name: n.skill_name, incorrect: 1).count %></td>
+                <td><%= SubSkill.where(match_id: @match.id, result_id: result.id, name: n.name, skill_name: n.skill_name, correct: 1).count - SubSkill.where(match_id: @match.id, result_id: result.id, name: n.name, skill_name: n.skill_name, incorrect: 1).count %></td>
+              </tr>
+            <% end %>
+        </table>
 
-
-
-</div>
+      </div>
 
 <% end %>
 
@@ -51,68 +52,56 @@
 
 
 
-<!--
 
+<% @match.results.each do |result| %>
 
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/data.js"></script>
 
 
-<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<div id=<%= result.id %> style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
-<table id="datatable">
+<table id='<%= result.id %>-table' class='hidden-table'>
     <thead>
         <tr>
             <th></th>
-            <th>Jane</th>
-            <th>John</th>
+            <th>Correct</th>
+            <th>Incorrect</th>
         </tr>
     </thead>
     <tbody>
+      <% skillNames = [] %>
+      <% result.sub_skills.each do |skill| %>
+          <% skillNames << skill %>
+      <% end %>
+      <% skillNames = skillNames.uniq { |skill| skill.name } %>
+
+      <% skillNames.each do |skill| %>
         <tr>
-            <th>Apples</th>
-            <td>3</td>
-            <td>4</td>
+            <th><%= skill.name %></th>
+            <td><%= SubSkill.where(match_id: @match.id, result_id: result.id, name: skill.name, skill_name: skill.skill_name, correct: 1).count %></td>
+            <td><%= SubSkill.where(match_id: @match.id, result_id: result.id, name: skill.name, skill_name: skill.skill_name, incorrect: 1).count %></td>
         </tr>
-        <tr>
-            <th>Pears</th>
-            <td>2</td>
-            <td>0</td>
-        </tr>
-        <tr>
-            <th>Plums</th>
-            <td>5</td>
-            <td>11</td>
-        </tr>
-        <tr>
-            <th>Bananas</th>
-            <td>1</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <th>Oranges</th>
-            <td>2</td>
-            <td>4</td>
-        </tr>
+      <% end %>
     </tbody>
 </table>
 
 <script>$(function () {
-    $('#container').highcharts({
+    $('#' + <%= result.id %>).highcharts({
         data: {
-            table: 'datatable'
+            table: '<%= result.id %>-table'
         },
         chart: {
             type: 'column'
         },
         title: {
-            text: 'im louie'
+            text: '<%= result.user.username %>'
         },
         yAxis: {
             allowDecimals: false,
             title: {
-                text: 'Units'
+                text: 'Count'
             }
         },
         tooltip: {
@@ -123,4 +112,6 @@
         }
     });
 });</script>
- -->
+
+
+<% end %>

@@ -5,3 +5,49 @@
 
 <%= render 'partials/radarChart' %>
 <%= render 'partials/bar_line_chart' %>
+
+
+<% results = [] %>
+
+<% @User.results.each do |result| %>
+
+<% results << result %>
+
+<% end %>
+
+
+
+  <div class='frogger-user-results-div'>
+
+      <h1><%= @User.username %></h1>
+
+        <table class='frogger-results-table'>
+
+            <tr class='skill-header'>
+              <th>Skill Type</th>
+              <th>Sub Skill</th>
+              <th>Correct</th>
+              <th>Incorrect</th>
+              <th>+ / -</th>
+            </tr>
+            <% names = [] %>
+            <% results.each do |result| %>
+            <% result.sub_skills.each do |skill| %>
+              <% names << skill %>
+            <% end %>
+            <% end %>
+
+            <% names = names.uniq { |n| n.name }.sort_by { |n| SubSkill.where(name: n.name, skill_name: n.skill_name, correct: 1).count - SubSkill.where(name: n.name, skill_name: n.skill_name, incorrect: 1).count }.reverse! %>
+
+            <% names.each do |n| %>
+              <tr>
+                <td><%= n.skill_name %></td>
+                <td><%= n.name %></td>
+                <td><%= SubSkill.where(name: n.name, skill_name: n.skill_name, correct: 1).count %></td>
+                <td><%= SubSkill.where(name: n.name, skill_name: n.skill_name, incorrect: 1).count %></td>
+                <td><%= SubSkill.where(name: n.name, skill_name: n.skill_name, correct: 1).count - SubSkill.where(name: n.name, skill_name: n.skill_name, incorrect: 1).count %></td>
+              </tr>
+            <% end %>
+        </table>
+
+      </div>
