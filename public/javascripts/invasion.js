@@ -3,9 +3,10 @@ $(document).ready(function(){
 })
 
 // declare all object types
-var cow, players, beams;
+var cow, players, beams, question1, question2;
 
 // cow movement parameters
+var cowValues = [];
 var startingCows = 4;
 var timer = 0;
 setInterval(function(){ timer = timer + 1 }, 1000);
@@ -57,6 +58,10 @@ function create(){
   for (var i = 0; i < startingCows; i++){
     spawnCow(Math.random()*(game.width - 100) , Math.random()*(game.height/2) + game.height* 0.3);
   }
+
+  question1 = generateEquation();
+  question2 = generateEquation();
+  displayEquations();
 
   // create the players
   players = game.add.group();
@@ -156,7 +161,6 @@ function shootBeam(x, id){
   };
   beam.alpha = 0.4;
   beamPosition = x;
-  console.log(beamPosition);
 };
 
 // move cow horizontally at intervals
@@ -185,3 +189,30 @@ function removeCow() {
   });
 };
 
+// make an equation which solves to a cow value
+function generateEquation(){
+  cowValues = []
+  cow.forEach(function(c){
+    cowValues.push(c.value);
+  });
+  var answer = cowValues[Math.floor(Math.random()*cowValues.length)];
+  var invalid = true;
+  // ensure that y is a positive number
+  while(invalid){
+    var x = Math.floor(Math.random() * 5);
+    var y = answer - x;
+    if (y >= 0) {
+      invalid = false;
+    };
+  };
+  // return a question
+  var question = x + ' + ' + y + ' = ?';
+  return question;
+};
+
+function displayEquations(){
+  $('body').append('<div class="p1 equation"></div>');
+  $('body').append('<div class="p2 equation"></div>');
+  $('.p1').append('<p>' + question1 + '</p>');
+  $('.p2').append('<p>' + question2 + '</p>');
+};
