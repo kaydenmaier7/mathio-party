@@ -8,14 +8,14 @@
   <div class="login">
     <% if current_user %>
     	<%= link_to "Logout, #{current_user.username}", destroy_user_session_path, method: :delete %> 
-      <%= link_to 'Profile Page', user_path(current_user.id) %>
-    	
+      
       <% if !player2_logged_in? %>
-    		<%= link_to 'Player 2 Login', players_new_path %>
-    	<% else %>
-    		<%= link_to "Logout, #{current_player2.username}", players_logout_path, method: :delete %>	
-    	<% end %>
+        <%= link_to 'Player 2 Login', players_new_path %>
+      <% else %>
+        <%= link_to "Logout, #{current_player2.username}", players_logout_path, method: :delete %>  
+      <% end %>
 
+      <%= link_to 'Profile Page', user_path(current_user.id) %>
     <% else %>
     	<%= link_to 'Login', new_user_session_path %>
       <%= link_to 'Sign Up', new_user_registration_path  %>
