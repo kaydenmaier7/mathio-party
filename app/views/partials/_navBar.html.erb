@@ -5,6 +5,7 @@
   <%= link_to 'Flappy Math', game_path(2) %>
   <%= link_to 'Invasion', game_path(3) %>
   <%= link_to 'Duck Hunt', game_path(4) %>
+  <%= link_to 'Leaderboards', users_path %>
   <div class="login">
     <% if current_user %>
     	<%= link_to "Logout, #{current_user.username}", destroy_user_session_path, method: :delete %> 
