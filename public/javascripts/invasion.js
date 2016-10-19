@@ -79,6 +79,7 @@ function update(){
   playerMovement();
   playerBeam();
   moveCow();
+  removeCow();
 };
 
 // create a cow
@@ -170,6 +171,16 @@ function moveCow(){
     } else if (timer % c.interval == 0) {
       c.body.velocity.x = c.speed;
       c.area = c.getBounds();
+    };
+  });
+};
+
+function removeCow() {
+  cow.forEach(function(c){
+    if (c.position.y < 50){
+      c.kill();
+      c.destroy();
+      setTimeout(function(){spawnCow(Math.random()*(game.width - 100) , Math.random()*(game.height/2) + game.height* 0.3)}, 2500);
     };
   });
 };
