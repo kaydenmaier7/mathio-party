@@ -2,13 +2,13 @@ $(document).ready(function(){
 
   var width = $('.games-main').width();
   var height = $('.games-main').height();
-  var buttonSize = 80;
-  var buttonY = height * 0.68;
+  var buttonSize = 120;
+  var buttonY = height * 0.665;
   var games = [
-      ['flappy_bird', 'http://files.gamebanana.com/img/ico/sprays/538578b593b47.gif'], 
-      ['frogger', 'http://andyluvsdonna.com/wp-content/uploads/2015/02/frogger-1.png'], 
-      ['othergame', 'http://www.pngmart.com/files/3/Spaceship-PNG-Pic.png'], 
-      ['othergame', 'http://vignette3.wikia.nocookie.net/metalslug/images/d/d7/192064fb7b55d9f8569231678ee1e333.jpg.gif/revision/latest?cb=20160109031801&path-prefix=es'], 
+      ['flappy_bird', 'http://files.gamebanana.com/img/ico/sprays/538578b593b47.gif'],
+      ['frogger', 'http://andyluvsdonna.com/wp-content/uploads/2015/02/frogger-1.png'],
+      ['invasion', 'http://www.pngmart.com/files/3/Spaceship-PNG-Pic.png'],
+      ['othergame', 'http://vignette3.wikia.nocookie.net/metalslug/images/d/d7/192064fb7b55d9f8569231678ee1e333.jpg.gif/revision/latest?cb=20160109031801&path-prefix=es'],
       ['othergame', 'http://www.retrogamenetwork.com/wp-content/uploads/2012/05/rand-avatar.png']
     ]
 
@@ -42,7 +42,7 @@ $(document).ready(function(){
   function moveImageRight() {
     svg.selectAll('.game')
       .transition()
-      .delay( function(d, i){ return 150 * i } )      
+      .delay( function(d, i){ return 150 * i } )
       .duration(1500)
       .attr('x', function(d, i){ return width - ((i + 0.5) * (width / games.length)) });
   }
@@ -86,6 +86,8 @@ $(document).ready(function(){
           var gameUrl = '/games/1'
         } else if ($(this).hasClass("flappy_bird")) {
           var gameUrl = 'games/2'
+        } else if ($(this).hasClass("invasion")) {
+          var gameUrl = 'games/3'
         }
         // add in more conditionals for future games
         $.ajax({

@@ -8,13 +8,13 @@ var mainState= {
   },
   create: function(){
     this.jumpSound = game.add.audio('jump');
-    this.p1score = 0;
     this.p2score = 0;
 
     this.player1score = game.add.text(20,20,"Player 1: "+this.p1score, { font: '30px Arial', fill: '#ff5733' });
     this.player2score = game.add.text(20,100,"Player 2: "+this.p2score, { font: '30px Arial', fill: '#4933ff' });
 
     this.pipes = game.add.group();
+    this.p1score = 0;
     this.correct1 = game.add.group();
     this.correct2 = game.add.group();
     game.stage.backgroundColor = '#37edf8';
