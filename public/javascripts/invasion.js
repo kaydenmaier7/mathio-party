@@ -5,6 +5,9 @@ $(document).ready(function(){
 // declare all object types
 var cow, players, beams, question1, question2, answer1, answer2;
 
+var playerOneScore = 0;
+var playerTwoScore = 0;
+
 // cow movement parameters
 var cowValues = [];
 var questions = [];
@@ -27,7 +30,18 @@ var assets = [
   ['cow', '/images/invasion/cow.png'],
   ['ufo1', '/images/invasion/ufo1.png'],
   ['ufo2', '/images/invasion/ufo2.png'],
-  ['beam', '/images/invasion/beam.png']
+  ['beam', '/images/invasion/beam.png'],
+  ['cow0', '/images/invasion/cow0.png'],
+  ['cow1', '/images/invasion/cow1.png'],
+  ['cow2', '/images/invasion/cow2.png'],
+  ['cow3', '/images/invasion/cow3.png'],
+  ['cow4', '/images/invasion/cow4.png'],
+  ['cow5', '/images/invasion/cow5.png'],
+  ['cow6', '/images/invasion/cow6.png'],
+  ['cow7', '/images/invasion/cow7.png'],
+  ['cow8', '/images/invasion/cow8.png'],
+  ['cow9', '/images/invasion/cow9.png'],
+  ['cow10', '/images/invasion/cow10.png']
 ];
 
 // add game window to page
@@ -65,7 +79,7 @@ function create(){
   generateQuestion2();
 
   // display question1 and question2
-  displayEquations();
+  displayPlayerInfo();
 
   // create the players
   players = game.add.group();
@@ -95,8 +109,9 @@ function update(){
 
 // create a cow
 function spawnCow(x, y){
-  var newCow = cow.create(x, y, 'cow');
-  newCow.value = Math.floor( Math.random() * 11 );
+  var randomValue = Math.floor( Math.random() * 11 );
+  var newCow = cow.create(x, y, 'cow' + randomValue);
+  newCow.value = randomValue;
   cowValues.push(newCow.value);
   newCow.speed = cowSpeedOptions[Math.floor(Math.random()*cowSpeedOptions.length)];
   newCow.interval = cowMovementIntervals[Math.floor(Math.random()*cowMovementIntervals.length)];
@@ -190,10 +205,10 @@ function moveCow(){
 function removeCow() {
   cow.forEach(function(c){
     if (c.position.y < 5){
-      // make a new question if the cow answered one of the questions
-      refreshQuestions(cow);
       // remove the cow's value from the cowValue array
       removeCowValue(c.value);
+      // make a new question if the cow answered one of the questions
+      refreshQuestions(cow);
       // destroy the cow object
       c.kill();
       c.destroy();
@@ -205,10 +220,12 @@ function removeCow() {
 
 // destroy cows that collide with players
 function captureCow(player, cow) {
-  // make a new question if the cow answered one of the questions
-  refreshQuestions(cow);
+  // increment the player score when they capture the correct cow
+  changeScore(player, cow);
   // remove the cow's value from the cowValue array
   removeCowValue(cow.value);
+  // make a new question if the cow answered one of the questions
+  refreshQuestions(cow);
   // destroy the cow object
   cow.kill();
   cow.destroy();
@@ -221,12 +238,12 @@ function refreshQuestions(cow){
   if (cow.value == questions[0][2]){
     questions.shift();
     generateQuestion1();
-    displayEquations();
-  } else
+    displayPlayerInfo();
+  }
   if (cow.value == questions[1][2]){
     questions.pop();
     generateQuestion2();
-    displayEquations();
+    displayPlayerInfo();
   };
 };
 
@@ -258,12 +275,14 @@ function generateEquation(){
   return [x, y, answer];
 };
 
-function displayEquations(){
+function displayPlayerInfo(){
   $('.equation').remove();
   $('body').append('<div class="p1 equation"></div>');
   $('body').append('<div class="p2 equation"></div>');
-  $('.p1').append('<p>' + question1 + '</p>');
-  $('.p2').append('<p>' + question2 + '</p>');
+  $('.p1').append('<p> Question: ' + question1 + '</p>');
+  $('.p2').append('<p> Question: ' + question2 + '</p>');
+  $('.p1').append('<p> Score: ' + playerOneScore + '</p>');
+  $('.p2').append('<p> Score: ' + playerTwoScore + '</p>');
 };
 
 function assignQuestion1(){
@@ -285,4 +304,16 @@ function removeCowValue(value){
   });
   // remove the input value from the cowValues array
   cowValues.splice(index, 1);
+};
+
+function changeScore(player, cow){
+  if (player.player_id === 'ufo1'){
+    if (cow.value == questions[0][2]){
+      playerOneScore++;
+    };
+  } else if (player.player_id === 'ufo2') {
+    if (cow.value == questions[1][2]){
+      playerTwoScore++;
+    };
+  };
 };
