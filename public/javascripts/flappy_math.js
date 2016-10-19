@@ -11,6 +11,7 @@ var mainState= {
 
     this.p1score = 0;
     this.p2score = 0;
+    this.gameOver = false;
 
     this.player1score = game.add.text(20,20,"Player 1: "+this.p1score, { font: '30px Arial', fill: '#ff5733' });
     this.player2score = game.add.text(20,100,"Player 2: "+this.p2score, { font: '30px Arial', fill: '#4933ff' });
@@ -42,7 +43,7 @@ var mainState= {
 
     this.timer = game.time.events.loop(4500, this.addRowOfPipes, this);
     this.timer = game.time.events.loop(3000, this.spawnCloud, this);
-    this.time = 3000;
+    this.time = 1000;
 
     this.timer = game.add.text(800,20, this.time, { font: "64px Arial", fill: "#ffffff", align: "center" });
 
@@ -97,7 +98,33 @@ var mainState= {
     } else {
       gotext.text = "Tie Game!"
     }
-    //game.destroy()
+    this.blueBird.destroy()
+    this.bird.destroy()
+    this.time = 1
+
+    if (!this.gameOver){
+      this.flappyAjaxCall()
+      this.gameOver = true;
+    }
+  },
+
+  flappyAjaxCall: function(){
+    console.log('in ajax function')
+
+    var request = $.ajax({
+      url: '/results',
+      type: 'post'
+    })
+
+    request.done(function(response){
+      console.log('success')
+      $('#flappy-bird').append($('#hidden_match_button'))
+      $('#hidden_match_button').slideToggle(1000)
+    })
+
+    request.fail(function(response){
+      console.log('failed')
+    })
   },
 
   hitPipe1: function(){
@@ -197,29 +224,33 @@ var mainState= {
   },
 
   spawnQuestion1: function (skill){
-    var problem = game.add.text(20,60, "", { font: '30px Arial', fill: '#ffffff#' });
+    if (!this.gameOver){
+      var problem = game.add.text(20,60, "", { font: '30px Arial', fill: '#ffffff#' });
 
-    param1 = Math.floor(Math.random()*10);
-    param2 = Math.floor(Math.random()*10);
+      param1 = Math.floor(Math.random()*10);
+      param2 = Math.floor(Math.random()*10);
 
-    problem.text = param1.toString() + " + " + param2.toString()
+      problem.text = param1.toString() + " + " + param2.toString()
 
-    that = this;
-    setTimeout(function(){problem.kill()}, 4500);
-    return (param1 + param2);
+      that = this;
+      setTimeout(function(){problem.kill()}, 4500);
+      return (param1 + param2);
+    }
   },
 
   spawnQuestion2: function (skill){
-    var problem = game.add.text(20,130, "", { font: '30px Arial', fill: '#ffffff#' });
+    if (!this.gameOver) {
+      var problem = game.add.text(20,130, "", { font: '30px Arial', fill: '#ffffff#' });
 
-    param1 = Math.floor(Math.random()*10);
-    param2 = param1 + Math.floor(Math.random()*10);
+      param1 = Math.floor(Math.random()*10);
+      param2 = param1 + Math.floor(Math.random()*10);
 
-    problem.text = param2.toString() + " - " + param1.toString()
+      problem.text = param2.toString() + " - " + param1.toString()
 
-    that = this;
-    setTimeout(function(){problem.kill()}, 4500);
-    return (param2 - param1);
+      that = this;
+      setTimeout(function(){problem.kill()}, 4500);
+      return (param2 - param1);
+  }
   },
   addOnePipe: function (x,y){
       var pipe = game.add.sprite(x,y, 'pipe');
