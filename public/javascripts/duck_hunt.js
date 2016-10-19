@@ -46,6 +46,7 @@ var mainState= {
     game.load.image('p1', '/images/duck_hunt/p1crosshairs.png');
     game.load.image('p2', '/images/duck_hunt/p2crosshairs.png');
     game.load.image('shot', '/images/duck_hunt/shotCrosshairs.png');
+    game.load.image('redX', '/images/duck_hunt/redX.png');
     //numbers
     game.load.image('empty', '/images/duck_hunt/empty.png');
 
@@ -60,6 +61,7 @@ var mainState= {
     game.load.audio('hit', '/sounds/duck_hunt/hit.wav')
     game.load.audio('fall', '/sounds/duck_hunt/fall.wav')
     game.load.audio('click', '/sounds/duck_hunt/click.wav')
+    game.load.audio('honk', '/sounds/duck_hunt/honk.wav')
   },
   create: function(){
     //set stage
@@ -75,6 +77,7 @@ var mainState= {
     this.quacks = game.add.audio('quacks');
     this.hit = game.add.audio('hit');
     this.fall = game.add.audio('fall');
+    this.honk = game.add.audio('honk')
 
     //set up ducks
     this.ducks = [];
@@ -214,48 +217,51 @@ var mainState= {
       this.p1.canShoot = false;
       var that = this;
       setTimeout(function(){that.p1.canShoot = true}, 1000)
-      this.shot1 = game.add.sprite(this.p1.x, this.p1.y, 'shot');
-      this.shot1.anchor.setTo( 0.5, 0.5);
-      game.physics.arcade.enable(this.shot1);
-      setTimeout(function(){that.shot1.kill()},100);
+      shot1 = game.add.sprite(this.p1.x, this.p1.y, 'shot');
+      shot1.anchor.setTo( 0.5, 0.5);
+      setTimeout(function(){shot1.kill()},100);
       this.shotSound.play();
       if (this.ducks.length > 0){
         if (this.checkOverlap(this.inner1, this.ducks[0])){
-          console.log("duck 1");
           this.ducks[0].sprite.kill();
           this.hitBird1()
         } else if (this.checkOverlap(this.inner1, this.ducks[1])){
-          console.log("duck 2");
-          this.ducks[1].sprite.kill();
-          this.hitBird1(this.ducks[1])
+          x = game.add.sprite(this.p1.x, this.p1.y, 'redX');
+          x.anchor.setTo( 0.5, 0.5);
+          setTimeout(function(){x.kill()},100);
+          this.honk.play()
         } else if (this.checkOverlap(this.inner1, this.ducks[2])){
-          console.log("duck 3");
-          this.ducks[2].sprite.kill();
-          this.hitBird1(this.ducks[2])}
+          x = game.add.sprite(this.p1.x, this.p1.y, 'redX');
+          x.anchor.setTo( 0.5, 0.5);
+          setTimeout(function(){x.kill()},100);
+          this.honk.play();
+        }
       }
     }
     if (this.p2shoot.isDown && this.p2.canShoot && this.fireBullets(2)){
       this.p2.canShoot = false;
       var that = this;
       setTimeout(function(){that.p2.canShoot = true}, 1000)
-      this.shot2 = game.add.sprite(this.p2.x, this.p2.y, 'shot');
-      this.shot2.anchor.setTo( 0.5, 0.5);
-      setTimeout(function(){that.shot2.kill()},100);
+      shot2 = game.add.sprite(this.p2.x, this.p2.y, 'shot');
+      shot2.anchor.setTo( 0.5, 0.5);
+      setTimeout(function(){shot2.kill()},100);
       this.shotSound.play();
 
       if (this.ducks.length > 0){
         if (this.checkOverlap(this.inner2, this.ducks[0])){
-          console.log("duck 1");
-          this.ducks[0].sprite.kill();
-          this.hitBird2()
+          x = game.add.sprite(this.p2.x, this.p2.y, 'redX');
+          x.anchor.setTo( 0.5, 0.5);
+          setTimeout(function(){x.kill()},100);
+          this.honk.play()
         } else if (this.checkOverlap(this.inner2, this.ducks[1])){
-          console.log("duck 2");
           this.ducks[1].sprite.kill();
           this.hitBird2(this.ducks[1])
         } else if (this.checkOverlap(this.inner2, this.ducks[2])){
-          console.log("duck 3");
-          this.ducks[2].sprite.kill();
-          this.hitBird2(this.ducks[2])}
+          x = game.add.sprite(this.p2.x, this.p2.y, 'redX');
+          x.anchor.setTo( 0.5, 0.5);
+          setTimeout(function(){x.kill()},100);
+          this.honk.play()
+        }
       }
     }
   },
@@ -288,7 +294,6 @@ var mainState= {
     dedDuck.anchor.setTo(.5,.5);
     this.hit.play();
     // duck.destroy;
-    console.log('hit!')
     this.updateScore(2);
     var that = this;
     setTimeout(function(){
