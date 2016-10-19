@@ -4,7 +4,7 @@ var game = new Phaser.Game(1000,910, Phaser.auto, 'math-hunt');
 function Duck() {
   this.xMove = 0;
   this.yMove = 0;
-  this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, 'ten');
+  this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, 'empty');
   this.area = this.sprite.getBounds();
   this.sprite.anchor.setTo( 0.5, 0.5 );
   this.init = function(){
@@ -47,16 +47,8 @@ var mainState= {
     game.load.image('p2', '/images/duck_hunt/p2crosshairs.png');
     game.load.image('shot', '/images/duck_hunt/shotCrosshairs.png');
     //numbers
-    game.load.image('one', '/images/duck_hunt/1.png');
-    game.load.image('two', '/images/duck_hunt/2.png');
-    game.load.image('three', '/images/duck_hunt/3.png');
-    game.load.image('four', '/images/duck_hunt/4.png');
-    game.load.image('five', '/images/duck_hunt/5.png');
-    game.load.image('six', '/images/duck_hunt/6.png');
-    game.load.image('seven', '/images/duck_hunt/7.png');
-    game.load.image('eight', '/images/duck_hunt/8.png');
-    game.load.image('nine', '/images/duck_hunt/9.png');
-    game.load.image('ten', '/images/duck_hunt/10.png');
+    game.load.image('empty', '/images/duck_hunt/empty.png');
+
     //bullets
     game.load.image('bullet', '/images/duck_hunt/bullet.png');
     //ducks
@@ -86,6 +78,14 @@ var mainState= {
 
     //set up ducks
     this.ducks = [];
+    this.answers = [];
+
+    this.answer1 = game.add.text(0,0, "", { font: '25px Arial', fill: '#ffffff#' });
+    this.answer1.anchor.setTo(.5,.5);
+    this.answer2 = game.add.text(0,0, "", { font: '25px Arial', fill: '#ffffff#' });
+    this.answer2.anchor.setTo(.5,.5);
+    this.answer3 = game.add.text(0,0, "", { font: '25px Arial', fill: '#ffffff#' });
+    this.answer3.anchor.setTo(.5,.5);
 
     //set players
     this.p1 = game.add.sprite( 250, 250, 'p1');
@@ -128,25 +128,13 @@ var mainState= {
     this.reload();
 
     //timers
-    // this.spawnDucks();
-    this.duckTimer = game.time.events.loop(1000, this.spawnDucks, this);
+    this.spawnDucks();
+    // this.duckTimer = game.time.events.loop(5000, this.spawnDucks, this);
   },
   update: function(){
     this.centerTarget();
     this.move();
     this.shoot();
-
-    // if(this.p1shoot.isDown){ this.checkOverlap(this.inner1, this.ducks[0])}
-    // if (this.ducks.length >0) {
-    //   console.log(this.inner1.getBounds().x - this.ducks[0].area.x);
-    //   if (this.checkOverlap(this.inner1, this.ducks[0])){
-    //       console.log('duck1');
-    //     } else if (this.checkOverlap(this.inner1, this.ducks[1])){
-    //       console.log('duck2')
-    //     } else if (this.checkOverlap(this.inner1, this.ducks[1])){
-    //       console.log('duck3')
-    //     }
-    //   }
   },
 
   checkOverlap: function(spriteA, duck) {
@@ -323,39 +311,35 @@ var mainState= {
     this.inner1.y = this.p1.y;
     this.inner2.x = this.p2.x;
     this.inner2.y = this.p2.y;
+
+
   },
 
   spawnDucks: function(){
+    this.ducks = [];
     this.reload();
-    this.spawnQuestions();
     this.quacks.play();
     var that = this;
     for(var i=0 ; i<3 ; i++){
-      setTimeout(function(){that.oneDuck()},2000);
+      setTimeout(function(){
+        that.oneDuck();
+        that.spawnQuestions();
+      },2000);
     }
   },
 
   oneDuck: function(count){
-    // if (count === 0) {
-      this.duck = new Duck();
-      this.duck.init();
-      this.ducks.push(this.duck);
-      game.time.events.loop(1, this.duck.move, this);
-    // }
-    // else if (count === 1) {
-    //   this.duck2 = new Duck();
-    //   this.duck2.init();
-    //   game.time.events.loop(1, this.duck2.move, this);
-    // }
-    // else {
-    //   this.duck3 = new Duck();
-    //   this.duck3.init();
-    //   game.time.events.loop(1, this.duck3.move, this);
-    // }
+    this.duck = new Duck();
+    this.duck.init();
+    this.ducks.push(this.duck);
+    game.time.events.loop(1, this.duck.move, this);
     this.reorderSprites();
   },
 
   reorderSprites: function(){
+    this.answer1.bringToTop();
+    this.answer2.bringToTop();
+    this.answer3.bringToTop();
     this.background.bringToTop();
     this.p1b1.bringToTop();
     this.p1b2.bringToTop();
@@ -370,15 +354,42 @@ var mainState= {
   },
 
   spawnQuestions: function(skill1,skill2){
+    this.answers = []
     var num1 = Math.floor(Math.random()*10);
     var num2 = Math.floor(Math.random()*10);
+
     this.p1Question.text = num1.toString() + " + " + num2.toString();
+    this.answers.push((num1+num2).toString());
 
     num1 = Math.floor(Math.random()*10);
     num2 = Math.floor(Math.random()*10);
+
     this.p2Question.text = num1.toString() + " + " + num2.toString();
+    this.answers.push((num1+num2).toString());
+
+
+    var rand = Math.floor(Math.random()*20).toString()
+    this.answers.push(rand);
+
+    console.log(this.answers);
+    this.answer1.text = this.answers[0];
+    this.answer2.text = this.answers[1];
+    this.answer3.text = this.answers[2];
+
+    var that = this;
+    game.time.events.loop(1,that.followDucks,this);
   },
 
+  followDucks: function(){
+    this.answer1.x = this.ducks[0].area.x;
+    this.answer1.y = this.ducks[0].area.y;
+
+    this.answer2.x = this.ducks[1].area.x;
+    this.answer2.y = this.ducks[1].area.y;
+
+    this.answer3.x = this.ducks[2].area.x;
+    this.answer3.y = this.ducks[2].area.y;
+  }
 };
 
 game.state.add('main', mainState);
