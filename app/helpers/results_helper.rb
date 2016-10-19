@@ -15,8 +15,8 @@ module ResultsHelper
 
 
   def create_results(params, user_id, match_id, player_id)
-    player_id = 'player1' ? equations = params[:player1correct] : equations = params[:player2correct]
-    player_id = 'player1' ? wrongEquations = params[:player1wrong] : wrongEquations = params[:player2wrong]
+    player_id == 'player1' ? equations = params[:player1correct] : equations = params[:player2correct]
+    player_id == 'player1' ? wrongEquations = params[:player1wrong] : wrongEquations = params[:player2wrong]
 
     result = Result.create(match_id: match_id, user_id: user_id)
 
@@ -25,7 +25,7 @@ module ResultsHelper
             p = p.split(' ')
 
                 if p[1] == '+'
-                  result.sub_skills.build(match_id: match_id, match_id: match_id, skill_name: 'addition', correct: 1, name: 'numbers greater than 10').save if p[0].to_i > 10 || p[2].to_i > 10
+                  result.sub_skills.build(match_id: match_id, skill_name: 'addition', correct: 1, name: 'numbers greater than 10').save if p[0].to_i > 10 || p[2].to_i > 10
                   result.sub_skills.build(match_id: match_id, skill_name: 'addition', correct: 1, name: 'numbers less than 10').save if p[0].to_i < 10 && p[2].to_i < 10
                   result.sub_skills.build(match_id: match_id, skill_name: 'addition', correct: 1, name: 'evens').save if p[0].to_i.even? && p[2].to_i.even?
                   result.sub_skills.build(match_id: match_id, skill_name: 'addition', correct: 1, name: 'odds').save if p[0].to_i.odd? && p[2].to_i.odd?
