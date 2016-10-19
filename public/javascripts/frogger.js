@@ -135,6 +135,7 @@ var playerTwoWrong = [];
 
 function preload() {
   game.load.image('tux', '/images/frogger/frog.png');
+  game.load.image('frog2', '/images/frogger/frog2.png')
   game.load.image("background", "/images/frogger/street.jpg");
   game.load.image('bug', '/images/frogger/bug.png')
   game.load.image('car1', '/images/frogger/car1.png');
@@ -152,8 +153,8 @@ function create(){
     // Players
     players = game.add.group();
     players.enableBody = true;
-    createPlayer(400, 10, 1);
-    createPlayer(200, 200, 2);
+    createPlayer(400, 10, 1, 'tux');
+    createPlayer(200, 200, 2, 'frog2');
 
     // Keyboard
     one = game.input.keyboard.addKey(Phaser.Keyboard.A);
@@ -184,8 +185,8 @@ function create(){
     croakSound = game.add.audio('croak1')
 
     // Text
-    playerOneText = game.add.text(32, 550, 'Player 1: ' + playerOneScore, { font: '20px Arial', fill: '#ffffff', align: 'left'});
-    playerTwoText = game.add.text(32, 500, 'Player 2: ' + playerTwoScore, { font: '20px Arial', fill: '#ffffff', align: 'left'});
+    playerOneText = game.add.text(32, 550, 'Player 1: ' + playerOneScore, { font: '30px Arial', fill: '#ffffff', align: 'left'});
+    playerTwoText = game.add.text(32, 500, 'Player 2: ' + playerTwoScore, { font: '30px Arial', fill: '#ffffff', align: 'left'});
     finalScoreText = game.add.text(200, 400, '', { font: '50px Arial', fill: '#ffffff', align: 'left'});
 }
 
@@ -209,8 +210,8 @@ function createBug(x, y){
   var bug = bugs.create(x, y, 'bug')
 }
 
-function createPlayer(x, y, id){
-  var player = players.create(x, y, 'tux');
+function createPlayer(x, y, id, image){
+  var player = players.create(x, y, image);
   player.player_id = id;
   player.health = 'true';
   player.body.collideWorldBounds = true;
