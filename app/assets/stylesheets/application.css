@@ -167,7 +167,20 @@ path.area {
 }
 
 .equation {
+  margin: 1%;
+  border-radius: 1em;
+  display: inline-block;
+  padding: 2%;
+  width: 10%;
   font-size: xx-large;
+  text-align: center;
 }
 
+.p1 {
+  background-color: #544E36;
+}
+
+.p2 {
+  background-color: #C62A47;
+}
 
