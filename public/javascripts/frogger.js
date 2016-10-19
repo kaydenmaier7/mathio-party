@@ -541,13 +541,11 @@ function froggerAjaxCall(){
   })
 
   request.done(function(response){
-    console.log(response)
     console.log('success')
     $('#equation_text_div').html('').append($('#hidden_match_button').slideToggle(1000))
   })
 
   request.fail(function(response){
-    console.log(response)
     console.log('failed')
   })
 
