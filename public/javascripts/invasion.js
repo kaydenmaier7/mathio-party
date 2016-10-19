@@ -21,11 +21,11 @@ var player1Location, player2Location, beamPosition;
 
 // declare static assets
 var assets = [
-  ["background", "/assets/invasion/farm.png"],
-  ['cow', '/assets/invasion/cow.png'],
-  ['ufo1', '/assets/invasion/ufo1.png'],
-  ['ufo2', '/assets/invasion/ufo2.png'],
-  ['beam', '/assets/invasion/beam.png']
+  ["background", "/images/invasion/farm.png"],
+  ['cow', '/images/invasion/cow.png'],
+  ['ufo1', '/images/invasion/ufo1.png'],
+  ['ufo2', '/images/invasion/ufo2.png'],
+  ['beam', '/images/invasion/beam.png']
 ];
 
 // add game window to page
