@@ -8,13 +8,15 @@ var mainState= {
   },
   create: function(){
     this.jumpSound = game.add.audio('jump');
+
+    this.p1score = 0;
     this.p2score = 0;
+    this.gameOver = false;
 
     this.player1score = game.add.text(20,20,"Player 1: "+this.p1score, { font: '30px Arial', fill: '#ff5733' });
     this.player2score = game.add.text(20,100,"Player 2: "+this.p2score, { font: '30px Arial', fill: '#4933ff' });
 
     this.pipes = game.add.group();
-    this.p1score = 0;
     this.correct1 = game.add.group();
     this.correct2 = game.add.group();
     game.stage.backgroundColor = '#37edf8';
@@ -39,9 +41,10 @@ var mainState= {
     this.bird.canScore = true;
     this.blueBird.canScore = true;
 
-    this.timer = game.time.events.loop(4500-this.speed, this.addRowOfPipes, this);
+    this.timer = game.time.events.loop(4500, this.addRowOfPipes, this);
     this.timer = game.time.events.loop(3000, this.spawnCloud, this);
-    this.time = 900
+    this.time = 1000;
+
     this.timer = game.add.text(800,20, this.time, { font: "64px Arial", fill: "#ffffff", align: "center" });
 
     game.time.events.loop(1, this.updateCounter, this);
@@ -87,6 +90,7 @@ var mainState= {
 
   endGame: function(){
     gotext = game.add.text(game.world.centerX, game.world.centerY, "", { font: "64px Arial", fill: "#ffffff", align: "center" });
+    gotext.anchor.setTo(0.5, 0.5);
     if (this.p1score > this.p2score){
       gotext.text = "Player 1 Wins!"
     } else if (this.p2Score > this.p1score){
@@ -94,7 +98,33 @@ var mainState= {
     } else {
       gotext.text = "Tie Game!"
     }
-    game.destroy()
+    this.blueBird.destroy()
+    this.bird.destroy()
+    this.time = 1
+
+    if (!this.gameOver){
+      this.flappyAjaxCall()
+      this.gameOver = true;
+    }
+  },
+
+  flappyAjaxCall: function(){
+    console.log('in ajax function')
+
+    var request = $.ajax({
+      url: '/results',
+      type: 'post'
+    })
+
+    request.done(function(response){
+      console.log('success')
+      $('#flappy-bird').append($('#hidden_match_button'))
+      $('#hidden_match_button').slideToggle(1000)
+    })
+
+    request.fail(function(response){
+      console.log('failed')
+    })
   },
 
   hitPipe1: function(){
@@ -164,10 +194,6 @@ var mainState= {
     this.blueBird.body.velocity.y = -350;
   },
 
-  restartGame: function(){
-    game.state.start('main');
-  },
-
   spawnCloud:function(){
     var cloud = game.add.sprite(1000,Math.floor(Math.random()*900), 'cloud');
     var multiplier = Math.floor(Math.random()*3)
@@ -198,38 +224,40 @@ var mainState= {
   },
 
   spawnQuestion1: function (skill){
-    var problem = game.add.text(20,60, "", { font: '30px Arial', fill: '#ffffff#' });
+    if (!this.gameOver){
+      var problem = game.add.text(20,60, "", { font: '30px Arial', fill: '#ffffff#' });
 
-    param1 = Math.floor(Math.random()*10);
-    param2 = Math.floor(Math.random()*10);
+      param1 = Math.floor(Math.random()*10);
+      param2 = Math.floor(Math.random()*10);
 
-    problem.text = param1.toString() + " + " + param2.toString()
+      problem.text = param1.toString() + " + " + param2.toString()
 
-    that = this;
-    setTimeout(function(){problem.kill()}, 4500-this.speed);
-    return (param1 + param2);
+      that = this;
+      setTimeout(function(){problem.kill()}, 4500);
+      return (param1 + param2);
+    }
   },
 
   spawnQuestion2: function (skill){
-    var problem = game.add.text(20,130, "", { font: '30px Arial', fill: '#ffffff#' });
+    if (!this.gameOver) {
+      var problem = game.add.text(20,130, "", { font: '30px Arial', fill: '#ffffff#' });
 
-    param1 = Math.floor(Math.random()*10);
-    param2 = param1 + Math.floor(Math.random()*10);
+      param1 = Math.floor(Math.random()*10);
+      param2 = param1 + Math.floor(Math.random()*10);
 
-    problem.text = param2.toString() + " - " + param1.toString()
+      problem.text = param2.toString() + " - " + param1.toString()
 
-    that = this;
-    setTimeout(function(){problem.kill()}, 4500);
-    return (param2 - param1);
+      that = this;
+      setTimeout(function(){problem.kill()}, 4500);
+      return (param2 - param1);
+  }
   },
   addOnePipe: function (x,y){
       var pipe = game.add.sprite(x,y, 'pipe');
-
       this.pipes.add(pipe);
 
       game.physics.arcade.enable(pipe);
-
-      pipe.body.velocity.x = -200
+      pipe.body.velocity.x = -200;
 
       pipe.checkWorldsBounds = true;
       pipe.outOfBoundsKill = true;
@@ -261,20 +289,21 @@ var mainState= {
   addRowOfPipes: function() {
     a1 = this.spawnQuestion1();
     a2 = this.spawnQuestion2();
-    console.log(a1)
 
     var config = this.currentConfig();
 
     var count = 0;
-    for(var i = 0; i < config.length; ++i){
+    for(var i = 0; i < config.length; i++){
       if(config[i] == 2) count++;
     }
-    var loc1 =  Math.floor(Math.random()*count)
-    var loc2 =  Math.floor(Math.random()*count)
 
+    while( loc1 === loc2){
+      var loc1 =  Math.floor(Math.random()*count)
+      var loc2 =  Math.floor(Math.random()*count)
+    }
     var answers = []
 
-    for (var i=0 ; i < count ; ++i){
+    for (var i=0 ; i < count ; i++){
       if (i === loc1){
         answers.push(a1)
       } else if (i === loc2){
@@ -283,8 +312,6 @@ var mainState= {
         answers.push(2)
       }
     }
-
-    console.log(answers)
 
     for (var i=0 ; i<config.length ; i++){
       if (config[i] === 1){
@@ -298,9 +325,44 @@ var mainState= {
   }
 };
 
+$(document).ready(function(){
+  flappyButtonClick()
+})
 
-var game = new Phaser.Game(1000,910, Phaser.AUTO, 'flappy-bird');
+var flappyButtonClick = function(){
+  $('#flappy-button').on('click', function(){
+    $(this).remove()
+    load3()
+  })
+}
 
-game.state.add('main', mainState);
+var load3 = function(){
+  $('#flappy-bird').css('background', 'black').html('<h1>3</h1>')
+  setTimeout(function(){
+      load2()
+    }, 1000)
+}
 
-game.state.start('main');
+var load2 = function(){
+  $('#flappy-bird').html('<h1>2</h1>')
+  setTimeout(function(){
+      load1()
+    }, 1000)
+}
+
+var load1 = function(){
+  $('#flappy-bird').html('<h1>1</h1>')
+  setTimeout(function(){
+      loadGame()
+    }, 1000)
+}
+
+var loadGame = function(){
+  $('#flappy-bird').html('')
+  game = new Phaser.Game(1000,910, Phaser.AUTO, 'flappy-bird');
+  game.state.add('main', mainState);
+  game.state.start('main');
+}
+
+
+

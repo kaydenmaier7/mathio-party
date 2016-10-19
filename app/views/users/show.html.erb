@@ -1,7 +1,121 @@
 <h1>Users#show</h1>
 <p>Find me in app/views/users/show.html.erb</p>
 
-<p><%= User.find(1).percent('correct', 'multiplication', '1 times tables', 1) %></p>
-
 <%= render 'partials/radarChart' %>
 <%= render 'partials/bar_line_chart' %>
+
+
+
+<% results = [] %>
+<% @User.results.each do |result| %>
+  <% results << result %>
+<% end %>
+
+  <div class='frogger-user-results-div'>
+
+      <h1><%= @User.username %></h1>
+
+        <table class='frogger-results-table'>
+
+            <tr class='skill-header'>
+              <th>Skill Type</th>
+              <th>Sub Skill</th>
+              <th>Correct</th>
+              <th>Incorrect</th>
+              <th>+ / -</th>
+            </tr>
+            <% names = [] %>
+            <% results.each do |result| %>
+            <% result.sub_skills.each do |skill| %>
+              <% names << skill %>
+            <% end %>
+            <% end %>
+
+            <% names = names.uniq { |n| n.name }.sort_by { |n| SubSkill.where(name: n.name, skill_name: n.skill_name, correct: 1).count - SubSkill.where(name: n.name, skill_name: n.skill_name, incorrect: 1).count }.reverse! %>
+
+            <% names.each do |n| %>
+              <tr>
+                <td><%= n.skill_name %></td>
+                <td><%= n.name %></td>
+                <td><%= SubSkill.where(name: n.name, skill_name: n.skill_name, correct: 1).count %></td>
+                <td><%= SubSkill.where(name: n.name, skill_name: n.skill_name, incorrect: 1).count %></td>
+                <td><%= SubSkill.where(name: n.name, skill_name: n.skill_name, correct: 1).count - SubSkill.where(name: n.name, skill_name: n.skill_name, incorrect: 1).count %></td>
+              </tr>
+            <% end %>
+        </table>
+
+      </div>
+
+
+
+
+
+
+
+<% results = [] %>
+<% @User.results.each do |result| %>
+  <% results << result %>
+<% end %>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+
+
+<div id=<%= @User.id %> style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<table id='<%= @User.id %>-table' class='hidden-table'>
+    <thead>
+        <tr>
+            <th></th>
+            <th>Correct</th>
+            <th>Incorrect</th>
+        </tr>
+    </thead>
+    <tbody>
+      <% skillNames = [] %>
+      <% results.each do |r| %>
+
+
+      <% r.sub_skills.each do |skill| %>
+          <% skillNames << skill %>
+      <% end %>
+      <% end %>
+      <% skillNames = skillNames.uniq { |skill| skill.name }.sort_by { |skill| skill.name } %>
+
+      <% skillNames.each do |skill| %>
+        <tr>
+            <th><%= skill.name %></th>
+            <td><%= SubSkill.where(name: skill.name, skill_name: skill.skill_name, correct: 1).count %></td>
+            <td><%= SubSkill.where(name: skill.name, skill_name: skill.skill_name, incorrect: 1).count %></td>
+        </tr>
+      <% end %>
+    </tbody>
+</table>
+
+<script>$(function () {
+    $('#' + <%= @User.id %>).highcharts({
+        data: {
+            table: '<%= @User.id %>-table'
+        },
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: '<%= @User.username %>'
+        },
+        yAxis: {
+            allowDecimals: false,
+            title: {
+                text: 'Count'
+            }
+        },
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.series.name + '</b><br/>' +
+                    this.point.y + ' ' + this.point.name.toLowerCase();
+            }
+        }
+    });
+});</script>
+
+

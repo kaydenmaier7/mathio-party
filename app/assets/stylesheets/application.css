@@ -68,7 +68,7 @@ body {
   box-shadow: 10px 10px 10px #888888;
 }
 
-#frogger h1 {
+#frogger h1, #flappy-bird h1 {
   padding-top: 25%;
   font-size: 6em;
   color: white;
@@ -76,19 +76,29 @@ body {
 
 #flappy-bird {
   width: 1000px;
+  height: 910px;
+  background-color: white;
   margin: auto;
+  text-align: center;
 }
 
 #frogger-button {
+  display: none;
+}
+
+#flappy-button {
+  margin-top: 45%;
+}
+
+
+.game-start-button {
   width: 25%;
   padding: 10px 20px;
   font-size: 2em;
   border-radius: 5px;
-  display: none;
-
 }
 
-#frogger-button:hover {
+.game-start-button:hover {
   font-weight: bold;
   box-shadow: 5px 5px 5px #888888;
 }

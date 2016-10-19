@@ -94,7 +94,7 @@ var subtractionEquations = [
 new problem('6 - 2 = 4', 'true'),
 new problem('8 - 1 = 8', 'false'),
 new problem('14 - 4 = 10', 'true'),
-new problem('7 - 6 = 1', 'false'),
+new problem('7 - 6 = 6', 'false'),
 new problem('100 - 48 = 52', 'true'),
 new problem('17 - 8 = 11', 'false'),
 new problem('11 - 5 = 6', 'true'),
@@ -367,7 +367,7 @@ function go_fullscreen(){
 // End game
 function gameOver(){
   if (!gameIsOver){
-    if (playerOneScore >= 5 || playerTwoScore >= 5){
+    if (playerOneScore >= 10 || playerTwoScore >= 10){
       gameIsOver = true;
       players.forEach(function(p){
         p.kill();
