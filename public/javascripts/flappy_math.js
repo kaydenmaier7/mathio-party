@@ -89,6 +89,7 @@ var mainState= {
 
   endGame: function(){
     gotext = game.add.text(game.world.centerX, game.world.centerY, "", { font: "64px Arial", fill: "#ffffff", align: "center" });
+    gotext.anchor.setTo(0.5, 0.5);
     if (this.p1score > this.p2score){
       gotext.text = "Player 1 Wins!"
     } else if (this.p2Score > this.p1score){
@@ -96,7 +97,7 @@ var mainState= {
     } else {
       gotext.text = "Tie Game!"
     }
-    game.destroy()
+    //game.destroy()
   },
 
   hitPipe1: function(){
@@ -166,10 +167,6 @@ var mainState= {
     this.blueBird.body.velocity.y = -350;
   },
 
-  restartGame: function(){
-    game.state.start('main');
-  },
-
   spawnCloud:function(){
     var cloud = game.add.sprite(1000,Math.floor(Math.random()*900), 'cloud');
     var multiplier = Math.floor(Math.random()*3)
@@ -226,11 +223,10 @@ var mainState= {
   },
   addOnePipe: function (x,y){
       var pipe = game.add.sprite(x,y, 'pipe');
-
       this.pipes.add(pipe);
 
       game.physics.arcade.enable(pipe);
-
+      pipe.body.velocity.x = -200;
 
       pipe.checkWorldsBounds = true;
       pipe.outOfBoundsKill = true;
@@ -262,20 +258,21 @@ var mainState= {
   addRowOfPipes: function() {
     a1 = this.spawnQuestion1();
     a2 = this.spawnQuestion2();
-    console.log(a1)
 
     var config = this.currentConfig();
 
     var count = 0;
-    for(var i = 0; i < config.length; ++i){
+    for(var i = 0; i < config.length; i++){
       if(config[i] == 2) count++;
     }
-    var loc1 =  Math.floor(Math.random()*count)
-    var loc2 =  Math.floor(Math.random()*count)
 
+    while( loc1 === loc2){
+      var loc1 =  Math.floor(Math.random()*count)
+      var loc2 =  Math.floor(Math.random()*count)
+    }
     var answers = []
 
-    for (var i=0 ; i < count ; ++i){
+    for (var i=0 ; i < count ; i++){
       if (i === loc1){
         answers.push(a1)
       } else if (i === loc2){
@@ -284,8 +281,6 @@ var mainState= {
         answers.push(2)
       }
     }
-
-    console.log(answers)
 
     for (var i=0 ; i<config.length ; i++){
       if (config[i] === 1){
@@ -299,9 +294,44 @@ var mainState= {
   }
 };
 
+$(document).ready(function(){
+  flappyButtonClick()
+})
 
-var game = new Phaser.Game(1000,910, Phaser.AUTO, 'flappy-bird');
+var flappyButtonClick = function(){
+  $('#flappy-button').on('click', function(){
+    $(this).remove()
+    load3()
+  })
+}
 
-game.state.add('main', mainState);
+var load3 = function(){
+  $('#flappy-bird').css('background', 'black').html('<h1>3</h1>')
+  setTimeout(function(){
+      load2()
+    }, 1000)
+}
 
-game.state.start('main');
+var load2 = function(){
+  $('#flappy-bird').html('<h1>2</h1>')
+  setTimeout(function(){
+      load1()
+    }, 1000)
+}
+
+var load1 = function(){
+  $('#flappy-bird').html('<h1>1</h1>')
+  setTimeout(function(){
+      loadGame()
+    }, 1000)
+}
+
+var loadGame = function(){
+  $('#flappy-bird').html('')
+  game = new Phaser.Game(1000,910, Phaser.AUTO, 'flappy-bird');
+  game.state.add('main', mainState);
+  game.state.start('main');
+}
+
+
+
