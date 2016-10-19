@@ -1,3 +1,40 @@
+
+var game = new Phaser.Game(1000,910, Phaser.auto, 'math-hunt');
+
+function Duck() {
+  this.xMove = 0;
+  this.yMove = 0;
+  this.init = function(){
+    this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, 'ten');
+    this.checkWorldsBounds = true;
+    this.outOfBoundsKill = true;
+    this.randomDirection();
+  };
+  this.randomDirection =  function(){
+
+    this.setXMove();
+    this.setYMove();
+    var that = this;
+    setTimeout(function(){ console.log("rando"); this.randomDirection }, Math.floor(Math.random()*800));
+  };
+  this.setXMove = function(){
+    this.xMove = Math.random()<0.5 ? -1: 1;
+    this.xMove *= Math.random() * 5;
+  };
+  this.setYMove = function(){
+    if (this.y < 500){
+      this.yMove = Math.random()<0.5 ? -1: 1;
+      return this.yMove *= Math.random() * 5;
+    } else {
+      return this.yMove = Math.random() * 5;
+    }
+  };
+  this.move = function(){
+    this.sprite.x += this.xMove;
+    this.sprite.y -= this.yMove;
+  }.bind(this);
+};
+
 var mainState= {
   preload: function(){
     game.load.image('stage', '/images/duck_hunt/duck_background.png');
@@ -35,8 +72,13 @@ var mainState= {
     //enable physics
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
+    //initialize sounds
     this.shotSound = game.add.audio('shotSound');
     this.emptyGunSound = game.add.audio('click');
+    this.quacks = game.add.audio('quacks');
+
+    //set up ducks
+    this.ducks = game.add.group();
 
     //set players
     this.p1 = game.add.sprite( 250, 250, 'p1');
@@ -69,12 +111,17 @@ var mainState= {
 
     //initialize bullets
     this.reload();
+
+    //timers
+    this.spawnDucks();
+    // this.duckTimer = game.time.events.loop(10000, this.spawnDuck, this);
   },
   update: function(){
     // keeps target center
     this.centerTarget();
     this.move();
     this.shoot();
+    // this.ducks.randomDirection();
   },
 
   reload: function(){
@@ -145,7 +192,7 @@ var mainState= {
   shoot: function(){
     if (this.p1shoot.isDown && this.p1.canShoot && this.fireBullets(1)){
       this.p1.canShoot = false;
-      that = this;
+      var that = this;
       setTimeout(function(){that.p1.canShoot = true}, 1000)
       this.shot1 = game.add.sprite(this.p1.x, this.p1.y, 'shot');
       this.shot1.anchor.setTo( 0.5, 0.5);
@@ -154,7 +201,7 @@ var mainState= {
     }
     if (this.p2shoot.isDown && this.p2.canShoot && this.fireBullets(2)){
       this.p2.canShoot = false;
-      that = this;
+      var that = this;
       setTimeout(function(){that.p2.canShoot = true}, 1000)
       this.shot2 = game.add.sprite(this.p2.x, this.p2.y, 'shot');
       this.shot2.anchor.setTo( 0.5, 0.5);
@@ -170,12 +217,22 @@ var mainState= {
     this.inner2.y = this.p2.y;
   },
 
-  spawnDuck: function(){
+  spawnDucks: function(){
+    this.quacks.play()
+    var that = this
+    for(var i=0 ; i<3 ; i++){
+      setTimeout(function(){that.oneDuck()},2000);
+    }
+  },
 
+  oneDuck: function(){
+    var duck = new Duck();
+    duck.init();
+    game.time.events.loop(1, duck.move, this);
   }
+
 };
 
-var game = new Phaser.Game(1000,910, Phaser.auto, 'math-hunt');
 
 game.state.add('main', mainState);
 game.state.start('main');
