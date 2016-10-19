@@ -85,6 +85,8 @@ function update(){
   playerBeam();
   moveCow();
   removeCow();
+
+  game.physics.arcade.overlap(players, cow, playerCowCollision, null, this);
 };
 
 // create a cow
@@ -215,4 +217,8 @@ function displayEquations(){
   $('body').append('<div class="p2 equation"></div>');
   $('.p1').append('<p>' + question1 + '</p>');
   $('.p2').append('<p>' + question2 + '</p>');
+};
+
+function playerCowCollision(){
+  console.log('collision');
 };
