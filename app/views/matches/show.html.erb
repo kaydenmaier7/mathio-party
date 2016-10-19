@@ -1,0 +1,17 @@
+<p>this is match show</p>
+
+
+<% @match.results.each do |result| %>
+  <ul>
+  <li><%= result.user.email %></li>
+  <% result.sub_skills.each do |skill| %>
+
+      <% if skill.correct == 1 %>
+  <li><%= skill.name %></li>
+      <% end %>
+
+  <% end %>
+
+  </ul>
+
+<% end %>

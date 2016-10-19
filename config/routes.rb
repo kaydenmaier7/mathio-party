@@ -15,4 +15,6 @@ Rails.application.routes.draw do
   post 'results' => 'results#create'
 
   root 'games#index'
+
+  get 'matches/:id' => 'matches#show'
 end
