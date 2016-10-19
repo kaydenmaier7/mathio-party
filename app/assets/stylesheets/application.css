@@ -24,6 +24,7 @@ html, body {
 body {
   margin: 0;
   background-color: #e0e0e0;
+  text-align: center;
 }
 
 .navBar {
@@ -172,15 +173,29 @@ path.area {
   display: inline-block;
   padding: 1%, 2%, 1%, 2%;
   width: 15%;
+  height: 600px;
   font-size: xx-large;
   text-align: center;
+  box-shadow: 10px 10px 10px #888888;
 }
 
 .p1 {
+  float: right;
   background-color: #544E36;
 }
 
 .p2 {
+  float: left;
   background-color: #C62A47;
+}
+
+#invasion {
+  display: inline-block;
+  width: 1000px;
+  height: 600px;
+  background-color: white;
+  margin: 1% auto;
+  text-align: center;
+  box-shadow: 10px 10px 10px #888888;
 }
 
