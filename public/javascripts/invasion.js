@@ -27,7 +27,17 @@ var assets = [
   ['cow', '/images/invasion/cow.png'],
   ['ufo1', '/images/invasion/ufo1.png'],
   ['ufo2', '/images/invasion/ufo2.png'],
-  ['beam', '/images/invasion/beam.png']
+  ['beam', '/images/invasion/beam.png'],
+  ['cow1', '/images/invasion/cow1.png'],
+  ['cow2', '/images/invasion/cow2.png'],
+  ['cow3', '/images/invasion/cow3.png'],
+  ['cow4', '/images/invasion/cow4.png'],
+  ['cow5', '/images/invasion/cow5.png'],
+  ['cow6', '/images/invasion/cow6.png'],
+  ['cow7', '/images/invasion/cow7.png'],
+  ['cow8', '/images/invasion/cow8.png'],
+  ['cow9', '/images/invasion/cow9.png'],
+  ['cow10', '/images/invasion/cow10.png']
 ];
 
 // add game window to page
@@ -95,8 +105,9 @@ function update(){
 
 // create a cow
 function spawnCow(x, y){
-  var newCow = cow.create(x, y, 'cow');
-  newCow.value = Math.floor( Math.random() * 11 );
+  var randomValue = Math.floor( Math.random() * 11 );
+  var newCow = cow.create(x, y, 'cow' + randomValue);
+  newCow.value = randomValue;
   cowValues.push(newCow.value);
   newCow.speed = cowSpeedOptions[Math.floor(Math.random()*cowSpeedOptions.length)];
   newCow.interval = cowMovementIntervals[Math.floor(Math.random()*cowMovementIntervals.length)];
@@ -222,7 +233,7 @@ function refreshQuestions(cow){
     questions.shift();
     generateQuestion1();
     displayEquations();
-  } else
+  }
   if (cow.value == questions[1][2]){
     questions.pop();
     generateQuestion2();
