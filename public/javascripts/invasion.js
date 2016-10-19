@@ -201,6 +201,18 @@ function captureCow(player, cow) {
   setTimeout(function(){spawnCow(Math.random()*(game.width - 100) , Math.random()*(game.height/2) + game.height* 0.3)}, 2500);
 };
 
+// make a new question when a cow that answers a question is destroyed
+function refreshQuestions(cow){
+  if (!cowValues.includes(questions[0][2])){
+    questions.shift();
+    generateQuestion1();
+  } else
+  if (!cowValues.includes(questions[1][2])){
+    questions.pop();
+    generateQuestion2();
+  };
+};
+
 function generateQuestion1(){
   questions.unshift(generateEquation());
   assignQuestion1();
