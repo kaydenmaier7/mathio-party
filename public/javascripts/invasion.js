@@ -3,10 +3,11 @@ $(document).ready(function(){
 })
 
 // declare all object types
-var cow, players, beams, question1, question2;
+var cow, players, beams, question1, question2, answer1, answer2;
 
 // cow movement parameters
 var cowValues = [];
+var questions = [];
 var startingCows = 4;
 var timer = 0;
 setInterval(function(){ timer = timer + 1 }, 1000);
@@ -59,8 +60,15 @@ function create(){
     spawnCow(Math.random()*(game.width - 100) , Math.random()*(game.height/2) + game.height* 0.3);
   }
 
-  question1 = generateEquation();
-  question2 = generateEquation();
+  // make the two starting equations
+  generateEquation();
+  generateEquation();
+
+  // make question1 and question2
+  assignQuestion1();
+  assignQuestion2();
+
+  // display question1 and question2
   displayEquations();
 
   // create the players
@@ -184,6 +192,7 @@ function moveCow(){
 function removeCow() {
   cow.forEach(function(c){
     if (c.position.y < 50){
+
       c.kill();
       c.destroy();
       setTimeout(function(){spawnCow(Math.random()*(game.width - 100) , Math.random()*(game.height/2) + game.height* 0.3)}, 2500);
@@ -207,9 +216,10 @@ function generateEquation(){
       invalid = false;
     };
   };
-  // return a question
-  var question = x + ' + ' + y + ' = ?';
-  return question;
+  // save the answers
+  var answers = x + y;
+  // add the question data to the questions array
+  questions.push([x, y, answer]);
 };
 
 function displayEquations(){
@@ -221,4 +231,14 @@ function displayEquations(){
 
 function playerCowCollision(){
   console.log('collision');
+};
+
+function assignQuestion1(){
+  question1 = questions[0][0] + " + " + questions[0][1]
+  answer1 = questions[0][2]
+};
+
+function assignQuestion2(){
+  question2 = questions[1][0] + " + " + questions[1][1]
+  answer2 = questions[1][2]
 };
