@@ -100,6 +100,13 @@ var mainState= {
     this.inner2.anchor.setTo( 0.5, 0.5 );
     game.physics.arcade.enable(this.p2);
 
+    //initialize game
+    this.p1Question = game.add.text(160,810,"", { font: '30px Arial', fill: '#ff5733' });
+    this.p1Question.anchor.set(.5,0)
+    this.p2Question = game.add.text(840,810,"", { font: '30px Arial', fill: '#4933ff' });
+    this.p2Question.anchor.set(.5,0)
+
+
     this.p1.canShoot = true;
     this.p2.canShoot = true;
 
@@ -121,8 +128,8 @@ var mainState= {
     this.reload();
 
     //timers
-    this.spawnDucks();
-    // this.duckTimer = game.time.events.loop(10000, this.spawnDuck, this);
+    // this.spawnDucks();
+    this.duckTimer = game.time.events.loop(1000, this.spawnDucks, this);
   },
   update: function(){
     this.centerTarget();
@@ -319,8 +326,10 @@ var mainState= {
   },
 
   spawnDucks: function(){
-    this.quacks.play()
-    var that = this
+    this.reload();
+    this.spawnQuestions();
+    this.quacks.play();
+    var that = this;
     for(var i=0 ; i<3 ; i++){
       setTimeout(function(){that.oneDuck()},2000);
     }
@@ -356,7 +365,20 @@ var mainState= {
     this.p2b3.bringToTop();
     this.p1.bringToTop();
     this.p2.bringToTop();
-  }
+    this.p1Question.bringToTop();
+    this.p2Question.bringToTop();
+  },
+
+  spawnQuestions: function(skill1,skill2){
+    var num1 = Math.floor(Math.random()*10);
+    var num2 = Math.floor(Math.random()*10);
+    this.p1Question.text = num1.toString() + " + " + num2.toString();
+
+    num1 = Math.floor(Math.random()*10);
+    num2 = Math.floor(Math.random()*10);
+    this.p2Question.text = num1.toString() + " + " + num2.toString();
+  },
+
 };
 
 game.state.add('main', mainState);
