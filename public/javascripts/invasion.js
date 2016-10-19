@@ -79,7 +79,7 @@ function create(){
   generateQuestion2();
 
   // display question1 and question2
-  displayEquations();
+  displayPlayerInfo();
 
   // create the players
   players = game.add.group();
@@ -238,12 +238,12 @@ function refreshQuestions(cow){
   if (cow.value == questions[0][2]){
     questions.shift();
     generateQuestion1();
-    displayEquations();
+    displayPlayerInfo();
   }
   if (cow.value == questions[1][2]){
     questions.pop();
     generateQuestion2();
-    displayEquations();
+    displayPlayerInfo();
   };
 };
 
@@ -275,12 +275,14 @@ function generateEquation(){
   return [x, y, answer];
 };
 
-function displayEquations(){
+function displayPlayerInfo(){
   $('.equation').remove();
   $('body').append('<div class="p1 equation"></div>');
   $('body').append('<div class="p2 equation"></div>');
-  $('.p1').append('<p>' + question1 + '</p>');
-  $('.p2').append('<p>' + question2 + '</p>');
+  $('.p1').append('<p> Question: ' + question1 + '</p>');
+  $('.p2').append('<p> Question: ' + question2 + '</p>');
+  $('.p1').append('<p> Score: ' + playerOneScore + '</p>');
+  $('.p2').append('<p> Score: ' + playerTwoScore + '</p>');
 };
 
 function assignQuestion1(){
