@@ -2,8 +2,8 @@ $(document).ready(function(){
 
   var width = $('.games-main').width();
   var height = $('.games-main').height();
-  var buttonSize = 80;
-  var buttonY = height * 0.68;
+  var buttonSize = 120;
+  var buttonY = height * 0.665;
   var games = [
       ['flappy_bird', 'http://files.gamebanana.com/img/ico/sprays/538578b593b47.gif'],
       ['frogger', 'http://andyluvsdonna.com/wp-content/uploads/2015/02/frogger-1.png'],
