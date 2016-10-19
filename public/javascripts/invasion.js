@@ -221,12 +221,12 @@ function refreshQuestions(cow){
   if (cow.value == questions[0][2]){
     questions.shift();
     generateQuestion1();
-    console.log(questions[0]);
+    displayEquations();
   } else
   if (cow.value == questions[1][2]){
     questions.pop();
     generateQuestion2();
-    console.log(questions[1]);
+    displayEquations();
   };
 };
 
@@ -259,6 +259,7 @@ function generateEquation(){
 };
 
 function displayEquations(){
+  $('.equation').remove();
   $('body').append('<div class="p1 equation"></div>');
   $('body').append('<div class="p2 equation"></div>');
   $('.p1').append('<p>' + question1 + '</p>');
