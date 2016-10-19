@@ -5,6 +5,9 @@ $(document).ready(function(){
 // declare all object types
 var cow, players, beams, question1, question2, answer1, answer2;
 
+var playerOneScore = 0;
+var playerTwoScore = 0;
+
 // cow movement parameters
 var cowValues = [];
 var questions = [];
@@ -217,6 +220,8 @@ function removeCow() {
 
 // destroy cows that collide with players
 function captureCow(player, cow) {
+  // increment the player score when they capture the correct cow
+  changeScore(player, cow);
   // remove the cow's value from the cowValue array
   removeCowValue(cow.value);
   // make a new question if the cow answered one of the questions
@@ -297,4 +302,16 @@ function removeCowValue(value){
   });
   // remove the input value from the cowValues array
   cowValues.splice(index, 1);
+};
+
+function changeScore(player, cow){
+  if (player.player_id === 'ufo1'){
+    if (cow.value == questions[0][2]){
+      playerOneScore++;
+    };
+  } else if (player.player_id === 'ufo2') {
+    if (cow.value == questions[1][2]){
+      playerTwoScore++;
+    };
+  };
 };
