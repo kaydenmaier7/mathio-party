@@ -72,6 +72,7 @@ function create(){
 };
 
 function update(){
+  removeBeams();
   playerMovement();
   playerBeam();
   moveCow();
@@ -132,11 +133,19 @@ function playerBeam(){
   });
 };
 
+function removeBeams(){
+  beams.forEach(function(b){
+    if (b){
+      b.kill();
+    }
+  });
+};
+
 function shootBeam(x, id){
   if (id === 'ufo1'){
-    beams.create(x - 15, 120, 'beam');
+    beams.create(x - 39, 120, 'beam');
   } else if (id === 'ufo2'){
-    beams.create(x + 10, 150, 'beam');
+    beams.create(x -11, 145, 'beam');
   };
 };
 
