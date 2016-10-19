@@ -16,6 +16,9 @@ function setCowSpeed(){
 }
 setInterval(setCowSpeed, 1000);
 
+// locations
+var player1Location, player2Location, beamPosition;
+
 // declare static assets
 var assets = [
   ["background", "/assets/invasion/farm.png"],
@@ -85,6 +88,7 @@ function spawnCow(x, y){
   newCow.speed = cowSpeedOptions[Math.floor(Math.random()*cowSpeedOptions.length)];
   newCow.interval = cowMovementIntervals[Math.floor(Math.random()*cowMovementIntervals.length)];
   newCow.body.collideWorldBounds = true;
+  newCow.area = newCow.getBounds();
 };
 
 function createPlayer1(x, y, id){
@@ -137,6 +141,8 @@ function removeBeams(){
   beams.forEach(function(b){
     if (b){
       b.kill();
+      b.destroy();
+      beamPosition = null;
     }
   });
 };
@@ -148,13 +154,23 @@ function shootBeam(x, id){
     var beam = beams.create(x -11, 145, 'beam');
   };
   beam.alpha = 0.4;
+  beamPosition = x;
+  console.log(beamPosition);
 };
 
+// move cow horizontally at intervals
 function moveCow(){
   cow.forEach(function(c){
     c.body.velocity.x = 0;
-    if (timer % c.interval == 0) {
+    // move cow vertically if hit with a beam
+    if (beamPosition &&
+      beamPosition < c.position.x &&
+      c.position.x < (beamPosition + 100) ){
+        c.body.velocity.y = -200;
+    } else if (timer % c.interval == 0) {
       c.body.velocity.x = c.speed;
+      c.area = c.getBounds();
     };
   });
 };
+
