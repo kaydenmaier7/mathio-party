@@ -21,10 +21,12 @@
       <br>
 
 
-      <button id='frogger-button'>start</button></div>
+      <button id='frogger-button' class='game-start-button'>start</button></div>
 
     <% elsif @game.id == 2 %>
-    <div id='flappy-bird'></div>
+    <div id='flappy-bird'>
+      <button id='flappy-button' class='game-start-button'>start</button>
+    </div>
 
     <% elsif @game.id == 3 %>
     <div id='invasion'></div>
