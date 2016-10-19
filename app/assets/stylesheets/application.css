@@ -170,8 +170,8 @@ path.area {
   margin: 1%;
   border-radius: 1em;
   display: inline-block;
-  padding: 2%;
-  width: 10%;
+  padding: 1%, 2%, 1%, 2%;
+  width: 15%;
   font-size: xx-large;
   text-align: center;
 }
