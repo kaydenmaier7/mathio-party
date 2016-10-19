@@ -50,6 +50,11 @@ var mainState= {
     //numbers
     game.load.image('empty', '/images/duck_hunt/empty.png');
 
+    //score
+    game.load.image('redScore', '/images/duck_hunt/red_score.png');
+    game.load.image('blueScore', '/images/duck_hunt/blue_score.png');
+    game.load.image('noScore', '/images/duck_hunt/no_score.png');
+
     //bullets
     game.load.image('bullet', '/images/duck_hunt/bullet.png');
     //ducks
@@ -109,7 +114,6 @@ var mainState= {
     this.p2Question = game.add.text(840,810,"", { font: '30px Arial', fill: '#4933ff' });
     this.p2Question.anchor.set(.5,0)
 
-
     this.p1.canShoot = true;
     this.p2.canShoot = true;
 
@@ -126,7 +130,10 @@ var mainState= {
     this.p2left  = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     this.p2shoot = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
 
-    var print = true;
+    //initialize scoring
+    this.score1 = [];
+    this.score2 = [];
+
     //initialize bullets
     this.reload();
 
@@ -272,10 +279,9 @@ var mainState= {
     var dedDuck = game.add.sprite(xCord, yCord, 'dedDuck');
     dedDuck.anchor.setTo(.5,.5);
     this.hit.play();
-    // duck.destroy;
-    console.log('hit!')
     this.updateScore(1);
     var that = this;
+    this.answer1.text= ""
     setTimeout(function(){
       dedDuck.kill();
       var downDuck = game.add.sprite(xCord, yCord, 'downDuck');
@@ -293,9 +299,9 @@ var mainState= {
     var dedDuck = game.add.sprite(xCord, yCord, 'dedDuck');
     dedDuck.anchor.setTo(.5,.5);
     this.hit.play();
-    // duck.destroy;
     this.updateScore(2);
     var that = this;
+    this.answer2.text= ""
     setTimeout(function(){
       dedDuck.kill();
       var downDuck = game.add.sprite(xCord, yCord, 'downDuck');
@@ -308,7 +314,30 @@ var mainState= {
   },
 
   updateScore: function(player){
-    console.log('Updating');
+    if (player === 1){
+      this.score1.push(1);
+    } else if (player === 2){
+      this.score2.push(1)
+    }
+    this.renderScore();
+  },
+
+  renderScore: function(){
+    for (var i=0 ; i < this.score1.length ; i++){
+      if (this.score1[i] === 1){
+        game.add.sprite(312+(i*35),830,'redScore');
+      } else if (this.score1[1] === 0){
+        game.add.sprite(312+(i*35),830,'noScore');
+      }
+    }
+
+    for (var i=0 ; i < this.score2.length ; i++){
+      if (this.score1[i] === 1){
+        game.add.sprite(654-(i*35),830,'blueScore');
+      } else if (this.score1[1] === 0){
+        game.add.sprite(654+(i*35),830,'noScore');
+      }
+    }
   },
 
   centerTarget: function(){
@@ -316,8 +345,6 @@ var mainState= {
     this.inner1.y = this.p1.y;
     this.inner2.x = this.p2.x;
     this.inner2.y = this.p2.y;
-
-
   },
 
   spawnDucks: function(){
@@ -356,6 +383,7 @@ var mainState= {
     this.p2.bringToTop();
     this.p1Question.bringToTop();
     this.p2Question.bringToTop();
+    this.renderScore();
   },
 
   spawnQuestions: function(skill1,skill2){
@@ -376,7 +404,6 @@ var mainState= {
     var rand = Math.floor(Math.random()*20).toString()
     this.answers.push(rand);
 
-    console.log(this.answers);
     this.answer1.text = this.answers[0];
     this.answer2.text = this.answers[1];
     this.answer3.text = this.answers[2];
