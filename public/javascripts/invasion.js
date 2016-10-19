@@ -28,6 +28,7 @@ var assets = [
   ['ufo1', '/images/invasion/ufo1.png'],
   ['ufo2', '/images/invasion/ufo2.png'],
   ['beam', '/images/invasion/beam.png'],
+  ['cow0', '/images/invasion/cow0.png'],
   ['cow1', '/images/invasion/cow1.png'],
   ['cow2', '/images/invasion/cow2.png'],
   ['cow3', '/images/invasion/cow3.png'],
