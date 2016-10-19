@@ -4,9 +4,9 @@ var game = new Phaser.Game(1000,910, Phaser.auto, 'math-hunt');
 function Duck() {
   this.xMove = 0;
   this.yMove = 0;
-  this.init = function(ducks){
-    this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, 'ten');
-    ducks.add(this.sprite);
+  this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, 'ten');
+  this.sprite.anchor.setTo( 0.5, 0.5 );
+  this.init = function(){
     game.physics.arcade.enable(this);
     this.checkWorldsBounds = true;
     this.outOfBoundsKill = true;
@@ -18,14 +18,14 @@ function Duck() {
   };
   this.setXMove = function(){
     this.xMove = Math.random()<0.5 ? -1: 1;
-    this.xMove *= Math.random() * 5;
+    this.xMove *= Math.random() * 1;
   };
   this.setYMove = function(){
     if (this.y < 500){
       this.yMove = Math.random()<0.5 ? -1: 1;
       return this.yMove *= Math.random() * 5;
     } else {
-      return this.yMove = Math.random() * 5;
+      return this.yMove = Math.random() * 1;
     }
   };
   this.move = function(){
@@ -58,7 +58,7 @@ var mainState= {
     game.load.image('bullet', '/images/duck_hunt/bullet.png');
     //ducks
     game.load.image('dedDuck', '/images/duck_hunt/blue_shot.png');
-    game.load.image('fallingDuck', '/images/duck_hunt/blue_down.png');
+    game.load.image('downDuck', '/images/duck_hunt/blue_down.png');
     //sounds
     game.load.audio('shotSound', '/sounds/duck_hunt/shot.wav')
     game.load.audio('quacks', '/sounds/duck_hunt/quacks.wav')
@@ -78,6 +78,8 @@ var mainState= {
     this.shotSound = game.add.audio('shotSound');
     this.emptyGunSound = game.add.audio('click');
     this.quacks = game.add.audio('quacks');
+    this.hit = game.add.audio('hit');
+    this.fall = game.add.audio('fall');
 
     //set up ducks
     this.ducks = game.add.group();
@@ -119,11 +121,15 @@ var mainState= {
     // this.duckTimer = game.time.events.loop(10000, this.spawnDuck, this);
   },
   update: function(){
-    // keeps target center
     this.centerTarget();
     this.move();
     this.shoot();
-    // this.ducks.randomDirection();
+  },
+
+  checkOverlap: function(spriteA, spriteB) {
+    var boundsA = spriteA.getBounds();
+    var boundsB = spriteB.getBounds();
+    return Phaser.Rectangle.intersects(boundsA, boundsB);
   },
 
   reload: function(){
@@ -200,8 +206,9 @@ var mainState= {
       this.shot1.anchor.setTo( 0.5, 0.5);
       game.physics.arcade.enable(this.shot1);
       setTimeout(function(){that.shot1.kill()},100);
+      this.shotSound.play();
 
-      game.physics.arcade.overlap(this.ducks, this.shot1, this.hitBird1, null,this);
+      if (this.checkOverlap(this.inner1, this.duck.sprite)){this.hitBird1(this.ducks)}
     }
     if (this.p2shoot.isDown && this.p2.canShoot && this.fireBullets(2)){
       this.p2.canShoot = false;
@@ -210,25 +217,44 @@ var mainState= {
       this.shot2 = game.add.sprite(this.p2.x, this.p2.y, 'shot');
       this.shot2.anchor.setTo( 0.5, 0.5);
       setTimeout(function(){that.shot2.kill()},100);
+      this.shotSound.play();
 
-
+      if (this.checkOverlap(this.inner2, this.duck.sprite)){this.hitBird2(this.ducks)}
     }
   },
 
   hitBird1: function(duck){
-    var dedDuck = game.add.sprite(duck.x, duck.y, 'dedDuck');
+    var dedDuck = game.add.sprite(this.x, this.y, 'dedDuck');
     this.hit.play();
     duck.destroy();
-    updateScore(1);
+    this.updateScore(1);
+    var that = this;
+    console.log(duck.x)
     setTimeout(function(){
       dedDuck.kill();
-      var downDuck = game.add.sprite(duck.x, duck.y, 'downDuck');
+      var downDuck = game.add.sprite(duck.sprite.x, duck.y, 'downDuck');
       game.physics.arcade.enable(downDuck);
-      downDuck.body.velocity.y = -200;
-      this.fall.play();
+      downDuck.body.velocity.y = 200;
+      that.fall.play();
+      that.reorderSprites();
     },500);
   },
 
+  hitBird2: function(duck){
+    var dedDuck = game.add.sprite(this.x, this.y, 'dedDuck');
+    this.hit.play();
+    duck.destroy();
+    this.updateScore(2);
+    var that = this;
+    setTimeout(function(){
+      dedDuck.kill();
+      var downDuck = game.add.sprite(that.duck.x, that.duck.y, 'downDuck');
+      game.physics.arcade.enable(downDuck);
+      downDuck.body.velocity.y = 200;
+      that.fall.play();
+      that.reorderSprites();
+    },500);
+  },
   updateScore: function(player){
     console.log('Updating');
   },
@@ -244,15 +270,17 @@ var mainState= {
     this.quacks.play()
     var that = this
     for(var i=0 ; i<3 ; i++){
-      setTimeout(function(){that.oneDuck()},2000);
+      setTimeout(function(){that.oneDuck(i)},2000);
     }
 
   },
 
-  oneDuck: function(){
-    var duck = new Duck();
-    duck.init(this.ducks);
-    game.time.events.loop(1, duck.move, this);
+  oneDuck: function(count){
+    if (count === 0) { this.duck1 = new Duck();}
+    else if (count === 1) { this.duck2 = new Duck();}
+    else { this.duck3 = new Duck();}
+    this.duck.init();
+    game.time.events.loop(1, this.duck.move, this);
     this.reorderSprites();
   },
 
