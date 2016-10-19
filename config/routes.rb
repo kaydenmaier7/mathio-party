@@ -6,9 +6,7 @@ Rails.application.routes.draw do
   delete 'players/logout' => 'players#destroy'
 
   devise_for :users
-  get 'users' => 'users#index'
-	get 'users/:id' => 'users#show'
-
+  resources :users, only: [:index, :show]
   get 'games' => 'games#index'
   get 'games/:id' => 'games#show'
 
