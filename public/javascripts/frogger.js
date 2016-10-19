@@ -142,8 +142,10 @@ function preload() {
   game.load.image('car3', '/images/frogger/car3.png');
   game.load.image('police1', '/images/frogger/police1.png')
   game.load.image('hummer1', '/images/frogger/limo1.png')
+  game.load.image('bike', '/images/frogger/lambo.png')
   game.load.audio('carhorn1', '/sounds/frogger_sounds/carhorn1.wav')
   game.load.audio('croak1', '/sounds/frogger_sounds/croak1.wav')
+  game.load.audio('error', '/sounds/frogger_sounds/error.wav')
 }
 
 function create(){
@@ -183,6 +185,7 @@ function create(){
     game.input.onDown.add(go_fullscreen, this);
     hornSound = game.add.audio('carhorn1')
     croakSound = game.add.audio('croak1')
+    errorSound = game.add.audio('error')
 
     // Text
     playerOneText = game.add.text(32, 550, 'Player 1: ' + playerOneScore, { font: '30px Arial', fill: '#ffffff', align: 'left'});
@@ -326,16 +329,19 @@ function updatePlayerHealth(player){
 
 function playerBugCollisionHandler(player, bug){
   bug.kill();
-  croakSound.play();
+
   createBug(Math.random()*(game.width - 20), Math.random()*(game.height - 20))
 
   if (current_equation.truth === 'true'){
-
+    croakSound.play();
       if (player.player_id === 1){
         playerOneScore += 1;
         if (playerOneScore === 2){
             createCar(1000, 225, 'hummer1', 200);
            }
+        if (playerOneScore === 1){
+          createCar(1000, 425, 'bike', 400)
+        }
         playerOneText.text = 'Player 1: ' + playerOneScore
         playerOneCorrect.push(current_equation.problem)
       } else if (player.player_id === 2) {
@@ -344,6 +350,7 @@ function playerBugCollisionHandler(player, bug){
         playerTwoCorrect.push(current_equation.problem)
       }
   } else {
+    errorSound.play()
     if (player.player_id === 1){
         playerTwoScore += 1;
         playerTwoText.text = 'Player 2: ' + playerTwoScore;
@@ -353,8 +360,6 @@ function playerBugCollisionHandler(player, bug){
         playerOneText.text = 'Player 1: ' + playerOneScore;
         playerTwoWrong.push(current_equation.problem)
     }
-    player.x = 0
-    player.y = 0
   }
   current_equation = equations[Math.floor(Math.random()*(equations.length - 0))]
   questionTimer = 0
