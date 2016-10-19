@@ -36,6 +36,7 @@ var mainState= {
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
     this.shotSound = game.add.audio('shotSound');
+    this.emptyGunSound = game.add.audio('click');
 
     //set players
     this.p1 = game.add.sprite( 250, 250, 'p1');
@@ -68,7 +69,6 @@ var mainState= {
 
     //initialize bullets
     this.reload();
-    this.bullets();
   },
   update: function(){
     // keeps target center
@@ -92,15 +92,41 @@ var mainState= {
 
   fireBullets: function(player){
     if ( player === 1 ){
-      if(this.p2b3){
-        this.p2b3.destroy();
-      }else if(this.p2b2){
-        this.p2b2.destroy();
+      if(this.p1bullets.length === 3){
+        this.p1b3.destroy();
+        this.p1bullets.pop();
+        return true;
+      }else if(this.p1bullets.length === 2){
+        this.p1b2.destroy();
+        this.p1bullets.pop();
+        return true;
+      }else if (this.p1bullets.length === 1){
+        this.p1b1.destroy();
+        this.p1bullets.pop();
+        return true;
       }else{
-        this.p2b1.destroy();
+        this.emptyGunSound.play();
+        return false;
       }
     }
-
+    if ( player === 2 ){
+        if(this.p2bullets.length === 3){
+        this.p2b3.destroy();
+        this.p2bullets.pop();
+        return true;
+      }else if(this.p2bullets.length === 2){
+        this.p2b2.destroy();
+        this.p2bullets.pop();
+        return true;
+      }else if (this.p2bullets.length === 1){
+        this.p2b1.destroy();
+        this.p2bullets.pop();
+        return true;
+      }else{
+        this.emptyGunSound.play();
+        return false;
+      }
+    }
   },
 
   // player 1 movement
@@ -117,8 +143,7 @@ var mainState= {
   },
 
   shoot: function(){
-    if (this.p1shoot.isDown && this.p1.canShoot && this.p1bullets.length > 0){
-      this.p1bullets.pop();
+    if (this.p1shoot.isDown && this.p1.canShoot && this.fireBullets(1)){
       this.p1.canShoot = false;
       that = this;
       setTimeout(function(){that.p1.canShoot = true}, 1000)
@@ -127,8 +152,7 @@ var mainState= {
       setTimeout(function(){that.shot1.kill()},100);
       this.shotSound.play();
     }
-    if (this.p2shoot.isDown && this.p2.canShoot && this.p2bullets.length > 0){
-      this.p2bullets.pop();
+    if (this.p2shoot.isDown && this.p2.canShoot && this.fireBullets(2)){
       this.p2.canShoot = false;
       that = this;
       setTimeout(function(){that.p2.canShoot = true}, 1000)
