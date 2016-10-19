@@ -8,7 +8,7 @@ function Duck() {
     this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, 'ten');
     this.checkWorldsBounds = true;
     this.outOfBoundsKill = true;
-    this.randomDirection();
+    game.time.events.loop(Math.random()*1200+800, this.randomDirection, this );
   };
   this.randomDirection =  function(){
     console.log("called");
@@ -228,7 +228,6 @@ var mainState= {
     duck.init();
     game.time.events.loop(1, duck.move, this);
     var that = this;
-    // game.time.events.loop(Math.random()*800, that.randomDirection, this );
   }
 
 };
