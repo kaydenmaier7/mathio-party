@@ -41,7 +41,7 @@ var mainState= {
 
     this.timer = game.time.events.loop(4500-this.speed, this.addRowOfPipes, this);
     this.timer = game.time.events.loop(3000, this.spawnCloud, this);
-    this.time = 900
+    this.time = 12000
     this.timer = game.add.text(800,20, this.time, { font: "64px Arial", fill: "#ffffff", align: "center" });
 
     game.time.events.loop(1, this.updateCounter, this);
