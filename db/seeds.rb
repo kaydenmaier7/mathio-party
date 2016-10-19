@@ -7,8 +7,12 @@ user1 = {
 game1 = {
 	name: 'Frogger',
 	src: '/javascripts/frogger.js',
-	description: 'Frogger with Math!',
-	directions: 'You do the thing and stuff happens!'
+	description: 'A spin on the classic Frogger game. Compete against other players to catch ladybugs.',
+  directions: "Move around the field and catch lady bugs with the math equation above is true. If you eat a ladybug when the equation is false, your opponent will get a point. If you hit a car, you will be faded for a time and will move at a decreased speed- giving your opponent a major advantage. The first player to reach 10 points wins!",
+  player1_character: 'Green Frog',
+  player2_character: 'Blue Frog',
+  player1_controls: 'Up Arrow: Move up, Down Arrow: Move Down, Left Arrow: Move Left, Right Arrow: Move Right',
+  player2_controls: 'W: Up, S: Down, A: Left, D: Right'
 }
 
 game2 = {
