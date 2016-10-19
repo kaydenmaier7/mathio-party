@@ -4,36 +4,47 @@
 
 
 
+
+
 .correct-answers {
-  color: green;
+  th, .skill-header {
+    color: green;
+  }
+  border: 2px solid green;
 }
 
 .incorrect-answers {
-  color: red;
+  th, .skill-header {
+    color: red
+  }
+  border: 2px solid red;
 }
 
 .frogger-results-table {
 
   margin: 10px auto;
-  border: 1px solid green;
   background: white;
-  padding: 10px 20px;
   text-align: center;
   width: 75%;
+  box-shadow: 2px 2px 2px black;
+
+  tr:nth-child(even){
+    background-color: whitesmoke;
+  }
 
   th {
-    color: black;
     font-size: 2.5em;
+    padding: 10px;
   }
 
   td {
     width: 25%;
     font-size: 2em;
-    padding: 2px;
+    padding: 7px;
   }
 
   .skill-header {
-    color: black;
+    //color: black;
     text-decoration: underline;
   }
 
@@ -44,10 +55,19 @@
   border: 1px solid red;
   width: 75%;
   margin: auto;
+
+  h1 {
+    font-size: 3em;
+    padding: 10px;
+    margin: 0;
+  }
 }
 
 .frogger-results-table:hover {
-  box-shadow: 2px 2px 2px black;
+  box-shadow: 4px 4px 4px black;
 
+  th {
+    text-decoration: underline;
+  }
 
 }

@@ -4,6 +4,7 @@
 <% @match.results.each do |result| %>
 
 
+
 <div class='frogger-user-results-div'>
 
 <h1><%= result.user.username %></h1>
@@ -21,10 +22,10 @@
             <% vals[[skill.name, skill.skill_name]] ? vals[[skill.name, skill.skill_name]] += 1 : vals[[skill.name, skill.skill_name]] = 1 %>
         <% end %>
       <% end %>
-      <% vals = vals.sort_by { |k, v| } %>
+      <% vals = vals.sort_by { |k, v| v } %>
       <% vals.each do |skill, count| %>
         <tr>
-          <td><%= skill[1] %></td><td><%= skill[0] %></td><td><%= count %></td>
+          <td><%= skill[1].capitalize %></td><td><%= skill[0].capitalize %></td><td><%= count %></td>
         </tr>
       <% end %>
   </table>
@@ -45,10 +46,10 @@
         <% end %>
       <% end %>
 
-      <% vals = vals.sort_by { |k, v| } %>
+      <% vals = vals.sort_by { |k, v| v } %>
       <% vals.each do |skill, count| %>
         <tr>
-          <td><%= skill[1] %></td><td><%= skill[0] %></td><td><%= count %></td>
+          <td><%= skill[1].capitalize %></td><td><%= skill[0].capitalize %></td><td><%= count %></td>
         </tr>
       <% end %>
   </table>
