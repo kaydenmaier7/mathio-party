@@ -2,16 +2,58 @@
 
 
 <% @match.results.each do |result| %>
-  <ul>
-  <li><%= result.user.email %></li>
-  <% result.sub_skills.each do |skill| %>
-
-      <% if skill.correct == 1 %>
-  <li><%= skill.name %></li>
+  <table>
+      <tr>
+      <th><%= result.user.username %></th>
+      </tr>
+      <tr>
+        <th>Correct answers:</th>
+      </tr>
+      <tr>
+      <td>Skill Type</td><td>Sub Skill</td><td>Count</td>
+      </tr>
+      <% vals = {} %>
+      <% result.sub_skills.each do |skill| %>
+        <% if skill.correct == 1 %>
+            <% vals[[skill.name, skill.skill_name]] ? vals[[skill.name, skill.skill_name]] += 1 : vals[[skill.name, skill.skill_name]] = 1 %>
+        <% end %>
       <% end %>
 
-  <% end %>
+      <% vals.each do |skill, count| %>
+        <tr>
+          <td><%= skill[1] %></td><td><%= skill[0] %></td><td><%= count %></td>
+        </tr>
+      <% end %>
+  </table>
 
-  </ul>
+<br>
+       <table>
+      <tr>
+      <th><%= result.user.username %></th>
+      </tr>
+      <tr>
+        <th>Incorrect answers:</th>
+      </tr>
+      <tr>
+      <td>Skill Type</td><td>Sub Skill</td><td>Count</td>
+      </tr>
+      <% vals = {} %>
+      <% result.sub_skills.each do |skill| %>
+        <% if skill.incorrect == 1 %>
+            <% vals[[skill.name, skill.skill_name]] ? vals[[skill.name, skill.skill_name]] += 1 : vals[[skill.name, skill.skill_name]] = 1 %>
+        <% end %>
+      <% end %>
+
+      <% vals.each do |skill, count| %>
+        <tr>
+          <td><%= skill[1] %></td><td><%= skill[0] %></td><td><%= count %></td>
+        </tr>
+      <% end %>
+  </table>
+  <br>
+
+
+
 
 <% end %>
+
