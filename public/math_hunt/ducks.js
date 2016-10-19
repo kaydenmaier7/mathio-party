@@ -70,7 +70,7 @@ var mainState= {
   reload: function(){
     this.p1bullets =[1,1,1];
     this.p2bullets =[1,1,1];
-  }
+  },
 
   // player 1 movement
   move: function(){
