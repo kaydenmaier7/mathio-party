@@ -20,7 +20,7 @@ cancel_user_registration GET    /users/cancel(.:format)        devise/registrati
                    users GET    /users(.:format)               users#index
                     user GET    /users/:id(.:format)           users#show
                    games GET    /games(.:format)               games#index
-                         GET    /games/:id(.:format)           games#show
+                    game GET    /games/:id(.:format)           games#show
                  results POST   /results(.:format)             results#create
                     root GET    /                              games#index
                          GET    /matches/:id(.:format)         matches#show

@@ -7,9 +7,9 @@ Rails.application.routes.draw do
 
   devise_for :users
   resources :users, only: [:index, :show]
-  get 'games' => 'games#index'
-  get 'games/:id' => 'games#show'
-
+  
+  resources :games, only: [:index, :show]
+  
   post 'results' => 'results#create'
 
   root 'games#index'
