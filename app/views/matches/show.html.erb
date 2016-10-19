@@ -11,23 +11,21 @@
 <div class='frogger-user-results-div'>
 
 <h1><%= result.user.username %></h1>
-  <table class='frogger-results-table correct-answers'>
+  <table class='frogger-results-table'>
 
-      <tr>
-        <th colspan='3'>Correct answers</th>
-      </tr>
+
       <tr class='skill-header'>
-      <td>Skill Type</td><td>Sub Skill</td><td>Correct</td><td>Incorrect</td>
+      <th>Skill Type</th><th>Sub Skill</th><th>Correct</th><th>Incorrect</th><th>+ / -</th>
       </tr>
       <% names = [] %>
       <% result.sub_skills.each do |skill| %>
         <% names << skill %>
       <% end %>
-      <% names = names.uniq { |n| n.name } %>
+      <% names = names.uniq { |n| n.name }.sort_by { |n| SubSkill.where(match_id: @match.id, result_id: result.id, name: n.name, skill_name: n.skill_name, correct: 1).count - SubSkill.where(match_id: @match.id, result_id: result.id, name: n.name, skill_name: n.skill_name, incorrect: 1).count }.reverse! %>
 
       <% names.each do |n| %>
         <tr>
-          <td><%= n.skill_name %></td><td><%= n.name %></td><td><%= SubSkill.where(match_id: @match.id, result_id: result.id, name: n.name, skill_name: n.skill_name, correct: 1).count %></td><td><%= SubSkill.where(match_id: @match.id, result_id: result.id, name: n.name, skill_name: n.skill_name, incorrect: 1).count %></td>
+          <td><%= n.skill_name %></td><td><%= n.name %></td><td><%= SubSkill.where(match_id: @match.id, result_id: result.id, name: n.name, skill_name: n.skill_name, correct: 1).count %></td><td><%= SubSkill.where(match_id: @match.id, result_id: result.id, name: n.name, skill_name: n.skill_name, incorrect: 1).count %></td><td><%= SubSkill.where(match_id: @match.id, result_id: result.id, name: n.name, skill_name: n.skill_name, correct: 1).count - SubSkill.where(match_id: @match.id, result_id: result.id, name: n.name, skill_name: n.skill_name, incorrect: 1).count %></td>
         </tr>
       <% end %>
   </table>
