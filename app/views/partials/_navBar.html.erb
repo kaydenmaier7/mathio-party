@@ -1,14 +1,21 @@
 <div class="navBar">
   <h1 class="title"><a href="/">Mathio Party</a></h1>
+
+  <%= link_to 'Frogger', game_path(1) %>
+  <%= link_to 'Flappy Math', game_path(2) %>
+  <%= link_to 'Invasion', game_path(3) %>
+  <%= link_to 'Duck Hunt', game_path(4) %>
   <div class="login">
     <% if current_user %>
     	<%= link_to "Logout, #{current_user.username}", destroy_user_session_path, method: :delete %> 
       <%= link_to 'Profile Page', user_path(current_user.id) %>
-    	<% if !player2_logged_in? %>
+    	
+      <% if !player2_logged_in? %>
     		<%= link_to 'Player 2 Login', players_new_path %>
     	<% else %>
     		<%= link_to "Logout, #{current_player2.username}", players_logout_path, method: :delete %>	
     	<% end %>
+
     <% else %>
     	<%= link_to 'Login', new_user_session_path %>
       <%= link_to 'Sign Up', new_user_registration_path  %>
