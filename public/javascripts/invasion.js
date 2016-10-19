@@ -61,12 +61,8 @@ function create(){
   }
 
   // make the two starting equations
-  generateEquation();
-  generateEquation();
-
-  // make question1 and question2
-  assignQuestion1();
-  assignQuestion2();
+  generateQuestion1();
+  generateQuestion2();
 
   // display question1 and question2
   displayEquations();
@@ -94,7 +90,7 @@ function update(){
   moveCow();
   removeCow();
 
-  game.physics.arcade.overlap(players, cow, playerCowCollision, null, this);
+  game.physics.arcade.overlap(players, cow, captureCow, null, this);
 };
 
 // create a cow
@@ -192,12 +188,27 @@ function moveCow(){
 function removeCow() {
   cow.forEach(function(c){
     if (c.position.y < 50){
-
       c.kill();
       c.destroy();
       setTimeout(function(){spawnCow(Math.random()*(game.width - 100) , Math.random()*(game.height/2) + game.height* 0.3)}, 2500);
     };
   });
+};
+
+function captureCow(player, cow) {
+  cow.kill();
+  cow.destroy();
+  setTimeout(function(){spawnCow(Math.random()*(game.width - 100) , Math.random()*(game.height/2) + game.height* 0.3)}, 2500);
+};
+
+function generateQuestion1(){
+  questions.unshift(generateEquation());
+  assignQuestion1();
+};
+
+function generateQuestion2(){
+  questions.push(generateEquation());
+  assignQuestion2();
 };
 
 // make an equation which solves to a cow value
@@ -218,8 +229,8 @@ function generateEquation(){
   };
   // save the answers
   var answers = x + y;
-  // add the question data to the questions array
-  questions.push([x, y, answer]);
+  // return the question data
+  return [x, y, answer];
 };
 
 function displayEquations(){
@@ -227,10 +238,6 @@ function displayEquations(){
   $('body').append('<div class="p2 equation"></div>');
   $('.p1').append('<p>' + question1 + '</p>');
   $('.p2').append('<p>' + question2 + '</p>');
-};
-
-function playerCowCollision(){
-  console.log('collision');
 };
 
 function assignQuestion1(){
