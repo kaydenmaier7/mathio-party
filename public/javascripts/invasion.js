@@ -202,10 +202,10 @@ function moveCow(){
 function removeCow() {
   cow.forEach(function(c){
     if (c.position.y < 5){
-      // make a new question if the cow answered one of the questions
-      refreshQuestions(cow);
       // remove the cow's value from the cowValue array
       removeCowValue(c.value);
+      // make a new question if the cow answered one of the questions
+      refreshQuestions(cow);
       // destroy the cow object
       c.kill();
       c.destroy();
@@ -217,10 +217,10 @@ function removeCow() {
 
 // destroy cows that collide with players
 function captureCow(player, cow) {
-  // make a new question if the cow answered one of the questions
-  refreshQuestions(cow);
   // remove the cow's value from the cowValue array
   removeCowValue(cow.value);
+  // make a new question if the cow answered one of the questions
+  refreshQuestions(cow);
   // destroy the cow object
   cow.kill();
   cow.destroy();
