@@ -3,7 +3,6 @@ class MatchesController < ApplicationController
 
   def show
     @match = Match.find(params[:id])
-    @results = parse_match(@match)
   end
 
 end
