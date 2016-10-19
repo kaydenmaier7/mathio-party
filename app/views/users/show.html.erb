@@ -80,7 +80,7 @@
           <% skillNames << skill %>
       <% end %>
       <% end %>
-      <% skillNames = skillNames.uniq { |skill| skill.name } %>
+      <% skillNames = skillNames.uniq { |skill| skill.name }.sort_by { |skill| skill.name } %>
 
       <% skillNames.each do |skill| %>
         <tr>
