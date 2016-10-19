@@ -97,6 +97,7 @@ function update(){
 function spawnCow(x, y){
   var newCow = cow.create(x, y, 'cow');
   newCow.value = Math.floor( Math.random() * 11 );
+  cowValues.push(newCow.value);
   newCow.speed = cowSpeedOptions[Math.floor(Math.random()*cowSpeedOptions.length)];
   newCow.interval = cowMovementIntervals[Math.floor(Math.random()*cowMovementIntervals.length)];
   newCow.body.collideWorldBounds = true;
@@ -185,19 +186,29 @@ function moveCow(){
   });
 };
 
+// destroy cows that float to the top of the screen
 function removeCow() {
   cow.forEach(function(c){
-    if (c.position.y < 50){
+    if (c.position.y < 5){
+      // remove the cow's value from the cowValue array
+      removeCowValue(c.value);
+      // destroy the cow object
       c.kill();
       c.destroy();
+      // make a new cow object after 2.5 seconds
       setTimeout(function(){spawnCow(Math.random()*(game.width - 100) , Math.random()*(game.height/2) + game.height* 0.3)}, 2500);
     };
   });
 };
 
+// destroy cows that collide with players
 function captureCow(player, cow) {
+  // remove the cow's value from the cowValue array
+  removeCowValue(cow.value);
+  // destroy the cow object
   cow.kill();
   cow.destroy();
+  // make a new cow object after 2.5 seconds
   setTimeout(function(){spawnCow(Math.random()*(game.width - 100) , Math.random()*(game.height/2) + game.height* 0.3)}, 2500);
 };
 
@@ -225,10 +236,6 @@ function generateQuestion2(){
 
 // make an equation which solves to a cow value
 function generateEquation(){
-  cowValues = []
-  cow.forEach(function(c){
-    cowValues.push(c.value);
-  });
   var answer = cowValues[Math.floor(Math.random()*cowValues.length)];
   var invalid = true;
   // ensure that y is a positive number
@@ -260,4 +267,15 @@ function assignQuestion1(){
 function assignQuestion2(){
   question2 = questions[1][0] + " + " + questions[1][1]
   answer2 = questions[1][2]
+};
+
+function removeCowValue(value){
+  // get the index of the value in the cowValues array
+  var index = cowValues.findIndex(function(element){
+    if(element == value){
+      return true;
+    };
+  });
+  // remove the input value from the cowValues array
+  cowValues.splice(index, 1);
 };
