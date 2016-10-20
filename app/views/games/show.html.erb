@@ -15,7 +15,7 @@
     </div>
 
     <div class="player1-character">
-      <h2>Player One</h2> 
+      <h2>Player One</h2>
       <%= @game.player1_character %>
     </div>
 
@@ -34,7 +34,7 @@
     <div class="player2-controls">
       <h2>Player Two Controls</h2>
       <% @game.player2_controls.split(',').each do |move| %>
-        <%= move %><br> 
+        <%= move %><br>
       <% end %>
     </div>
 
@@ -56,6 +56,25 @@
 
     <% elsif @game.id == 2 %>
     <div id='flappy-bird'>
+
+      <select id='flappy-mode-1' class='flappy-select'>
+        <option value='none'>Player 1</option>
+        <option value="addition">Addition</option>
+        <option value="subtraction">Subtraction</option>
+        <option value="multiplication">Multiplication</option>
+        <option value="division">Division</option>
+        <option value='all'>All</option>
+      </select>
+      <select id='flappy-mode-2' class='flappy-select'>
+        <option value='none'>Player 2</option>
+        <option value="addition">Addition</option>
+        <option value="subtraction">Subtraction</option>
+        <option value="multiplication">Multiplication</option>
+        <option value="division">Division</option>
+        <option value='all'>All</option>
+      </select>
+    <br>
+
       <button id='flappy-button' class='game-start-button'>start</button>
     </div>
 
