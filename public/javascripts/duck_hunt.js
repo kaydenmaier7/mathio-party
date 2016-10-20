@@ -8,10 +8,14 @@ function Duck() {
   this.area = this.sprite.getBounds();
   this.sprite.anchor.setTo( 0.5, 0.5 );
   this.init = function(){
+    this.isActive = true;
     game.physics.arcade.enable(this);
     this.checkWorldsBounds = true;
     this.outOfBoundsKill = true;
     game.time.events.loop(Math.random()*1200+800, this.randomDirection, this );
+  };
+  this.setAnswer = function(answer){
+    this.answer = answer;
   };
   this.randomDirection =  function(){
     this.setXMove();
@@ -32,8 +36,11 @@ function Duck() {
   this.move = function(){
     this.sprite.x += this.xMove;
     this.area.x = this.sprite.x;
+    this.answer.x = this.area.x;
     this.sprite.y -= this.yMove;
     this.area.y = this.sprite.y;
+    this.answer.y = this.area.y;
+    console.log(this.answer.x);
   }.bind(this);
 };
 
@@ -88,6 +95,12 @@ var mainState= {
     this.ducks = [];
     this.answers = [];
 
+    //set up data
+    this.playerOneCorrect = [];
+    this.playerOneWrong = [];
+    this.playerTwoCorrect = [];
+    this.playerTwoWrong = [];
+
     this.answer1 = game.add.text(0,0, "", { font: '25px Arial', fill: '#ffffff#' });
     this.answer1.anchor.setTo(.5,.5);
     this.answer2 = game.add.text(0,0, "", { font: '25px Arial', fill: '#ffffff#' });
@@ -113,6 +126,7 @@ var mainState= {
     this.p1Question.anchor.set(.5,0)
     this.p2Question = game.add.text(840,810,"", { font: '30px Arial', fill: '#4933ff' });
     this.p2Question.anchor.set(.5,0)
+    this.round = 0;
 
     this.p1.canShoot = true;
     this.p2.canShoot = true;
@@ -139,7 +153,8 @@ var mainState= {
 
     //timers
     this.spawnDucks();
-    // this.duckTimer = game.time.events.loop(5000, this.spawnDucks, this);
+    // var that = this;
+    // game.time.events.loop(15000, that.spawnDucks, this);
   },
   update: function(){
     this.centerTarget();
@@ -325,17 +340,17 @@ var mainState= {
   renderScore: function(){
     for (var i=0 ; i < this.score1.length ; i++){
       if (this.score1[i] === 1){
-        game.add.sprite(312+(i*35),830,'redScore');
+        game.add.sprite(311+(i*30),830,'redScore');
       } else if (this.score1[1] === 0){
-        game.add.sprite(312+(i*35),830,'noScore');
+        game.add.sprite(312+(i*30),830,'noScore');
       }
     }
 
     for (var i=0 ; i < this.score2.length ; i++){
       if (this.score1[i] === 1){
-        game.add.sprite(654-(i*35),830,'blueScore');
+        game.add.sprite(655-(i*30),830,'blueScore');
       } else if (this.score1[1] === 0){
-        game.add.sprite(654+(i*35),830,'noScore');
+        game.add.sprite(655+(i*30),830,'noScore');
       }
     }
   },
@@ -348,6 +363,12 @@ var mainState= {
   },
 
   spawnDucks: function(){
+    this.round++
+    if (this.round < 6){
+      this.showRound(this.round);
+    } else {
+      this.gameOver;
+    }
     this.ducks = [];
     this.reload();
     this.quacks.play();
@@ -358,6 +379,15 @@ var mainState= {
         that.spawnQuestions();
       },2000);
     }
+  },
+  showRound: function(round){
+    console.log('Round shown');
+    var roundText = game.add.text(game.world.centerX, game.world.centerY, "Round "+ round.toString(), { font: "64px Arial", fill: "#000000", align: "center" });
+    roundText.anchor.setTo(.5,.5);
+    setTimeout(function(){ roundText.text = ""},1000);
+    // var that = this;
+    // setTimeout(function(){ that.spawnDucks},1500);
+
   },
 
   oneDuck: function(count){
@@ -408,20 +438,29 @@ var mainState= {
     this.answer2.text = this.answers[1];
     this.answer3.text = this.answers[2];
 
-    var that = this;
-    game.time.events.loop(1,that.followDucks,this);
-  },
-
-  followDucks: function(){
-    this.answer1.x = this.ducks[0].area.x;
-    this.answer1.y = this.ducks[0].area.y;
-
-    this.answer2.x = this.ducks[1].area.x;
-    this.answer2.y = this.ducks[1].area.y;
-
-    this.answer3.x = this.ducks[2].area.x;
-    this.answer3.y = this.ducks[2].area.y;
+    this.ducks[0].setAnswer(this.answers[0]);
+    this.ducks[1].setAnswer(this.answers[1]);
+    this.ducks[2].setAnswer(this.answers[2]);
   }
+
+  // followDucks: function(){
+  //   console.log("called")
+  //   while (this.ducks[0].isActive){
+  //     console.log('duck1 active')
+  //     this.answer1.x = this.ducks[0].area.x;
+  //     this.answer1.y = this.ducks[0].area.y;
+  //   }
+
+  //   while (this.ducks[1].isActive){
+  //     this.answer2.x = this.ducks[1].area.x;
+  //     this.answer2.y = this.ducks[1].area.y;
+  //   }
+
+  //   while (this.ducks[2].isActive){
+  //     this.answer3.x = this.ducks[2].area.x;
+  //     this.answer3.y = this.ducks[2].area.y;
+  //   }
+  // }
 };
 
 game.state.add('main', mainState);
