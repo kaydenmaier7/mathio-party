@@ -93,7 +93,7 @@ var mainState= {
     gotext.anchor.setTo(0.5, 0.5);
     if (this.p1score > this.p2score){
       gotext.text = "Player 1 Wins!"
-    } else if (this.p2Score > this.p1score){
+    } else if (this.p1score < this.p2score){
       gotext.text = "Player 2 Wins!"
     } else {
       gotext.text = "Tie Game!"
@@ -102,6 +102,8 @@ var mainState= {
     this.bird.destroy()
     this.time = 1
 
+    console.log(this.p1score);
+    console.log(this.p2score);
     if (!this.gameOver){
       this.flappyAjaxCall()
       this.gameOver = true;
