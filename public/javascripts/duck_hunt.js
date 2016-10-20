@@ -1,4 +1,3 @@
-
 var game = new Phaser.Game(1000,910, Phaser.auto, 'math-hunt');
 
 function Duck() {
