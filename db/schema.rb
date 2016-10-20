@@ -20,8 +20,12 @@ ActiveRecord::Schema.define(version: 20161018020256) do
     t.string   "src"
     t.text     "description"
     t.text     "directions"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "player1_character"
+    t.string   "player2_character"
+    t.text     "player1_controls"
+    t.text     "player2_controls"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "matches", force: :cascade do |t|

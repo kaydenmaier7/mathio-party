@@ -7,29 +7,45 @@ user1 = {
 game1 = {
 	name: 'Frogger',
 	src: '/javascripts/frogger.js',
-	description: 'Frogger with Math!',
-	directions: 'You do the thing and stuff happens!'
+	description: 'A spin on the classic Frogger game. Compete against other players to catch ladybugs.',
+  directions: "Move around the field and catch lady bugs when the math equation above is true. If you eat a ladybug when the equation is false, your opponent will get a point. If you hit a car, you will be faded for a time and will move at a decreased speed- giving your opponent a major advantage. The first player to reach 10 points wins!",
+  player1_character: 'Green Frog',
+  player2_character: 'Blue Frog',
+  player1_controls: 'Up Arrow: Move Up, Down Arrow: Move Down, Left Arrow: Move Left, Right Arrow: Move Right',
+  player2_controls: 'W: Move Up, S: Move Down, A: Move Left, D: Move Right'
 }
 
 game2 = {
   name: 'Flappy Math',
   src: '/javascripts/flappy_math.js',
-  description: 'A second game!',
-  directions: 'fly through the answer!'
+  description: 'Flappy Bird but with Math!',
+  directions: "Fly through the Pipe with the correct answer to your equation to gain points. Don't hit the green pipes, fly too high, or fly too low. Doing so will temporarily knock your character out of the game- giving your opponent a major advantage. The player with the most points when the timer hits 0, wins.",
+  player1_character: 'Yellow Bird',
+  player2_character: 'Blue Bird',
+  player1_controls: 'Up Arrow: Move up, Down Arrow: Move Down, Left Arrow: Move Left, Right Arrow: Move Right',
+  player2_controls: 'W: Move Up, S: Move Down, A: Move Left, D: Move Right'
 }
 
 game3 = {
   name: 'Invasion',
   src: '/javascripts/invasion.js',
-  description: 'Collect cows for your queen!',
-  directions: 'Gather the cows you need!'
+  description: "Your queen demands milk. Gather cows for your queen.",
+  directions: "Use your tractor beam to grab the cow that answers your equation.",
+  player1_character: "Green Ship",
+  player2_character: "Red Ship",
+  player1_controls: "Down Arrow: Tractor Beam, Left Arrow: Move Left, Right Arrow: Move Right",
+  player2_controls: "2: Tractor Beam, 1: Move Left, 3: Move Right "
 }
 
 game4 = {
   name: 'Duck Hunt',
   src: '/javascripts/duck_hunt.js',
   description: 'Duck hunt....with MATH!!',
-  directions: 'The ducks had it coming'
+  directions: 'The ducks had it coming',
+  player1_character: "placeholder text",
+  player2_character: "placeholder text",
+  player1_controls: "placeholder text",
+  player2_controls: "placeholder text",
 }
 
 User.create(user1)
