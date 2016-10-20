@@ -1,6 +1,3 @@
-<h1>Users#index</h1>
-<p>Find me in app/views/users/index.html.erb</p>
-
 <div id='leaderboard-div'>
 <h1 id='table-title'>Leaderboard</h1>
 
@@ -19,6 +16,7 @@
   </tr>
               <% @users = @users.sort_by { |u| u.results.count } %>
               <% @users.each do |user| %>
+              <% next if user.matches.length == 0 %>
 
 
                 <% results = [] %>
@@ -53,19 +51,10 @@
       <td><%= 100*division.length/((division.length + x_division.length).nonzero? || 1) %> %</td>
 
 
-<!--
-      <td><%= subtraction.length %></td>
-      <td><%= division.length %></td>
-      <td><%= addition.length %></td>
-      <td><%= x_multiplication.length %></td>
-      <td><%= x_subtraction.length %></td>
-      <td><%= x_division.length %></td>
-      <td><%= x_addition.length %></td>
-      -->
 
       <td><%= correct.length %></td>
       <td><%= incorrect.length %></td>
-      <td><%= 100*correct.length/(correct.length + incorrect.length) %> %</td>
+      <td><%= (100*correct.length/(correct.length + incorrect.length).nonzero? || 1) %> %</td>
 
   </tr>
 
