@@ -85,11 +85,8 @@ function Duck(val) {
   this.move = function(){
     this.sprite.x += this.xMove;
     this.area.x = this.sprite.x;
-    this.answer.x = this.area.x;
     this.sprite.y -= this.yMove;
     this.area.y = this.sprite.y;
-    this.answer.y = this.area.y;
-    console.log(this.answer.x);
   }.bind(this);
 };
 
@@ -152,7 +149,7 @@ var mainState= {
     game.load.image('46', '/images/duck_hunt/46.png');
     game.load.image('47', '/images/duck_hunt/47.png');
     game.load.image('48', '/images/duck_hunt/48.png');
-    game.load.image('48', '/images/duck_hunt/49.png');
+    game.load.image('49', '/images/duck_hunt/49.png');
     game.load.image('50', '/images/duck_hunt/50.png');
 
     //score
@@ -514,44 +511,29 @@ var mainState= {
   },
 
   spawnQuestions: function(skill1,skill2){
-    // this.answers = []
-    // var num1 = 100;
-    // var num2 = 100;
+    var num1;
+    var num2;
 
-    // while (num1+num2 > 50){
-    //   var num1 = Math.floor(Math.random()*10);
-    //   var num2 = Math.floor(Math.random()*10);
-    //   console.log (num1+num2);
-    // }
+    for (var i=0 ; i<2 ; i++){
+      num1 = 100;
+      num2 = 100;
 
-    // this.p1Question.text = num1.toString() + " + " + num2.toString();
-    // this.answers.push((num1+num2).toString());
-    // this.oneDuck(num1+num2);
+      while (num+num2 > 50){
+        var num1= Math.floor(Math.random()*10);
+        var num2= Math.floor(Math.random()*10);
+      }
 
-    // num1 = 100;
-    // num2 = 100;
+      if(i===0){
+        this.p1Question.text = num1.toString() + " + " + num2.toString();
+      } else if (i===1){
+        this.answers.push((num1+num2).toString());
+        this.oneDuck(num1+num2);
+      }
+    }
 
-    // while(num1+num2 >50){
-    //   num1 = Math.floor(Math.random()*10);
-    //   num2 = Math.floor(Math.random()*10);
-    //   console.log (num1+num2);
-    // }
-
-    // this.p2Question.text = num1.toString() + " + " + num2.toString();
-    // this.answers.push((num1+num2).toString());
-    // this.oneDuck(num1+num2);
-
-    // var rand = Math.floor(Math.random()*20).toString()
-    // this.answers.push(rand);
-    // this.oneDuck(rand);
-
-    // this.answer1.text = this.answers[0];
-    // this.answer2.text = this.answers[1];
-    // this.answer3.text = this.answers[2];
-
-    // this.ducks[0].setAnswer(this.answers[0]);
-    // this.ducks[1].setAnswer(this.answers[1]);
-    // this.ducks[2].setAnswer(this.answers[2]);
+    var rand = Math.floor(Math.random()*20).toString()
+    this.answers.push(rand);
+    this.oneDuck(rand);
   }
 };
 
