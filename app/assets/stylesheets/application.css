@@ -166,4 +166,33 @@ path.area {
   box-shadow: 2px 2px 2px #888888;
 }
 
+.equation {
+  margin: 1%;
+  border-radius: 1em;
+  display: inline-block;
+  padding: 1%, 2%, 1%, 2%;
+  width: 15%;
+  font-size: xx-large;
+  text-align: center;
+  box-shadow: 10px 10px 10px #888888;
+}
+
+.p1 {
+  margin-left: 20%;
+  background-color: #544E36;
+}
+
+.p2 {
+  margin-left: 30%;
+  background-color: #C62A47;
+}
+
+#invasion {
+  width: 1000px;
+  height: 600px;
+  background-color: white;
+  margin: 1% auto;
+  text-align: center;
+  box-shadow: 10px 10px 10px #888888;
+}
 
