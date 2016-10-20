@@ -44,7 +44,9 @@
     </div>
   </div>
 
+
   <% if @game.id == 1 %>
+    <div class="spacer"></div>
     <div id='equation_text_div'>Frogger</div>
     <div id='frogger'>
     <select id='mode'>
@@ -61,11 +63,13 @@
     <button id='frogger-button' class='game-start-button'>start</button></div>
 
   <% elsif @game.id == 2 %>
+    <div class="spacer"></div>
     <div id='flappy-bird'>
       <button id='flappy-button' class='game-start-button'>start</button>
     </div>
 
   <% elsif @game.id == 3 %>
+    <div class="invasion-questions"></div>
     <div id='invasion'></div>
   <% end %>
   <script type="text/javascript" src="<%= @game.src %>"></script>

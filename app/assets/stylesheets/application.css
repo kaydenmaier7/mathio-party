@@ -164,24 +164,30 @@ path.area {
   box-shadow: 2px 2px 2px #888888;
 }
 
+.invasion-questions {
+  width: 1000px;
+  height: 180px;
+  margin: auto;
+}
+
 .equation {
   margin: 1%;
   border-radius: 1em;
   display: inline-block;
   padding: 1%, 2%, 1%, 2%;
-  width: 15%;
+  width: 47%;
   font-size: xx-large;
   text-align: center;
   box-shadow: 10px 10px 10px #888888;
 }
 
 .p1 {
-  margin-left: 20%;
+  float: left;
   background-color: #544E36;
 }
 
 .p2 {
-  margin-left: 30%;
+  float: right;
   background-color: #C62A47;
 }
 
@@ -334,6 +340,12 @@ path.area {
   background-size: 100% 100%;
 }
 
+.game-show h1 {
+  text-align: center;
+  padding-top: 10px;
+  font-size: xx-large;
+}
+
 .game-info {
   background-color: #E0E0E0;
   width: 100%;
@@ -382,4 +394,8 @@ path.area {
 
 .player1-controls, .player2-controls, .player1-character, .player2-character {
   padding-bottom: 5px;
+}
+
+.spacer {
+  height: 20px;
 }
