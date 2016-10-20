@@ -14,6 +14,9 @@ var mainState= {
     game.load.image('cloud', '/images/flappy_math/cloud.png');
   },
   create: function(){
+    this.problem1 = game.add.text(20,60, "", { font: '30px Arial', fill: '#ffffff#' });
+    this.problem2 = game.add.text(20,130, "", { font: '30px Arial', fill: '#ffffff#' });
+
     this.jumpSound = game.add.audio('jump');
 
     this.p1score = 0;
@@ -62,9 +65,6 @@ var mainState= {
   },
 
   update: function(){
-    if (this.problem2){
-      console.log(this.problem2.text)
-    }
 
     if (this.bird.angle < 20){
        this.bird.angle += 1;
@@ -218,7 +218,6 @@ var mainState= {
       this.p1score  += 1;
       this.player1score.text = "Player 1: "+this.p1score;
       that = this;
-      setTimeout(function(){that.bird.canScore=true}, 1000);
       p1correct.push(this.problem1.text);
     }
   },
@@ -229,7 +228,6 @@ var mainState= {
       this.p2score  += 1;
       this.player2score.text = "Player 2: "+this.p2score;
       that = this;
-      setTimeout(function(){that.blueBird.canScore=true}, 1000);
       p2correct.push(this.problem2.text);
     }
   },
@@ -239,12 +237,11 @@ var mainState= {
       param1 = Math.floor(Math.random()*10);
       param2 = Math.floor(Math.random()*10);
 
-      this.problem1 = game.add.text(20,60, "", { font: '30px Arial', fill: '#ffffff#' });
+
       switch(p1skill){
         case "Addition":
           this.problem1.text = param1.toString() + " + " + param2.toString()
           var that = this;
-          setTimeout(function(){that.problem1.kill()}, 4500);
           return (param1 + param2);
           break;
 
@@ -252,50 +249,42 @@ var mainState= {
           param2 = param1 + Math.floor(Math.random()*10);
           this.problem1.text = param2.toString() + " - " + param1.toString()
           var that = this;
-          setTimeout(function(){that.problem1.kill()}, 4500);
           return (param2 - param1);
           break;
 
         case "Multiplication":
           this.problem1.text = param1.toString() + " * " + param2.toString()
           var that = this;
-          setTimeout(function(){that.problem1.kill()}, 4500);
           return (param1 * param2);
           break;
 
         case "Division":
           this.problem1.text = (param1*param2).toString() + " / " + param2.toString()
           var that = this;
-          setTimeout(function(){that.problem1.kill()}, 4500);
           return (param1);
           break;
 
         case "All":
         var select = Math.random();
-        console.log(select);
         if (select < .25){
           this.problem1.text = param1.toString() + " + " + param2.toString()
           var that = this;
-          setTimeout(function(){that.problem1.kill()}, 4500);
           return (param1 + param2);
 
         } else if (select < .5) {
           param2 = param1 + Math.floor(Math.random()*10);
           this.problem1.text = param2.toString() + " - " + param1.toString()
           var that = this;
-          setTimeout(function(){that.problem1.kill()}, 4500);
           return (param2 - param1);
 
         } else if (select < .75) {
           this.problem1.text = param1.toString() + " * " + param2.toString()
           var that = this;
-          setTimeout(function(){that.problem1.kill()}, 4500);
           return (param1 * param2);
 
         } else {
           this.problem1.text = (param1*param2).toString() + " / " + param2.toString()
           var that = this;
-          setTimeout(function(){that.problem1.kill()}, 4500);
           return (param1);
         }
         break;
@@ -303,7 +292,6 @@ var mainState= {
         default:
           this.problem1.text = param1.toString() + " + " + param2.toString()
           var that = this;
-          setTimeout(function(){that.problem1.kill()}, 4500);
           return (param1 + param2);
         }
       }
@@ -314,18 +302,12 @@ var mainState= {
       param1 = Math.floor(Math.random()*10);
       param2 = Math.floor(Math.random()*10);
 
-      this.problem2 = game.add.text(20,130, "", { font: '30px Arial', fill: '#ffffff#' });
       switch(p2skill){
 
         case "Addition":
-        console.log('param 1 is ' + param1)
-        console.log('p2 text: ')
         p2text = param1.toString() + " + " + param2.toString()
-        console.log('this is: ')
-        console.log(this)
           this.problem2.text = p2text
           var that = this;
-          setTimeout(function(){that.problem2.kill()}, 4500);
           return (param1 + param2);
           break;
 
@@ -333,53 +315,42 @@ var mainState= {
           param2 = param1 + param2;
           this.problem2.text = param2.toString() + " - " + param1.toString()
           var that = this;
-          setTimeout(function(){that.problem2.kill()}, 4500);
           return (param2 - param1);
           break;
 
         case "Multiplication":
           this.problem2.text = param1.toString() + " * " + param2.toString()
           var that = this;
-          setTimeout(function(){that.problem2.kill()}, 4500);
           return (param1 * param2);
           break;
 
         case "Division":
           this.problem2.text = (param1*param2).toString() + " / " + param1.toString()
           var that = this;
-          setTimeout(function(){that.problem2.kill()}, 4500);
           return (param2);
           break;
 
         case "All":
           var select = Math.random();
           if (select < .25){
-            console.log("add");
             this.problem2.text = param1.toString() + " + " + param2.toString()
             var that = this;
-            setTimeout(function(){that.problem2.kill()}, 4500);
             return (param1 + param2);
 
           } else if (select < .5) {
-            console.log("sub");
             param2 = param1 + Math.floor(Math.random()*10);
             this.problem2.text = param2.toString() + " - " + param1.toString()
             var that = this;
-            setTimeout(function(){that.problem2.kill()}, 4500);
             return (param2 - param1);
 
           } else if (select < .75) {
-            console.log("times");
             this.problem2.text = param1.toString() + " * " + param2.toString()
             var that = this;
-            setTimeout(function(){that.problem2.kill()}, 4500);
             return (param1 * param2);
 
           } else {
-            console.log("div");
             this.problem2.text = (param1*param2).toString() + " / " + param2.toString()
             var that = this;
-            setTimeout(function(){that.problem2.kill()}, 4500);
             return (param1);
           }
         break;
@@ -387,7 +358,6 @@ var mainState= {
         default:
           this.problem2.text = param1.toString() + " + " + param2.toString()
           var that = this;
-          setTimeout(function(){that.problem2.kill()}, 4500);
           return (param1 + param2);
         }
       }
@@ -431,7 +401,6 @@ var mainState= {
   addRowOfPipes: function() {
     a1 = this.spawnQuestion1();
     a2 = this.spawnQuestion2();
-    console.log(this.problem2.text)
 
     var config = this.currentConfig();
 
