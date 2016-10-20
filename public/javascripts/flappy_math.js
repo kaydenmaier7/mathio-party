@@ -93,7 +93,7 @@ var mainState= {
     gotext.anchor.setTo(0.5, 0.5);
     if (this.p1score > this.p2score){
       gotext.text = "Player 1 Wins!"
-    } else if (this.p2Score > this.p1score){
+    } else if (this.p1score < this.p2score){
       gotext.text = "Player 2 Wins!"
     } else {
       gotext.text = "Tie Game!"

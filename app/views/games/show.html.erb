@@ -5,7 +5,38 @@
 
 
     <h1>Welcome to <%= @game.name %></h1>
-    <p><%= @game.directions %></p>
+    <div class="game-directions">
+      <h2>Directions</h2>
+      <p>
+        <% @game.directions.split('.').each do |direction| %>
+          <%= direction %><br>
+        <% end %>
+      </p>
+    </div>
+
+    <div class="player1-character">
+      <h2>Player One</h2> 
+      <%= @game.player1_character %>
+    </div>
+
+    <div class="player1-controls">
+      <h2>Player One Controls</h2>
+      <% @game.player1_controls.split(',').each do |move| %>
+        <%= move %><br>
+      <% end %>
+    </div>
+
+    <div class="player2-character">
+      <h2>Player Two</h2>
+      <%= @game.player2_character %>
+    </div>
+
+    <div class="player2-controls">
+      <h2>Player Two Controls</h2>
+      <% @game.player2_controls.split(',').each do |move| %>
+        <%= move %><br> 
+      <% end %>
+    </div>
 
     <% if @game.id == 1 %>
       <div id='equation_text_div'>Frogger</div>
