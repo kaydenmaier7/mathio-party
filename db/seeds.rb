@@ -8,29 +8,29 @@ game1 = {
 	name: 'Frogger',
 	src: '/javascripts/frogger.js',
 	description: 'A spin on the classic Frogger game. Compete against other players to catch ladybugs.',
-  directions: "Move around the field and catch lady bugs with the math equation above is true. If you eat a ladybug when the equation is false, your opponent will get a point. If you hit a car, you will be faded for a time and will move at a decreased speed- giving your opponent a major advantage. The first player to reach 10 points wins!",
+  directions: "Move around the field and catch lady bugs when the math equation above is true. If you eat a ladybug when the equation is false, your opponent will get a point. If you hit a car, you will be faded for a time and will move at a decreased speed- giving your opponent a major advantage. The first player to reach 10 points wins!",
   player1_character: 'Green Frog',
   player2_character: 'Blue Frog',
-  player1_controls: 'Up Arrow: Move up, Down Arrow: Move Down, Left Arrow: Move Left, Right Arrow: Move Right',
-  player2_controls: 'W: Up, S: Down, A: Left, D: Right'
+  player1_controls: 'Up Arrow: Move Up, Down Arrow: Move Down, Left Arrow: Move Left, Right Arrow: Move Right',
+  player2_controls: 'W: Move Up, S: Move Down, A: Move Left, D: Move Right'
 }
 
 game2 = {
   name: 'Flappy Math',
   src: '/javascripts/flappy_math.js',
   description: 'Flappy Bird but with Math!',
-  directions: "Fly through the Pipe with the correct answer to your equation to gain points. Don't hit the green pipes, fly too high, or fly too low. Doing so will temporarily be knocked out of the game- giving your opponent a major advantage. The player with the most points when the timer hits 0, wins.",
-  player1_character: 'Green Frog',
-  player2_character: 'Blue Frog',
+  directions: "Fly through the Pipe with the correct answer to your equation to gain points. Don't hit the green pipes, fly too high, or fly too low. Doing so will temporarily knock your character out of the game- giving your opponent a major advantage. The player with the most points when the timer hits 0, wins.",
+  player1_character: 'Yellow Bird',
+  player2_character: 'Blue Bird',
   player1_controls: 'Up Arrow: Move up, Down Arrow: Move Down, Left Arrow: Move Left, Right Arrow: Move Right',
-  player2_controls: 'W: Up, S: Down, A: Left, D: Right'
+  player2_controls: 'W: Move Up, S: Move Down, A: Move Left, D: Move Right'
 }
 
 game3 = {
   name: 'Invasion',
   src: '/javascripts/invasion.js',
   description: "Your queen demands milk. Gather cows for your queen.",
-  directions: "Use your tracker beam to grab the cow that answers your equation.",
+  directions: "Use your tractor beam to grab the cow that answers your equation.",
   player1_character: "Green Ship",
   player2_character: "Red Ship",
   player1_controls: "Down Arrow: Tractor Beam, Left Arrow: Move Left, Right Arrow: Move Right",
