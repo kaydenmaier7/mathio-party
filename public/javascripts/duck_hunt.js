@@ -3,7 +3,9 @@ var game = new Phaser.Game(1000,910, Phaser.auto, 'math-hunt');
 function Duck(val) {
   this.xMove = 0;
   this.yMove = 0;
-    if(val === 1){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '1')}
+  this.speed = 2;
+
+  if(val === 1){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '1')}
   else if(val === 2){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '2')}
   else if(val === 3){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '3')}
   else if(val === 4){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '4')}
@@ -63,30 +65,31 @@ function Duck(val) {
     this.outOfBoundsKill = true;
     game.time.events.loop(Math.random()*1200+800, this.randomDirection, this );
   };
-  this.setAnswer = function(answer){
-    this.answer = answer;
-  };
+
   this.randomDirection =  function(){
+    if (this.speed<10){
     this.setXMove();
     this.setYMove();
+    }
   };
+
   this.setXMove = function(){
     this.xMove = Math.random()<0.5 ? -1: 1;
-    this.xMove *= Math.random() * 1;
+    this.xMove *= Math.random() * this.speed;
   };
   this.setYMove = function(){
     if (this.y < 500){
       this.yMove = Math.random()<0.5 ? -1: 1;
-      return this.yMove *= Math.random() * 5;
+      return this.yMove *= Math.random();
     } else {
-      return this.yMove = Math.random() * 1;
+      return this.yMove = Math.random();
     }
   };
   this.move = function(){
-    this.sprite.x += this.xMove;
-    this.area.x = this.sprite.x;
-    this.sprite.y -= this.yMove;
-    this.area.y = this.sprite.y;
+    this.sprite.x += this.xMove * this.speed;
+    this.area.x = this.sprite.x * this.speed;
+    this.sprite.y -= this.yMove * this.speed;
+    this.area.y = this.sprite.y * this.speed;
   }.bind(this);
 };
 
@@ -467,23 +470,25 @@ var mainState= {
     this.ducks = [];
     this.reload();
     this.quacks.play();
-    var that = this;
-    for(var i=0 ; i<3 ; i++){
-      setTimeout(function(){
-        that.spawnQuestions();
-      },2000);
-    }
+    this.spawnQuestions();
   },
+
   showRound: function(round){
     console.log('Round shown');
     var roundText = game.add.text(game.world.centerX, game.world.centerY, "Round "+ round.toString(), { font: "64px Arial", fill: "#000000", align: "center" });
     roundText.anchor.setTo(.5,.5);
     setTimeout(function(){ roundText.text = ""},1000);
-    // var that = this;
-    // setTimeout(function(){ that.spawnDucks},1500);
-
+    var that = this;
+    setTimeout(function(){ that.endRound},500);
   },
 
+  endRound: function(){
+    for ( var i=0 ; i < this.ducks.length ; i++ )
+    {
+      console.log("End Round")
+      this.ducks[i].speed = 10;
+    }
+  },
   oneDuck: function(val){
     this.duck = new Duck(val);
     this.duck.init();
@@ -511,29 +516,32 @@ var mainState= {
   },
 
   spawnQuestions: function(skill1,skill2){
-    var num1;
-    var num2;
+    var num1 = 100;
+    var num2 = 100;
+    var num3 = 100;
+    var num4 = 100;
 
-    for (var i=0 ; i<2 ; i++){
-      num1 = 100;
-      num2 = 100;
-
-      while (num+num2 > 50){
-        var num1= Math.floor(Math.random()*10);
-        var num2= Math.floor(Math.random()*10);
-      }
-
-      if(i===0){
-        this.p1Question.text = num1.toString() + " + " + num2.toString();
-      } else if (i===1){
-        this.answers.push((num1+num2).toString());
-        this.oneDuck(num1+num2);
-      }
+    while (num1+num2 > 50 || num3+num4 > 50 || num3+num4 === num1+num2){
+      num1= Math.floor(Math.random()*10);
+      num2= Math.floor(Math.random()*10);
+      num3= Math.floor(Math.random()*10);
+      num4= Math.floor(Math.random()*10);
     }
+    console.log(num1 + " + " + num2);
+    console.log(num3 + " + " + num4);
+    this.oneDuck(num1+num2);
+    this.oneDuck(num3+num4);
 
-    var rand = Math.floor(Math.random()*20).toString()
-    this.answers.push(rand);
+    this.p1Question.text = num1.toString() + " + " + num2.toString();
+    this.p2Question.text = num3.toString() + " + " + num4.toString();
+
+    var rand = Math.floor(Math.random()*20);
     this.oneDuck(rand);
+    this.reorderSprites();
+  },
+
+  callDog: function(){
+
   }
 };
 
