@@ -80,11 +80,11 @@
           <% skillNames << skill %>
       <% end %>
       <% end %>
-      <% skillNames = skillNames.uniq { |skill| skill.name } %>
+      <% skillNames = skillNames.uniq { |skill| skill.name }.sort_by { |skill| skill.name } %>
 
       <% skillNames.each do |skill| %>
         <tr>
-            <th><%= skill.name %></th>
+            <th><p><%= skill.name.capitalize %></p></th>
             <td><%= SubSkill.where(name: skill.name, skill_name: skill.skill_name, correct: 1).count %></td>
             <td><%= SubSkill.where(name: skill.name, skill_name: skill.skill_name, incorrect: 1).count %></td>
         </tr>

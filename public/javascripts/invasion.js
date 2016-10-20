@@ -3,9 +3,14 @@ $(document).ready(function(){
 })
 
 // declare all object types
-var cow, players, beams;
+var cow, players, beams, question1, question2, answer1, answer2;
+
+var playerOneScore = 0;
+var playerTwoScore = 0;
 
 // cow movement parameters
+var cowValues = [];
+var questions = [];
 var startingCows = 4;
 var timer = 0;
 setInterval(function(){ timer = timer + 1 }, 1000);
@@ -25,7 +30,18 @@ var assets = [
   ['cow', '/images/invasion/cow.png'],
   ['ufo1', '/images/invasion/ufo1.png'],
   ['ufo2', '/images/invasion/ufo2.png'],
-  ['beam', '/images/invasion/beam.png']
+  ['beam', '/images/invasion/beam.png'],
+  ['cow0', '/images/invasion/cow0.png'],
+  ['cow1', '/images/invasion/cow1.png'],
+  ['cow2', '/images/invasion/cow2.png'],
+  ['cow3', '/images/invasion/cow3.png'],
+  ['cow4', '/images/invasion/cow4.png'],
+  ['cow5', '/images/invasion/cow5.png'],
+  ['cow6', '/images/invasion/cow6.png'],
+  ['cow7', '/images/invasion/cow7.png'],
+  ['cow8', '/images/invasion/cow8.png'],
+  ['cow9', '/images/invasion/cow9.png'],
+  ['cow10', '/images/invasion/cow10.png']
 ];
 
 // add game window to page
@@ -58,6 +74,13 @@ function create(){
     spawnCow(Math.random()*(game.width - 100) , Math.random()*(game.height/2) + game.height* 0.3);
   }
 
+  // make the two starting equations
+  generateQuestion1();
+  generateQuestion2();
+
+  // display question1 and question2
+  displayPlayerInfo();
+
   // create the players
   players = game.add.group();
   players.enableBody = true;
@@ -80,12 +103,16 @@ function update(){
   playerBeam();
   moveCow();
   removeCow();
+
+  game.physics.arcade.overlap(players, cow, captureCow, null, this);
 };
 
 // create a cow
 function spawnCow(x, y){
-  var newCow = cow.create(x, y, 'cow');
-  newCow.value = Math.floor( Math.random() * 11 );
+  var randomValue = Math.floor( Math.random() * 11 );
+  var newCow = cow.create(x, y, 'cow' + randomValue);
+  newCow.value = randomValue;
+  cowValues.push(newCow.value);
   newCow.speed = cowSpeedOptions[Math.floor(Math.random()*cowSpeedOptions.length)];
   newCow.interval = cowMovementIntervals[Math.floor(Math.random()*cowMovementIntervals.length)];
   newCow.body.collideWorldBounds = true;
@@ -156,7 +183,6 @@ function shootBeam(x, id){
   };
   beam.alpha = 0.4;
   beamPosition = x;
-  console.log(beamPosition);
 };
 
 // move cow horizontally at intervals
@@ -175,13 +201,119 @@ function moveCow(){
   });
 };
 
+// destroy cows that float to the top of the screen
 function removeCow() {
   cow.forEach(function(c){
-    if (c.position.y < 50){
+    if (c.position.y < 5){
+      // remove the cow's value from the cowValue array
+      removeCowValue(c.value);
+      // make a new question if the cow answered one of the questions
+      refreshQuestions(cow);
+      // destroy the cow object
       c.kill();
       c.destroy();
+      // make a new cow object after 2.5 seconds
       setTimeout(function(){spawnCow(Math.random()*(game.width - 100) , Math.random()*(game.height/2) + game.height* 0.3)}, 2500);
     };
   });
 };
 
+// destroy cows that collide with players
+function captureCow(player, cow) {
+  // increment the player score when they capture the correct cow
+  changeScore(player, cow);
+  // remove the cow's value from the cowValue array
+  removeCowValue(cow.value);
+  // make a new question if the cow answered one of the questions
+  refreshQuestions(cow);
+  // destroy the cow object
+  cow.kill();
+  cow.destroy();
+  // make a new cow object after 2.5 seconds
+  setTimeout(function(){spawnCow(Math.random()*(game.width - 100) , Math.random()*(game.height/2) + game.height* 0.3)}, 2500);
+};
+
+// make a new question when a cow that answers a question is destroyed
+function refreshQuestions(cow){
+  if (cow.value == questions[0][2]){
+    questions.shift();
+    generateQuestion1();
+    displayPlayerInfo();
+  }
+  if (cow.value == questions[1][2]){
+    questions.pop();
+    generateQuestion2();
+    displayPlayerInfo();
+  };
+};
+
+function generateQuestion1(){
+  questions.unshift(generateEquation());
+  assignQuestion1();
+};
+
+function generateQuestion2(){
+  questions.push(generateEquation());
+  assignQuestion2();
+};
+
+// make an equation which solves to a cow value
+function generateEquation(){
+  var answer = cowValues[Math.floor(Math.random()*cowValues.length)];
+  var invalid = true;
+  // ensure that y is a positive number
+  while(invalid){
+    var x = Math.floor(Math.random() * 5);
+    var y = answer - x;
+    if (y >= 0) {
+      invalid = false;
+    };
+  };
+  // save the answers
+  var answers = x + y;
+  // return the question data
+  return [x, y, answer];
+};
+
+function displayPlayerInfo(){
+  $('.equation').remove();
+  $('body').append('<div class="p1 equation"></div>');
+  $('body').append('<div class="p2 equation"></div>');
+  $('.p1').append('<p> Question: ' + question1 + '</p>');
+  $('.p2').append('<p> Question: ' + question2 + '</p>');
+  $('.p1').append('<p> Score: ' + playerOneScore + '</p>');
+  $('.p2').append('<p> Score: ' + playerTwoScore + '</p>');
+};
+
+function assignQuestion1(){
+  question1 = questions[0][0] + " + " + questions[0][1]
+  answer1 = questions[0][2]
+};
+
+function assignQuestion2(){
+  question2 = questions[1][0] + " + " + questions[1][1]
+  answer2 = questions[1][2]
+};
+
+function removeCowValue(value){
+  // get the index of the value in the cowValues array
+  var index = cowValues.findIndex(function(element){
+    if(element == value){
+      return true;
+    };
+  });
+  // remove the input value from the cowValues array
+  cowValues.splice(index, 1);
+};
+
+function changeScore(player, cow){
+  if (player.player_id === 'ufo1'){
+    if (cow.value == questions[0][2]){
+      playerOneScore++;
+    };
+  } else if (player.player_id === 'ufo2') {
+    if (cow.value == questions[1][2]){
+      playerTwoScore++;
+    };
+  };
+};

@@ -1,0 +1,24 @@
+var randEquation = function(){
+  var x = Math.floor(Math.random()*20)
+  var y = Math.floor(Math.random()*10)
+  var operations = ['+', '*', '-', '/']
+  var operation = operations[Math.floor(Math.random()*(operations.length - 0))]
+  var equation = x.toString() + ' ' + operation + ' ' + y.toString() + ' = '
+  if (operation === '+'){
+    var answer = x + y
+  } else if (operation === '/'){
+    var z = x * y
+    answer = z / x
+    console.log(answer)
+    return z + ' / ' + x + ' = '
+  } else if (operation === '-'){
+    answer = x - y
+  } else {
+    answer = x * y
+  }
+
+  console.log(answer)
+  return equation
+}
+
+console.log(randEquation())

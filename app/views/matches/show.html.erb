@@ -49,15 +49,15 @@
 
 
 
-
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
 
 
 
 <% @match.results.each do |result| %>
 
 
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/data.js"></script>
+
 
 
 <div id=<%= result.id %> style="min-width: 310px; height: 400px; margin: 0 auto"></div>
@@ -75,11 +75,11 @@
       <% result.sub_skills.each do |skill| %>
           <% skillNames << skill %>
       <% end %>
-      <% skillNames = skillNames.uniq { |skill| skill.name } %>
+      <% skillNames = skillNames.uniq { |skill| skill.name }.sort_by { |skill| skill.name } %>
 
       <% skillNames.each do |skill| %>
         <tr>
-            <th><%= skill.name %></th>
+            <th><p><%= skill.name.capitalize %></p></th>
             <td><%= SubSkill.where(match_id: @match.id, result_id: result.id, name: skill.name, skill_name: skill.skill_name, correct: 1).count %></td>
             <td><%= SubSkill.where(match_id: @match.id, result_id: result.id, name: skill.name, skill_name: skill.skill_name, incorrect: 1).count %></td>
         </tr>
