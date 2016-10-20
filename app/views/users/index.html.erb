@@ -1,11 +1,97 @@
 <h1>Users#index</h1>
 <p>Find me in app/views/users/index.html.erb</p>
 
+<div id='leaderboard-div'>
+<h1 id='table-title'>Leaderboard</h1>
 
-<table>
-    <% @users.each do |user| %>
+<table id='leaderboard-table'>
 
-    <% user.username %>
+  <tr>
+    <th>Username</th>
+    <th>Games played</th>
+    <th>Addition</th>
+    <th>Subtraction</th>
+    <th>Multiplication</th>
+    <th>Division</th>
+    <th>Total Correct</th>
+    <th>Total incorrect</th>
+    <th>% Correct</th>
+  </tr>
+              <% @users = @users.sort_by { |u| u.results.count } %>
+              <% @users.each do |user| %>
+
+
+                <% results = [] %>
+                  <% user.results.each do |result| %>
+                    <% results << result %>
+                  <% end %>
+                <% subSkills = [] %>
+                  <% results.each do |r| %>
+                    <% subSkills << r.sub_skills %>
+                  <% end %>
+                  <% subSkills = subSkills.flatten %>
+                  <% multiplication = subSkills.select { |s| s.skill_name == 'multiplication' && s.correct == 1} %>
+                  <% subtraction = subSkills.select { |s| s.skill_name == 'subtraction' && s.correct == 1} %>
+                  <% division = subSkills.select { |s| s.skill_name == 'division' && s.correct == 1} %>
+                  <% addition = subSkills.select { |s| s.skill_name == 'addition' && s.correct == 1} %>
+                  <% x_multiplication = subSkills.select { |s| s.skill_name == 'multiplication' && s.incorrect == 1} %>
+                  <% x_subtraction = subSkills.select { |s| s.skill_name == 'subtraction' && s.incorrect == 1} %>
+                  <% x_division = subSkills.select { |s| s.skill_name == 'division' && s.incorrect == 1} %>
+                  <% x_addition = subSkills.select { |s| s.skill_name == 'addition' && s.incorrect == 1} %>
+                  <% correct = subSkills.select { |s|  s.correct == 1} %>
+                  <% incorrect = subSkills.select { |s| s.incorrect == 1} %>
+
+  <tr>
+
+
+      <td><%= user.username.capitalize %></td>
+      <td><%= results.count %></td>
+
+      <td><%= 100*addition.length/((addition.length + x_addition.length).nonzero? || 1) %> %</td>
+      <td><%= 100*subtraction.length/((subtraction.length + x_subtraction.length).nonzero? || 1) %> %</td>
+      <td><%= 100*multiplication.length/((multiplication.length + x_multiplication.length).nonzero? || 1) %> %</td>
+      <td><%= 100*division.length/((division.length + x_division.length).nonzero? || 1) %> %</td>
+
+
+<!--
+      <td><%= subtraction.length %></td>
+      <td><%= division.length %></td>
+      <td><%= addition.length %></td>
+      <td><%= x_multiplication.length %></td>
+      <td><%= x_subtraction.length %></td>
+      <td><%= x_division.length %></td>
+      <td><%= x_addition.length %></td>
+      -->
+
+      <td><%= correct.length %></td>
+      <td><%= incorrect.length %></td>
+      <td><%= 100*correct.length/(correct.length + incorrect.length) %> %</td>
+
+  </tr>
 
     <% end %>
+
 </table>
+</div>
+
+
+
+<script>
+
+$('th').click(function(){
+    var table = $(this).parents('table').eq(0)
+    var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+    this.asc = !this.asc
+    if (!this.asc){rows = rows.reverse()}
+    for (var i = 0; i < rows.length; i++){table.append(rows[i])}
+})
+function comparer(index) {
+    return function(a, b) {
+        var valA = getCellValue(a, index), valB = getCellValue(b, index)
+        return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB)
+    }
+}
+function getCellValue(row, index){ return $(row).children('td').eq(index).html() }
+
+
+</script>
