@@ -18,22 +18,34 @@ game1 = {
 game2 = {
   name: 'Flappy Math',
   src: '/javascripts/flappy_math.js',
-  description: 'A second game!',
-  directions: 'fly through the answer!'
+  description: 'Flappy Bird but with Math!',
+  directions: "Fly through the Pipe with the correct answer to your equation to gain points. Don't hit the green pipes, fly too high, or fly too low. Doing so will temporarily be knocked out of the game- giving your opponent a major advantage. The player with the most points when the timer hits 0, wins.",
+  player1_character: 'Green Frog',
+  player2_character: 'Blue Frog',
+  player1_controls: 'Up Arrow: Move up, Down Arrow: Move Down, Left Arrow: Move Left, Right Arrow: Move Right',
+  player2_controls: 'W: Up, S: Down, A: Left, D: Right'
 }
 
 game3 = {
   name: 'Invasion',
   src: '/javascripts/invasion.js',
-  description: 'Collect cows for your queen!',
-  directions: 'Gather the cows you need!'
+  description: "Your queen demands milk. Gather cows for your queen.",
+  directions: "Use your tracker beam to grab the cow that answers your equation.",
+  player1_character: "Green Ship",
+  player2_character: "Red Ship",
+  player1_controls: "Down Arrow: Tractor Beam, Left Arrow: Move Left, Right Arrow: Move Right",
+  player2_controls: "2: Tractor Beam, 1: Move Left, 3: Move Right "
 }
 
 game4 = {
   name: 'Duck Hunt',
   src: '/javascripts/duck_hunt.js',
   description: 'Duck hunt....with MATH!!',
-  directions: 'The ducks had it coming'
+  directions: 'The ducks had it coming',
+  player1_character: "placeholder text",
+  player2_character: "placeholder text",
+  player1_controls: "placeholder text",
+  player2_controls: "placeholder text",
 }
 
 User.create(user1)
