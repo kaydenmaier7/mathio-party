@@ -403,6 +403,9 @@ path.area {
 
 .radarChart {
   text-align: center;
+  font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+  color: #E0E0E0;
+  font-size: 1.3em;
 }
 
 .profile-page-background {
