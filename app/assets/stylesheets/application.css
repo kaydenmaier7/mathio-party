@@ -199,3 +199,68 @@ path.area {
   box-shadow: 10px 10px 10px #888888;
 }
 
+.deviseLogin {
+  background-image: url("http://2.bp.blogspot.com/-5tSsahBREd0/T9Ocr-4p5UI/AAAAAAAAAEg/3pNQqFfAS0U/s1600/1339215668258.jpg");
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 95%;
+  margin: -20px auto;
+  background-size: 100% 100%;
+  color: white;
+  font-size: large;
+}
+
+.deviseLogin h2 {
+  padding-top: 20px;
+  color: #515B63;
+  margin-bottom: 0;
+}
+
+.new_user {
+  background-color: #353535;
+  color: white;
+  width: 15%;
+  margin: 1% auto;
+  opacity: 0.7;
+  border: 2px solid #B9C0C4;
+  border-radius: 5%;
+}
+
+.new_user .field {
+  margin: 2% auto;
+  padding: 5%;
+  width: 80%;
+  opacity: 1;
+}
+
+.actions input {
+  width: 100%;
+  height: 4em;
+  background-color: #00BFE9;
+  font-size: medium;
+  font-weight: bold;
+}
+
+.actions input:hover {
+  background-color: #36609f;
+}
+
+.new_user label {
+  padding: 10px;
+}
+
+.deviseLogin a {
+  margin: auto;
+  width: 10%;
+  background-color: #D44032;
+  color: white;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+}
+
+.deviseLogin a:hover {
+  background-color: #F54A3A;
+  box-shadow: 5px 5px 5px #888888;
+}
