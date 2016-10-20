@@ -208,10 +208,14 @@ path.area {
   text-align: center;
 }
 
-.deviseLogin h2 {
-  padding-top: 20px;
+.deviseLogin h2, .deviseForgotPassword h2 {
+  padding-top: 10%;
   color: #515B63;
   margin-bottom: 0;
+}
+
+.deviseSignUp h2 {
+  padding-top: 1%;
 }
 
 .new_user {
@@ -219,7 +223,7 @@ path.area {
   color: white;
   width: 15%;
   margin: 1% auto;
-  opacity: 0.7;
+  opacity: 0.9;
   border: 2px solid #B9C0C4;
   border-radius: 5%;
 }
@@ -263,12 +267,6 @@ path.area {
   box-shadow: 5px 5px 5px #888888;
 }
 
-.deviseSignUp h2 {
-  padding-top: 20px;
-  color: #515B63;
-  margin-bottom: 0;
-}
-
 .deviseSignUp {
   background-image: url("http://cdn.wallpapersafari.com/22/21/8bXrLQ.jpg");
   background-repeat: no-repeat;
@@ -288,4 +286,25 @@ path.area {
 .deviseSignUp .new_user .field input {
   width: 80%;
   height: 1.5em;
+}
+
+.deviseForgotPassword {
+  background-image: url("http://www.etouchcontrol.com/images/category/pages%20artwork/security/security-background.jpg");
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 95%;
+  margin: -20px auto;
+  text-align: center;
+  background-size: 100% 100%;
+  color: white;
+  font-size: large;
+}
+
+.deviseForgotPassword .new_user {
+  width: 20%;
+  border-radius: 10px;
+}
+
+.deviseForgotPassword a {
+  display: block;
 }
