@@ -36,3 +36,35 @@
   width: 36%;
   background-color: red;
 }
+
+.hidden-frontpage {
+  font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+  z-index: 1;
+  height: 15em;
+  width: 600px;
+  top: 35%;
+  position: absolute;
+  left: 50%;
+  margin-left: -300px;
+  background-color: #636363;
+  color: white;
+  text-shadow: 2px 2px 2px black;
+  opacity: .95;
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 8px 8px 8px black;
+
+  display: none;
+
+  h1 {
+    font-size: 4em;
+    letter-spacing: 4px;
+  }
+
+  p {
+    font-size: 2em;
+    letter-spacing: 2px;
+  }
+
+}
