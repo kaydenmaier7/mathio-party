@@ -130,6 +130,10 @@
 <script>
 
   $(function () {
+    Highcharts.setOptions({
+        colors: ['#2f7ed8', '#0d233a', '#8bbc21', '#910000', '#1aadce',
+   '#492970', '#f28f43', '#77a1e5', '#c42525', '#a6c96a']
+    });
     var data = {
 
 
@@ -223,7 +227,7 @@
     $('#tree').highcharts({
         series: [{
             type: 'treemap',
-            layoutAlgorithm: 'squarified',
+            layoutAlgorithm: 'sliceAndDice',
             allowDrillToNode: true,
             animationLimit: 1000,
             dataLabels: {
@@ -235,17 +239,19 @@
                 dataLabels: {
                     enabled: true
                 },
-                borderWidth: 3
+                borderWidth: 5
             }],
             data: points
         }],
         subtitle: {
-            text: 'Click points to drill down. Source: <a href="http://apps.who.int/gho/data/node.main.12?lang=en">WHO</a>.'
+            text: 'Click category for detailed breakdown'
         },
         title: {
             text: 'User History'
         }
     });
+
+
 });
 
 </script>
