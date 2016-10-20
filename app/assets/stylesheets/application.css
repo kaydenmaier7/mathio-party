@@ -400,3 +400,18 @@ path.area {
 .spacer {
   height: 20px;
 }
+
+.radarChart {
+  text-align: center;
+}
+
+.profile-page-background {
+  background-image: url("http://www.pixelstalk.net/wp-content/uploads/2016/05/Formula-math-text-texture-wallpaper.jpg");
+  background-size: 100% 100%;
+}
+
+.correct-incorrect-bar-chart, .userHistory {
+  width: 60%;
+  margin:  10px auto;
+  margin-bottom: 0;
+}
