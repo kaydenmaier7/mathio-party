@@ -1,3 +1,8 @@
+var p1correct = [];
+var p2correct = [];
+var p1incorrect =[];
+var p2incorrect =[];
+
 var mainState= {
   preload: function(){
     game.load.audio('jump', '/sounds/flappy_math/jump.wav');
@@ -210,6 +215,7 @@ var mainState= {
       this.player1score.text = "Player 1: "+this.p1score;
       that = this;
       setTimeout(function(){that.bird.canScore=true}, 1000);
+      p1correct.push(this.problem1.text);
     }
   },
 
@@ -220,38 +226,40 @@ var mainState= {
       this.player2score.text = "Player 2: "+this.p2score;
       that = this;
       setTimeout(function(){that.blueBird.canScore=true}, 1000);
+      p2correct.push(this.problem2.text);
     }
   },
 
   spawnQuestion1: function (skill){
     if (!this.gameOver){
-      var problem = game.add.text(20,60, "", { font: '30px Arial', fill: '#ffffff#' });
+      this.problem1 = game.add.text(20,60, "", { font: '30px Arial', fill: '#ffffff#' });
 
       param1 = Math.floor(Math.random()*10);
       param2 = Math.floor(Math.random()*10);
 
-      problem.text = param1.toString() + " + " + param2.toString()
+      this.problem1.text = param1.toString() + " + " + param2.toString()
 
-      that = this;
-      setTimeout(function(){problem.kill()}, 4500);
+      var that = this;
+      setTimeout(function(){that.problem1.kill()}, 4500);
       return (param1 + param2);
     }
   },
 
   spawnQuestion2: function (skill){
     if (!this.gameOver) {
-      var problem = game.add.text(20,130, "", { font: '30px Arial', fill: '#ffffff#' });
+      this.problem2 = game.add.text(20,130, "", { font: '30px Arial', fill: '#ffffff#' });
 
       param1 = Math.floor(Math.random()*10);
       param2 = param1 + Math.floor(Math.random()*10);
 
-      problem.text = param2.toString() + " - " + param1.toString()
+      this.problem2.text = param2.toString() + " - " + param1.toString()
 
-      that = this;
-      setTimeout(function(){problem.kill()}, 4500);
+      var that = this;
+      setTimeout(function(){that.problem2.kill()}, 4500);
       return (param2 - param1);
-  }
+    }
   },
+
   addOnePipe: function (x,y){
       var pipe = game.add.sprite(x,y, 'pipe');
       this.pipes.add(pipe);
