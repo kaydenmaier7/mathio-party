@@ -67,6 +67,15 @@ $(document).ready(function(){
           .attr('y', buttonY - buttonSize/2)
           .attr('height', buttonSize * 1.5)
           .attr('width', buttonSize * 1.5);
+
+          if ($(this).hasClass('frogger')){
+            $('#frogger-frontpage-div').show(500)
+          } else if ($(this).hasClass('invasion')){
+            $('#invasion-frontpage-div').show(500)
+          } else if ($(this).hasClass('flappy_bird')){
+            $('#flappy-frontpage-div').show(500)
+          }
+
       })
       .on("mouseout", function(){
         d3.select(this)
@@ -75,6 +84,14 @@ $(document).ready(function(){
           .attr('y', buttonY)
           .attr('height', buttonSize)
           .attr('width', buttonSize);
+
+                 if ($(this).hasClass('frogger')){
+                  $('#frogger-frontpage-div').hide(500)
+                } else if ($(this).hasClass('invasion')){
+                  $('#invasion-frontpage-div').hide(500)
+                } else if ($(this).hasClass('flappy_bird')){
+                  $('#flappy-frontpage-div').hide(500)
+                }
       });
   };
 
@@ -101,6 +118,7 @@ $(document).ready(function(){
           });
       });
   };
+
 
   makeImage(games);
   moveImageRight()
