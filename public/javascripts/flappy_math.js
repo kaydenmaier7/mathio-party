@@ -102,8 +102,6 @@ var mainState= {
     this.bird.destroy()
     this.time = 1
 
-    console.log(this.p1score);
-    console.log(this.p2score);
     if (!this.gameOver){
       this.flappyAjaxCall()
       this.gameOver = true;
