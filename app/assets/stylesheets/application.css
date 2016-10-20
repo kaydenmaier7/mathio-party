@@ -328,3 +328,42 @@ path.area {
 .title a {
   font-size: xx-large;
 }
+
+.game-show {
+  background-image: url("http://www.hotstudio.com/sites/default/files/abstract3_1.jpg");
+  background-size: 100% 100%;
+}
+
+.game-info {
+  background-color: white;
+  width: 100%;
+  text-align: center;
+}
+
+.game-directions {
+  display: block;
+  width: 1000px;
+  margin: auto;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.player1-info, .player2-info {
+  width: 478px;
+  display: inline-block;
+}
+
+.player1-info {
+  margin-right: 5px;
+}
+
+.player2-info {
+  margin-left: 5px;
+}
+
+.player-info {
+  width: 1000px;
+  margin: auto;
+}
+
+

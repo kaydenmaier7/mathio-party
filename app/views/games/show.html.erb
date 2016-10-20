@@ -3,67 +3,74 @@
 </div>
 <div class="game-stats display"></div> -->
 
+<div class="game-show">
+  <h1>Welcome to <%= @game.name %></h1>
+  <div class="game-directions game-info">
+    <h2>Directions</h2>
+    <p>
+      <% @game.directions.split('.').each do |direction| %>
+        <%= direction %><br>
+      <% end %>
+    </p>
+  </div>
 
-    <h1>Welcome to <%= @game.name %></h1>
-    <div class="game-directions">
-      <h2>Directions</h2>
-      <p>
-        <% @game.directions.split('.').each do |direction| %>
-          <%= direction %><br>
+  <div class="player-info">
+    <div class="player1-info">
+      <div class="player1-character game-info">
+        <h2>Player One</h2>
+        <%= @game.player1_character %>
+      </div>
+
+      <div class="player1-controls game-info">
+        <h2>Player One Controls</h2>
+        <% @game.player1_controls.split(',').each do |move| %>
+          <%= move %><br>
         <% end %>
-      </p>
+      </div>
     </div>
 
-    <div class="player1-character">
-      <h2>Player One</h2> 
-      <%= @game.player1_character %>
+    <div class="player1-info">
+      <div class="player2-character game-info">
+        <h2>Player Two</h2>
+        <%= @game.player2_character %>
+      </div>
+
+      <div class="player2-controls game-info">
+        <h2>Player Two Controls</h2>
+        <% @game.player2_controls.split(',').each do |move| %>
+          <%= move %><br>
+        <% end %>
+      </div>
     </div>
+  </div>
 
-    <div class="player1-controls">
-      <h2>Player One Controls</h2>
-      <% @game.player1_controls.split(',').each do |move| %>
-        <%= move %><br>
-      <% end %>
-    </div>
-
-    <div class="player2-character">
-      <h2>Player Two</h2>
-      <%= @game.player2_character %>
-    </div>
-
-    <div class="player2-controls">
-      <h2>Player Two Controls</h2>
-      <% @game.player2_controls.split(',').each do |move| %>
-        <%= move %><br> 
-      <% end %>
-    </div>
-
-    <% if @game.id == 1 %>
-      <div id='equation_text_div'>Frogger</div>
-      <div id='frogger'>
-      <select id='mode'>
-        <option value='none'>Select Mode</option>
-        <option value="addition">Addition</option>
-        <option value="subtraction">Subtraction</option>
-        <option value="multiplication">Multiplication</option>
-        <option value="division">Division</option>
-        <option value='all'>All</option>
-      </select>
-      <br>
+  <% if @game.id == 1 %>
+    <div id='equation_text_div'>Frogger</div>
+    <div id='frogger'>
+    <select id='mode'>
+      <option value='none'>Select Mode</option>
+      <option value="addition">Addition</option>
+      <option value="subtraction">Subtraction</option>
+      <option value="multiplication">Multiplication</option>
+      <option value="division">Division</option>
+      <option value='all'>All</option>
+    </select>
+    <br>
 
 
-      <button id='frogger-button' class='game-start-button'>start</button></div>
+    <button id='frogger-button' class='game-start-button'>start</button></div>
 
-    <% elsif @game.id == 2 %>
+  <% elsif @game.id == 2 %>
     <div id='flappy-bird'>
       <button id='flappy-button' class='game-start-button'>start</button>
     </div>
 
-    <% elsif @game.id == 3 %>
+  <% elsif @game.id == 3 %>
     <div id='invasion'></div>
-    <% end %>
-    <script type="text/javascript" src="<%= @game.src %>"></script>
+  <% end %>
+  <script type="text/javascript" src="<%= @game.src %>"></script>
 
-<button id='hidden_match_button'>
-    <a href='/matches/<%= @match_id %>'>Match Results</a>
-</button>
+  <button id='hidden_match_button'>
+      <a href='/matches/<%= @match_id %>'>Match Results</a>
+  </button>
+</div>

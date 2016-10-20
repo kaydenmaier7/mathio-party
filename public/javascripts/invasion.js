@@ -277,8 +277,8 @@ function generateEquation(){
 
 function displayPlayerInfo(){
   $('.equation').remove();
-  $('body').append('<div class="p1 equation"></div>');
-  $('body').append('<div class="p2 equation"></div>');
+  $('.game-show').append('<div class="p1 equation"></div>');
+  $('.game-show').append('<div class="p2 equation"></div>');
   $('.p1').append('<p> Question: ' + question1 + '</p>');
   $('.p2').append('<p> Question: ' + question2 + '</p>');
   $('.p1').append('<p> Score: ' + playerOneScore + '</p>');
