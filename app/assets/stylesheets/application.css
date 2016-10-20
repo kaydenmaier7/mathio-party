@@ -336,7 +336,7 @@ path.area {
 }
 
 .game-show {
-  background-image: url("http://www.hotstudio.com/sites/default/files/abstract3_1.jpg");
+  background-image: url("http://hdwallpaperbackgrounds.net/wp-content/uploads/2016/07/white-background.jpg");
   background-size: 100% 100%;
   margin-top: -19px;
 }
@@ -401,8 +401,11 @@ path.area {
   height: 20px;
 }
 
-.radarChart {
+.radarChartDescription {
   text-align: center;
+  font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+  color: #E0E0E0;
+  font-size: 1.3em;
 }
 
 .profile-page-background {

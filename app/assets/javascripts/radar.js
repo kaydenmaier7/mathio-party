@@ -16,7 +16,7 @@ function RadarChart(id, data, options) {
    labelFactor: 1.25,   //How much farther than the radius of the outer circle should the labels be placed
    wrapWidth: 60,     //The number of pixels after which a label needs to be given a new line
    opacityArea: 0.35,   //The opacity of the area of the blob
-   dotRadius: 4,      //The size of the colored circles of each blog
+   dotRadius: 5,      //The size of the colored circles of each blog
    opacityCircles: 0.1,   //The opacity of the circles of each blob
    strokeWidth: 2,    //The width of the stroke around each blob
    roundStrokes: false, //If true the area and stroke will follow a round path (cardinal-closed)
@@ -98,8 +98,8 @@ function RadarChart(id, data, options) {
      .attr("x", 4)
      .attr("y", function(d){return -d*radius/cfg.levels;})
      .attr("dy", "0.4em")
-     .style("font-size", "10px")
-     .attr("fill", "#737373")
+     .style("font-size", "15px")
+     .attr("fill", "#e0e0e0")
      .text(function(d,i) { return Math.floor((maxValue * d/cfg.levels) * 100) + "%"; });
 
   /////////////////////////////////////////////////////////
@@ -125,7 +125,8 @@ function RadarChart(id, data, options) {
   //Append the labels at each axis
   axis.append("text")
     .attr("class", "legend")
-    .style("font-size", "11px")
+    .style("font-size", "20px")
+    .style("fill", "#e0e0e0")
     .attr("text-anchor", "middle")
     .attr("dy", "0.35em")
     .attr("x", function(d, i){ return rScale(maxValue * cfg.labelFactor) * Math.cos(angleSlice*i - Math.PI/2); })
@@ -226,7 +227,9 @@ function RadarChart(id, data, options) {
         .attr('y', newY)
         .text(Math.floor(d.value * 100) + "%")
         .transition().duration(200)
-        .style('opacity', 1);
+        .style('opacity', 1)
+        .style("font-size", "30px")
+        .style('fill', "#e0e0e0");
     })
     .on("mouseout", function(){
       tooltip.transition().duration(200)
