@@ -196,7 +196,7 @@ path.area {
   box-shadow: 10px 10px 10px #888888;
 }
 
-.deviseLogin {
+.deviseLogin, .playerTwoLogin {
   background-image: url("http://2.bp.blogspot.com/-5tSsahBREd0/T9Ocr-4p5UI/AAAAAAAAAEg/3pNQqFfAS0U/s1600/1339215668258.jpg");
   background-repeat: no-repeat;
   width: 100%;
@@ -208,7 +208,12 @@ path.area {
   text-align: center;
 }
 
-.deviseLogin h2, .deviseForgotPassword h2 {
+.flash-errors {
+  color: red;
+  margin: 1em;
+}
+
+.deviseLogin h2, .deviseForgotPassword h2, .playerTwoLogin h2 {
   padding-top: 10%;
   color: #515B63;
   margin-bottom: 0;
@@ -235,7 +240,7 @@ path.area {
   opacity: 1;
 }
 
-.actions input {
+.actions input, .playerTwoLoginButton input {
   width: 100%;
   height: 4em;
   background-color: #00BFE9;

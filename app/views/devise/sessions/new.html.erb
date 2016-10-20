@@ -1,8 +1,12 @@
 <div class="deviseLogin">
   <h2>Log in</h2>
-  <%= render "partials/flash" %>
 
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+
+    <div class="flash-errors">
+      <%= render "partials/flash" %>
+    </div>
+
     <div class="field">
       <%= f.label :email %><br />
       <%= f.email_field :email, autofocus: true %>
