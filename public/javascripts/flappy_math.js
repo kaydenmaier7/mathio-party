@@ -1,3 +1,10 @@
+var p1correct = [];
+var p2correct = [];
+var p1incorrect =[];
+var p2incorrect =[];
+var p1skill;
+var p2skill;
+
 var mainState= {
   preload: function(){
     game.load.audio('jump', '/sounds/flappy_math/jump.wav');
@@ -7,6 +14,9 @@ var mainState= {
     game.load.image('cloud', '/images/flappy_math/cloud.png');
   },
   create: function(){
+    this.problem1 = game.add.text(20,60, "", { font: '30px Arial', fill: '#ffffff#' });
+    this.problem2 = game.add.text(20,130, "", { font: '30px Arial', fill: '#ffffff#' });
+
     this.jumpSound = game.add.audio('jump');
 
     this.p1score = 0;
@@ -55,6 +65,7 @@ var mainState= {
   },
 
   update: function(){
+
     if (this.bird.angle < 20){
        this.bird.angle += 1;
     }
@@ -109,8 +120,6 @@ var mainState= {
   },
 
   flappyAjaxCall: function(){
-    console.log('in ajax function')
-
     var request = $.ajax({
       url: '/results',
       type: 'post'
@@ -209,7 +218,7 @@ var mainState= {
       this.p1score  += 1;
       this.player1score.text = "Player 1: "+this.p1score;
       that = this;
-      setTimeout(function(){that.bird.canScore=true}, 1000);
+      p1correct.push(this.problem1.text);
     }
   },
 
@@ -219,39 +228,141 @@ var mainState= {
       this.p2score  += 1;
       this.player2score.text = "Player 2: "+this.p2score;
       that = this;
-      setTimeout(function(){that.blueBird.canScore=true}, 1000);
+      p2correct.push(this.problem2.text);
     }
   },
 
-  spawnQuestion1: function (skill){
+  spawnQuestion1: function (){
     if (!this.gameOver){
-      var problem = game.add.text(20,60, "", { font: '30px Arial', fill: '#ffffff#' });
-
       param1 = Math.floor(Math.random()*10);
       param2 = Math.floor(Math.random()*10);
 
-      problem.text = param1.toString() + " + " + param2.toString()
 
-      that = this;
-      setTimeout(function(){problem.kill()}, 4500);
-      return (param1 + param2);
-    }
+      switch(p1skill){
+        case "Addition":
+          this.problem1.text = param1.toString() + " + " + param2.toString()
+          var that = this;
+          return (param1 + param2);
+          break;
+
+        case "Subtraction":
+          param2 = param1 + Math.floor(Math.random()*10);
+          this.problem1.text = param2.toString() + " - " + param1.toString()
+          var that = this;
+          return (param2 - param1);
+          break;
+
+        case "Multiplication":
+          this.problem1.text = param1.toString() + " * " + param2.toString()
+          var that = this;
+          return (param1 * param2);
+          break;
+
+        case "Division":
+          this.problem1.text = (param1*param2).toString() + " / " + param2.toString()
+          var that = this;
+          return (param1);
+          break;
+
+        case "All":
+        var select = Math.random();
+        if (select < .25){
+          this.problem1.text = param1.toString() + " + " + param2.toString()
+          var that = this;
+          return (param1 + param2);
+
+        } else if (select < .5) {
+          param2 = param1 + Math.floor(Math.random()*10);
+          this.problem1.text = param2.toString() + " - " + param1.toString()
+          var that = this;
+          return (param2 - param1);
+
+        } else if (select < .75) {
+          this.problem1.text = param1.toString() + " * " + param2.toString()
+          var that = this;
+          return (param1 * param2);
+
+        } else {
+          this.problem1.text = (param1*param2).toString() + " / " + param2.toString()
+          var that = this;
+          return (param1);
+        }
+        break;
+
+        default:
+          this.problem1.text = param1.toString() + " + " + param2.toString()
+          var that = this;
+          return (param1 + param2);
+        }
+      }
   },
 
-  spawnQuestion2: function (skill){
-    if (!this.gameOver) {
-      var problem = game.add.text(20,130, "", { font: '30px Arial', fill: '#ffffff#' });
-
+  spawnQuestion2: function (){
+    if (!this.gameOver){
       param1 = Math.floor(Math.random()*10);
-      param2 = param1 + Math.floor(Math.random()*10);
+      param2 = Math.floor(Math.random()*10);
 
-      problem.text = param2.toString() + " - " + param1.toString()
+      switch(p2skill){
 
-      that = this;
-      setTimeout(function(){problem.kill()}, 4500);
-      return (param2 - param1);
-  }
+        case "Addition":
+        p2text = param1.toString() + " + " + param2.toString()
+          this.problem2.text = p2text
+          var that = this;
+          return (param1 + param2);
+          break;
+
+        case "Subtraction":
+          param2 = param1 + param2;
+          this.problem2.text = param2.toString() + " - " + param1.toString()
+          var that = this;
+          return (param2 - param1);
+          break;
+
+        case "Multiplication":
+          this.problem2.text = param1.toString() + " * " + param2.toString()
+          var that = this;
+          return (param1 * param2);
+          break;
+
+        case "Division":
+          this.problem2.text = (param1*param2).toString() + " / " + param1.toString()
+          var that = this;
+          return (param2);
+          break;
+
+        case "All":
+          var select = Math.random();
+          if (select < .25){
+            this.problem2.text = param1.toString() + " + " + param2.toString()
+            var that = this;
+            return (param1 + param2);
+
+          } else if (select < .5) {
+            param2 = param1 + Math.floor(Math.random()*10);
+            this.problem2.text = param2.toString() + " - " + param1.toString()
+            var that = this;
+            return (param2 - param1);
+
+          } else if (select < .75) {
+            this.problem2.text = param1.toString() + " * " + param2.toString()
+            var that = this;
+            return (param1 * param2);
+
+          } else {
+            this.problem2.text = (param1*param2).toString() + " / " + param2.toString()
+            var that = this;
+            return (param1);
+          }
+        break;
+
+        default:
+          this.problem2.text = param1.toString() + " + " + param2.toString()
+          var that = this;
+          return (param1 + param2);
+        }
+      }
   },
+
   addOnePipe: function (x,y){
       var pipe = game.add.sprite(x,y, 'pipe');
       this.pipes.add(pipe);
@@ -265,6 +376,7 @@ var mainState= {
 
   spawnAnswer: function (x, y, num, correct1, correct2){
       var answer = game.add.text(x,y, num, { font: '30px Arial', fill: '#ffffff#' });
+      answer.anchor.setTo(.5,.5)
       game.physics.arcade.enable(answer);
       answer.body.velocity.x = -200;
 
@@ -326,8 +438,25 @@ var mainState= {
 };
 
 $(document).ready(function(){
+  flappyMode1Listener()
+  flappyMode2Listener()
   flappyButtonClick()
 })
+
+var flappyMode1Listener = function(){
+  $('#flappy-mode-1').on('change', function(){
+    p1skill = $('#flappy-mode-1 option:selected').text()
+    $('#flappy-mode-1 :first-child').attr('disabled', 'disabled')
+  })
+}
+
+var flappyMode2Listener = function(){
+  $('#flappy-mode-2').on('change', function(){
+    p2skill = $('#flappy-mode-2 option:selected').text()
+    $('#flappy-mode-2 :first-child').attr('disabled', 'disabled')
+  })
+}
+
 
 var flappyButtonClick = function(){
   $('#flappy-button').on('click', function(){
