@@ -335,9 +335,11 @@ path.area {
 }
 
 .game-info {
-  background-color: white;
+  background-color: #E0E0E0;
   width: 100%;
   text-align: center;
+  font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+  font-size: medium;
 }
 
 .game-directions {
@@ -348,8 +350,12 @@ path.area {
   border-top-right-radius: 10px;
 }
 
+.game-directions h2, .player-info h2 {
+  padding-top: 5px;
+}
+
 .player1-info, .player2-info {
-  width: 478px;
+  width: 49.5%;
   display: inline-block;
 }
 
@@ -358,7 +364,7 @@ path.area {
 }
 
 .player2-info {
-  margin-left: 5px;
+  float: right;
 }
 
 .player-info {
@@ -366,4 +372,14 @@ path.area {
   margin: auto;
 }
 
+.player1-controls {
+  border-bottom-left-radius: 10px;
+}
 
+.player2-controls {
+  border-bottom-right-radius: 10px;
+}
+
+.player1-controls, .player2-controls, .player1-character, .player2-character {
+  padding-bottom: 5px;
+}
