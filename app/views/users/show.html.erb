@@ -1,5 +1,4 @@
 <div class="profile-page-background">
-  <!-- <%= render 'partials/radarChart' %> -->
 
   <% results = [] %>
   <% @User.results.each do |result| %>
@@ -9,6 +8,8 @@
     <div class='frogger-user-results-div'>
 
         <h1><%= @User.username %>'s recent results:</h1>
+
+        <%= render 'partials/radarChart' %>
 
           <table class='frogger-results-table'>
 
