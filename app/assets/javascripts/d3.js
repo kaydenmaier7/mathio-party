@@ -18,9 +18,10 @@ $(document).ready(function(){
     .enter()
     .append('svg')
     .style('width', width)
-    .style('height', height);
+    .style('height', height)
+    .classed('game-index-svg', true);
 
-  var svg = d3.select("svg");
+  var svg = d3.select(".game-index-svg");
 
   // add game-images
   function makeImage() {
