@@ -252,19 +252,7 @@ path.area {
 }
 
 .deviseLogin a {
-  margin: auto;
-  width: 10%;
-  background-color: #D44032;
-  color: white;
-  padding: 10px 15px;
-  text-align: center;
-  text-decoration: none;
   display: block;
-}
-
-.deviseLogin a:hover {
-  background-color: #F54A3A;
-  box-shadow: 5px 5px 5px #888888;
 }
 
 .deviseSignUp {
