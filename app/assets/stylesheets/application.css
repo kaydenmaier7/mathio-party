@@ -164,24 +164,30 @@ path.area {
   box-shadow: 2px 2px 2px #888888;
 }
 
+.invasion-questions {
+  width: 1000px;
+  height: 180px;
+  margin: auto;
+}
+
 .equation {
   margin: 1%;
   border-radius: 1em;
   display: inline-block;
   padding: 1%, 2%, 1%, 2%;
-  width: 15%;
+  width: 47%;
   font-size: xx-large;
   text-align: center;
   box-shadow: 10px 10px 10px #888888;
 }
 
 .p1 {
-  margin-left: 20%;
+  float: left;
   background-color: #544E36;
 }
 
 .p2 {
-  margin-left: 30%;
+  float: right;
   background-color: #C62A47;
 }
 
@@ -334,10 +340,18 @@ path.area {
   background-size: 100% 100%;
 }
 
+.game-show h1 {
+  text-align: center;
+  padding-top: 10px;
+  font-size: xx-large;
+}
+
 .game-info {
-  background-color: white;
+  background-color: #E0E0E0;
   width: 100%;
   text-align: center;
+  font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+  font-size: medium;
 }
 
 .game-directions {
@@ -348,8 +362,12 @@ path.area {
   border-top-right-radius: 10px;
 }
 
+.game-directions h2, .player-info h2 {
+  padding-top: 5px;
+}
+
 .player1-info, .player2-info {
-  width: 478px;
+  width: 49.5%;
   display: inline-block;
 }
 
@@ -358,7 +376,7 @@ path.area {
 }
 
 .player2-info {
-  margin-left: 5px;
+  float: right;
 }
 
 .player-info {
@@ -366,4 +384,18 @@ path.area {
   margin: auto;
 }
 
+.player1-controls {
+  border-bottom-left-radius: 10px;
+}
 
+.player2-controls {
+  border-bottom-right-radius: 10px;
+}
+
+.player1-controls, .player2-controls, .player1-character, .player2-character {
+  padding-bottom: 5px;
+}
+
+.spacer {
+  height: 20px;
+}
