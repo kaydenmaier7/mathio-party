@@ -4,6 +4,18 @@ user1 = {
 	password: '123456'
 }
 
+user2 = {
+  username: 'joe',
+  email: 'joe@joe.com',
+  password: 'joejoe'
+}
+
+user3 = {
+  username: 'tammy',
+  email: 'tammy@tammy.com',
+  password: 'tammy1'
+}
+
 game1 = {
 	name: 'Frogger',
 	src: '/javascripts/frogger.js',
@@ -49,50 +61,125 @@ game4 = {
 }
 
 User.create(user1)
+User.create(user2)
+User.create(user3)
 Game.create(game1)
 Game.create(game2)
 Game.create(game3)
 Game.create(game4)
 
-2.times do
+10.times do
   Match.create({game_id: 1})
 end
 
 # create results for 2 matches
-2.times do |num|
+10.times do |num|
   Result.create({
     user_id: 1,
-    match_id: num,
-    score: 5
+    match_id: (num + 1)
   })
 end
 
-possible_correct = [100, 72, 30, 50]
-possible_incorrect = [50, 20]
+10.times do |num|
+  Result.create({
+    user_id: 2,
+    match_id: (num + 1)
+  })
+end
 
-# create sub_skills
-2.times do |num|
-  10.times do |integer|
-    SubSkill.create({
-      result_id: 1,
-      name: "#{integer} times tables",
-      skill_name: "multiplication",
-      correct: possible_correct.sample,
-      incorrect: possible_incorrect.sample,
-      match_id: num + 1
+multiplication_skills = ['0 times table', '1 times table', '2 times table', '3 times table', '4 times table', '5 times table', '6 times table', '7 times table',
+'8 times table', '9 times table', '10 times table', 'squares', 'numbers greater than 10']
+
+division_skills = ['diving by 0', 'diving by 1', 'diving by 2', 'diving by 3', 'diving by 4', 'diving by 5', 'diving by 6', 'diving by 7',
+'diving by 8', 'diving by 9']
+
+addition_skills = ['numbers greater than 10', 'numbers less than 10', 'evens', 'odds', 're-grouping']
+
+subtraction_skills = ['numbers greater than 10', 'evens', 'odds', 're-grouping']
+
+
+20.times do |num|
+  5.times do |x|
+  SubSkill.create({
+    result_id: (num + 1),
+    skill_name: 'multiplication',
+    name: multiplication_skills.sample,
+    correct: 1,
+    match_id: rand(1..10)
+    })
+  end
+  5.times do |x|
+  SubSkill.create({
+    result_id: (num + 1),
+    skill_name: 'multiplication',
+    name: multiplication_skills.sample,
+    incorrect: 1,
+    match_id: rand(1..10)
     })
   end
 end
 
-2.times do |num|
-  10.times do |integer|
-    SubSkill.create({
-      result_id: 1,
-      name: "Addends of #{integer}",
-      skill_name: "addition",
-      correct: possible_correct.sample,
-      incorrect: possible_incorrect.sample,
-      match_id: num + 1
+20.times do |num|
+  5.times do |x|
+  SubSkill.create({
+    result_id: (num + 1),
+    skill_name: 'addition',
+    name: addition_skills.sample,
+    correct: 1,
+    match_id: rand(1..10)
+    })
+  end
+  5.times do |x|
+  SubSkill.create({
+    result_id: (num + 1),
+    skill_name: 'addition',
+    name: addition_skills.sample,
+    incorrect: 1,
+    match_id: rand(1..10)
     })
   end
 end
+
+20.times do |num|
+  5.times do |x|
+  SubSkill.create({
+    result_id: (num + 1),
+    skill_name: 'subtraction',
+    name: subtraction_skills.sample,
+    correct: 1,
+    match_id: rand(1..10)
+    })
+  end
+  5.times do |x|
+  SubSkill.create({
+    result_id: (num + 1),
+    skill_name: 'subtraction',
+    name: subtraction_skills.sample,
+    incorrect: 1,
+    match_id: rand(1..10)
+    })
+  end
+end
+
+20.times do |num|
+  5.times do |x|
+  SubSkill.create({
+    result_id: (num + 1),
+    skill_name: 'division',
+    name: division_skills.sample,
+    correct: 1,
+    match_id: rand(1..10)
+    })
+  end
+  5.times do |x|
+  SubSkill.create({
+    result_id: (num + 1),
+    skill_name: 'division',
+    name: division_skills.sample,
+    incorrect: 1,
+    match_id: rand(1..10)
+    })
+  end
+end
+
+
