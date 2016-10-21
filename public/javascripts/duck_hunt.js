@@ -1,10 +1,61 @@
 var game = new Phaser.Game(1000,910, Phaser.auto, 'math-hunt');
 
-function Duck() {
+function Duck(val) {
   this.xMove = 0;
   this.yMove = 0;
-  this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, 'empty');
-  this.area = this.sprite.getBounds();
+  this.speed = 1;
+
+  if(val === 1){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '1')}
+  else if(val === 2){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '2')}
+  else if(val === 3){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '3')}
+  else if(val === 4){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '4')}
+  else if(val === 5){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '5')}
+  else if(val === 6){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '6')}
+  else if(val === 7){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '7')}
+  else if(val === 8){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '8')}
+  else if(val === 9){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '9')}
+  else if(val === 10){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '10')}
+  else if(val === 11){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '11')}
+  else if(val === 12){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '12')}
+  else if(val === 13){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '13')}
+  else if(val === 14){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '14')}
+  else if(val === 15){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '15')}
+  else if(val === 16){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '16')}
+  else if(val === 17){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '17')}
+  else if(val === 18){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '18')}
+  else if(val === 19){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '19')}
+  else if(val === 20){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '20')}
+    else if(val === 21){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '21')}
+  else if(val === 22){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '22')}
+  else if(val === 23){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '23')}
+  else if(val === 24){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '24')}
+  else if(val === 25){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '25')}
+  else if(val === 26){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '26')}
+  else if(val === 27){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '27')}
+  else if(val === 28){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '28')}
+  else if(val === 29){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '29')}
+  else if(val === 30){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '30')}
+  else if(val === 31){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '31')}
+  else if(val === 32){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '32')}
+  else if(val === 33){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '33')}
+  else if(val === 34){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '34')}
+  else if(val === 35){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '35')}
+  else if(val === 36){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '36')}
+  else if(val === 37){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '37')}
+  else if(val === 38){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '38')}
+  else if(val === 39){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '39')}
+  else if(val === 40){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '40')}
+  else if(val === 41){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '41')}
+  else if(val === 42){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '42')}
+  else if(val === 43){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '43')}
+  else if(val === 44){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '44')}
+  else if(val === 45){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '45')}
+  else if(val === 46){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '46')}
+  else if(val === 47){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '47')}
+  else if(val === 48){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '48')}
+  else if(val === 49){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '49')}
+  else if(val === 50){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '50')}
+
   this.sprite.anchor.setTo( 0.5, 0.5 );
   this.init = function(){
     this.isActive = true;
@@ -13,33 +64,29 @@ function Duck() {
     this.outOfBoundsKill = true;
     game.time.events.loop(Math.random()*1200+800, this.randomDirection, this );
   };
-  this.setAnswer = function(answer){
-    this.answer = answer;
-  };
+
   this.randomDirection =  function(){
+    if (this.speed<10){
     this.setXMove();
     this.setYMove();
+    }
   };
+
   this.setXMove = function(){
     this.xMove = Math.random()<0.5 ? -1: 1;
-    this.xMove *= Math.random() * 1;
+    this.xMove *= Math.random() * this.speed;
   };
   this.setYMove = function(){
     if (this.y < 500){
       this.yMove = Math.random()<0.5 ? -1: 1;
-      return this.yMove *= Math.random() * 5;
+      return this.yMove *= Math.random();
     } else {
-      return this.yMove = Math.random() * 1;
+      return this.yMove = Math.random();
     }
   };
   this.move = function(){
-    this.sprite.x += this.xMove;
-    this.area.x = this.sprite.x;
-    this.answer.x = this.area.x;
-    this.sprite.y -= this.yMove;
-    this.area.y = this.sprite.y;
-    this.answer.y = this.area.y;
-    console.log(this.answer.x);
+    this.sprite.x += this.xMove * this.speed;
+    this.sprite.y -= this.yMove * this.speed;
   }.bind(this);
 };
 
@@ -54,12 +101,65 @@ var mainState= {
     game.load.image('shot', '/images/duck_hunt/shotCrosshairs.png');
     game.load.image('redX', '/images/duck_hunt/redX.png');
     //numbers
-    game.load.image('empty', '/images/duck_hunt/empty.png');
+    game.load.image('1', '/images/duck_hunt/1.png');
+    game.load.image('2', '/images/duck_hunt/2.png');
+    game.load.image('3', '/images/duck_hunt/3.png');
+    game.load.image('4', '/images/duck_hunt/4.png');
+    game.load.image('5', '/images/duck_hunt/5.png');
+    game.load.image('6', '/images/duck_hunt/6.png');
+    game.load.image('7', '/images/duck_hunt/7.png');
+    game.load.image('8', '/images/duck_hunt/8.png');
+    game.load.image('9', '/images/duck_hunt/9.png');
+    game.load.image('10', '/images/duck_hunt/10.png');
+    game.load.image('11', '/images/duck_hunt/11.png');
+    game.load.image('12', '/images/duck_hunt/12.png');
+    game.load.image('13', '/images/duck_hunt/13.png');
+    game.load.image('14', '/images/duck_hunt/14.png');
+    game.load.image('15', '/images/duck_hunt/15.png');
+    game.load.image('16', '/images/duck_hunt/16.png');
+    game.load.image('17', '/images/duck_hunt/17.png');
+    game.load.image('18', '/images/duck_hunt/18.png');
+    game.load.image('19', '/images/duck_hunt/19.png');
+    game.load.image('20', '/images/duck_hunt/20.png');
+    game.load.image('21', '/images/duck_hunt/21.png');
+    game.load.image('22', '/images/duck_hunt/22.png');
+    game.load.image('23', '/images/duck_hunt/23.png');
+    game.load.image('24', '/images/duck_hunt/24.png');
+    game.load.image('25', '/images/duck_hunt/25.png');
+    game.load.image('26', '/images/duck_hunt/26.png');
+    game.load.image('27', '/images/duck_hunt/27.png');
+    game.load.image('28', '/images/duck_hunt/28.png');
+    game.load.image('29', '/images/duck_hunt/29.png');
+    game.load.image('30', '/images/duck_hunt/30.png');
+    game.load.image('31', '/images/duck_hunt/31.png');
+    game.load.image('32', '/images/duck_hunt/32.png');
+    game.load.image('33', '/images/duck_hunt/33.png');
+    game.load.image('34', '/images/duck_hunt/34.png');
+    game.load.image('35', '/images/duck_hunt/35.png');
+    game.load.image('36', '/images/duck_hunt/36.png');
+    game.load.image('37', '/images/duck_hunt/37.png');
+    game.load.image('38', '/images/duck_hunt/38.png');
+    game.load.image('39', '/images/duck_hunt/39.png');
+    game.load.image('40', '/images/duck_hunt/40.png');
+    game.load.image('41', '/images/duck_hunt/41.png');
+    game.load.image('42', '/images/duck_hunt/42.png');
+    game.load.image('43', '/images/duck_hunt/43.png');
+    game.load.image('44', '/images/duck_hunt/44.png');
+    game.load.image('45', '/images/duck_hunt/45.png');
+    game.load.image('46', '/images/duck_hunt/46.png');
+    game.load.image('47', '/images/duck_hunt/47.png');
+    game.load.image('48', '/images/duck_hunt/48.png');
+    game.load.image('49', '/images/duck_hunt/49.png');
+    game.load.image('50', '/images/duck_hunt/50.png');
 
     //score
     game.load.image('redScore', '/images/duck_hunt/red_score.png');
     game.load.image('blueScore', '/images/duck_hunt/blue_score.png');
     game.load.image('noScore', '/images/duck_hunt/no_score.png');
+
+    //dog
+    game.load.image('laugh1', '/images/duck_hunt/dog_laugh1.png');
+    game.load.image('laugh2', '/images/duck_hunt/dog_laugh2.png');
 
     //bullets
     game.load.image('bullet', '/images/duck_hunt/bullet.png');
@@ -78,6 +178,7 @@ var mainState= {
     //set stage
     game.stage.backgroundColor = '#40bdff';
     this.background = game.add.sprite( 0, 0, 'stage');
+    // this.dog = game.add.sprite(450,700,'laugh1');
 
     //enable physics
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -151,9 +252,7 @@ var mainState= {
     this.reload();
 
     //timers
-    this.spawnDucks();
-    // var that = this;
-    // game.time.events.loop(15000, that.spawnDucks, this);
+    this.startRound();
   },
   update: function(){
     this.centerTarget();
@@ -163,8 +262,7 @@ var mainState= {
 
   checkOverlap: function(spriteA, duck) {
     var boundsA = spriteA.getBounds();
-    var boundsB = duck.area;
-
+    var boundsB = duck.sprite.getBounds();
     return Phaser.Rectangle.intersects(boundsA, boundsB);
   },
 
@@ -220,17 +318,17 @@ var mainState= {
     }
   },
 
-  // player 1 movement
+  // player movement
   move: function(){
-    if (this.p1up.isDown) { this.p1.y -= 3; }
-    else if (this.p1down.isDown) { this.p1.y += 3; }
-    if (this.p1right.isDown) { this.p1.x += 3; }
-    else if (this.p1left.isDown) { this.p1.x -= 3; }
+    if (this.p1up.isDown) { this.p1.y -= 5; }
+    else if (this.p1down.isDown) { this.p1.y += 5; }
+    if (this.p1right.isDown) { this.p1.x += 5; }
+    else if (this.p1left.isDown) { this.p1.x -= 5; }
 
-    if (this.p2up.isDown) { this.p2.y -= 3; }
-    else if (this.p2down.isDown) { this.p2.y += 3; }
-    if (this.p2right.isDown) { this.p2.x += 3; }
-    else if (this.p2left.isDown) { this.p2.x -= 3; }
+    if (this.p2up.isDown) { this.p2.y -= 5; }
+    else if (this.p2down.isDown) { this.p2.y += 5; }
+    if (this.p2right.isDown) { this.p2.x += 5; }
+    else if (this.p2left.isDown) { this.p2.x -= 5; }
   },
 
   shoot: function(){
@@ -245,6 +343,7 @@ var mainState= {
       if (this.ducks.length > 0){
         if (this.checkOverlap(this.inner1, this.ducks[0])){
           this.ducks[0].sprite.kill();
+          this.ducks.splice(0,1);
           this.hitBird1()
         } else if (this.checkOverlap(this.inner1, this.ducks[1])){
           x = game.add.sprite(this.p1.x, this.p1.y, 'redX');
@@ -276,6 +375,7 @@ var mainState= {
           this.honk.play()
         } else if (this.checkOverlap(this.inner2, this.ducks[1])){
           this.ducks[1].sprite.kill();
+          this.ducks.splice(1,1);
           this.hitBird2(this.ducks[1])
         } else if (this.checkOverlap(this.inner2, this.ducks[2])){
           x = game.add.sprite(this.p2.x, this.p2.y, 'redX');
@@ -346,10 +446,10 @@ var mainState= {
     }
 
     for (var i=0 ; i < this.score2.length ; i++){
-      if (this.score1[i] === 1){
+      if (this.score2[i] === 1){
         game.add.sprite(655-(i*30),830,'blueScore');
-      } else if (this.score1[1] === 0){
-        game.add.sprite(655+(i*30),830,'noScore');
+      } else if (this.score2[1] === 0){
+        game.add.sprite(655-(i*30),830,'noScore');
       }
     }
   },
@@ -371,26 +471,38 @@ var mainState= {
     this.ducks = [];
     this.reload();
     this.quacks.play();
-    var that = this;
-    for(var i=0 ; i<3 ; i++){
-      setTimeout(function(){
-        that.oneDuck();
-        that.spawnQuestions();
-      },2000);
-    }
+    this.spawnQuestions();
   },
+
   showRound: function(round){
-    console.log('Round shown');
     var roundText = game.add.text(game.world.centerX, game.world.centerY, "Round "+ round.toString(), { font: "64px Arial", fill: "#000000", align: "center" });
     roundText.anchor.setTo(.5,.5);
     setTimeout(function(){ roundText.text = ""},1000);
-    // var that = this;
-    // setTimeout(function(){ that.spawnDucks},1500);
-
+    var that = this;
+    setTimeout(function(){that.endRound() },10000);
   },
 
-  oneDuck: function(count){
-    this.duck = new Duck();
+  endRound: function(){
+    console.log(this.ducks)
+    hits = this.ducks.length;
+
+    if (this.score1.length < this.round){this.score1.push(0)}
+    if (this.score2.length < this.round){this.score2.push(0)}
+
+    for ( var i=0 ; i < this.ducks.length ; i++ )
+    {
+      this.ducks[i].speed = 10;
+    }
+    this.renderScore();
+    this.callDog(hits);
+  },
+
+  startRound: function(){
+    this.spawnDucks();
+  },
+
+  oneDuck: function(val){
+    this.duck = new Duck(val);
     this.duck.init();
     this.ducks.push(this.duck);
     game.time.events.loop(1, this.duck.move, this);
@@ -416,50 +528,31 @@ var mainState= {
   },
 
   spawnQuestions: function(skill1,skill2){
-    this.answers = []
-    var num1 = Math.floor(Math.random()*10);
-    var num2 = Math.floor(Math.random()*10);
+    var num1 = 100;
+    var num2 = 100;
+    var num3 = 100;
+    var num4 = 100;
+
+    while (num1+num2 > 50 || num3+num4 > 50 || num3+num4 === num1+num2){
+      num1= Math.floor(Math.random()*10);
+      num2= Math.floor(Math.random()*10);
+      num3= Math.floor(Math.random()*10);
+      num4= Math.floor(Math.random()*10);
+    }
+    this.oneDuck(num1+num2);
+    this.oneDuck(num3+num4);
 
     this.p1Question.text = num1.toString() + " + " + num2.toString();
-    this.answers.push((num1+num2).toString());
+    this.p2Question.text = num3.toString() + " + " + num4.toString();
 
-    num1 = Math.floor(Math.random()*10);
-    num2 = Math.floor(Math.random()*10);
+    var rand = Math.floor(Math.random()*20);
+    this.oneDuck(rand);
+    this.reorderSprites();
+  },
 
-    this.p2Question.text = num1.toString() + " + " + num2.toString();
-    this.answers.push((num1+num2).toString());
-
-
-    var rand = Math.floor(Math.random()*20).toString()
-    this.answers.push(rand);
-
-    this.answer1.text = this.answers[0];
-    this.answer2.text = this.answers[1];
-    this.answer3.text = this.answers[2];
-
-    this.ducks[0].setAnswer(this.answers[0]);
-    this.ducks[1].setAnswer(this.answers[1]);
-    this.ducks[2].setAnswer(this.answers[2]);
+  callDog: function(hits){
+    this.spawnDucks();
   }
-
-  // followDucks: function(){
-  //   console.log("called")
-  //   while (this.ducks[0].isActive){
-  //     console.log('duck1 active')
-  //     this.answer1.x = this.ducks[0].area.x;
-  //     this.answer1.y = this.ducks[0].area.y;
-  //   }
-
-  //   while (this.ducks[1].isActive){
-  //     this.answer2.x = this.ducks[1].area.x;
-  //     this.answer2.y = this.ducks[1].area.y;
-  //   }
-
-  //   while (this.ducks[2].isActive){
-  //     this.answer3.x = this.ducks[2].area.x;
-  //     this.answer3.y = this.ducks[2].area.y;
-  //   }
-  // }
 };
 
 game.state.add('main', mainState);
