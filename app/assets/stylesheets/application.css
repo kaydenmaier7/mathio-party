@@ -80,7 +80,7 @@ body {
   width: 1000px;
   height: 910px;
   background-color: black;
-  background-image: url('/images/flappy2-background.png');
+  background-image: url('/images/flappy_math/flappy2-background.png');
   background-size: 700px 600px;
   background-repeat: no-repeat;
   background-position: center;
