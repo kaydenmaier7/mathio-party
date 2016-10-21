@@ -441,77 +441,102 @@ var mainState= {
   },
 
   spawnQuestions: function(skill1,skill2){
+    var answer1 = 100;
+    var answer2 = 100;
     var num1 = 100;
     var num2 = 100;
     var num3 = 100;
     var num4 = 100;
 
-      // switch(p2skill){
-
-      //   case "Addition":
-      //   p2text = param1.toString() + " + " + param2.toString()
-      //     this.problem2.text = p2text
-      //     var that = this;
-      //     return (param1 + param2);
-      //     break;
-
-      //   case "Subtraction":
-      //     param2 = param1 + param2;
-      //     this.problem2.text = param2.toString() + " - " + param1.toString()
-      //     var that = this;
-      //     return (param2 - param1);
-      //     break;
-
-      //   case "Multiplication":
-      //     this.problem2.text = param1.toString() + " * " + param2.toString()
-      //     var that = this;
-      //     return (param1 * param2);
-      //     break;
-
-      //   case "Division":
-      //     this.problem2.text = (param1*param2).toString() + " / " + param1.toString()
-      //     var that = this;
-      //     return (param2);
-      //     break;
-
-      //   case "All":
-      //     var select = Math.random();
-      //     if (select < .25){
-      //       this.problem2.text = param1.toString() + " + " + param2.toString()
-      //       var that = this;
-      //       return (param1 + param2);
-
-      //     } else if (select < .5) {
-      //       param2 = param1 + Math.floor(Math.random()*10);
-      //       this.problem2.text = param2.toString() + " - " + param1.toString()
-      //       var that = this;
-      //       return (param2 - param1);
-
-      //     } else if (select < .75) {
-      //       this.problem2.text = param1.toString() + " * " + param2.toString()
-      //       var that = this;
-      //       return (param1 * param2);
-
-      //     } else {
-      //       this.problem2.text = (param1*param2).toString() + " / " + param2.toString()
-      //       var that = this;
-      //       return (param1);
-      //     }
-      //   break;
-    while (num1+num2 > 50 || num3+num4 > 50 || num3+num4 === num1+num2){
+    while ( answer1 > 50 || answer2 > 50 || answer1 !== answer2 ){
       num1= Math.floor(Math.random()*10);
       num2= Math.floor(Math.random()*10);
       num3= Math.floor(Math.random()*10);
       num4= Math.floor(Math.random()*10);
-    }
-    this.oneDuck(num1+num2);
-    this.oneDuck(num3+num4);
 
-    this.p1Question.text = num1.toString() + " + " + num2.toString();
-    this.p2Question.text = num3.toString() + " + " + num4.toString();
+      switch(skill1){
+        case "Addition":
+          answer1 = num1 + num2;
+          this.p1Question.text = num1.toString() + " + " + num2.toString();
+          break;
+        case "Subtraction":
+          answer1 = num1;
+          this.p1Question.text = (num1+num2).toString() + " - " + num2.toString();
+          break;
+        case "Multiplication":
+          answer1 = num1*num2;
+          this.p1Question.text = num1.toString() + " * " + num2.toString();
+          break;
+        case "Division":
+          answer1 = num1;
+          this.p1Question.text = (num1*num2).toString() + " / " + num2.toString();
+          break;
+        case "All":
+          var select = Math.random();
+          if (select < .25){
+            answer1 = num1 + num2;
+            this.p1Question.text = num1.toString() + " + " + num2.toString();
+          } else if (select < .5){
+            answer1 = num1;
+            this.p1Question.text = (num1+num2).toString() + " - " + num2.toString();
+          } else if (select < .75){
+            answer1 = num1*num2;
+            this.p1Question.text = num1.toString() + " * " + num2.toString();
+          } else{
+            answer1 = num1;
+            this.p1Question.text = (num1*num2).toString() + " / " + num2.toString();
+          }
+          break;
+
+          default:
+            answer1 = num1 + num2;
+            this.p1Question.text = num1.toString() + " + " + num2.toString();
+        }
+
+        switch(skill2){
+        case "Addition":
+          answer2 = num3 + num4;
+          this.p2Question.text = num3.toString() + " + " + num4.toString();
+          break;
+        case "Subtraction":
+          answer2 = num3;
+          this.p2Question.text = (num3+num4).toString() + " - " + num4.toString();
+          break;
+        case "Multiplication":
+          answer2 = num3*num4;
+          this.p2Question.text = num3.toString() + " * " + num4.toString();
+          break;
+        case "Division":
+          answer2 = num3;
+          this.p2Question.text = (num3*num4).toString() + " / " + num4.toString();
+          break;
+        case "All":
+          var select = Math.random();
+          if (select < .25){
+            answer2 = num3 + num4;
+            this.p2Question.text = num3.toString() + " + " + num4.toString();
+          } else if (select < .5){
+            answer2 = num3;
+            this.p2Question.text = (num3+num4).toString() + " - " + num4.toString();
+          } else if (select < .75){
+            answer2 = num3*num4;
+            this.p2Question.text = num3.toString() + " * " + num4.toString();
+          } else{
+            answer2 = num3;
+            this.p2Question.text = (num3*num4).toString() + " / " + num4.toString();
+          }
+          break;
+        default:
+          answer2 = num3 + num4;
+          this.p2Question.text = num3.toString() + " + " + num4.toString();
+        }
+    }
+
+    this.oneDuck(answer1);
+    this.oneDuck(answer2);
 
     var rand = Math.floor(Math.random()*20);
-    while ( rand === num3+num4 || rand === num1+num2){
+    while ( rand === answer1 || rand === answer2){
       rand = Math.floor(Math.random()*20);
     }
     this.oneDuck(rand);
