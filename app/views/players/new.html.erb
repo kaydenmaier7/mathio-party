@@ -1,27 +1,26 @@
-<h1>Welcome Player 2! Login here...</h1>
+<div class="playerTwoLogin">
+	<h2>Welcome Player 2! Login here...</h2>
 
-<%= form_for :player, url: players_path do |f| %>
-	<% if @errors %>
-		<ul>
-			<% @errors.each do |error| %>
-				<li>
-					<%= error %>
-				</li>
-				<% end %>
-		</ul>
-	<% end %>
+	<div class="new_user">
+		<%= form_for :player, url: players_path do |f| %>
 
-	<p>
-		<%= f.label :Email %><br>
-		<%= f.text_field :email %>
-	</p>
+			<div class="flash-errors">
+				<%= render "partials/flash" %>
+			</div>
 
-	<p>
-		<%= f.label :Password %><br>
-		<%= f.password_field :password %>
-	</p>
+			<p>
+				<%= f.label :Email %><br>
+				<%= f.text_field :email %>
+			</p>
 
-	<p>
-		<%= f.submit 'Login' %>
-	</p>
-<% end %>
+			<p>
+				<%= f.label :Password %><br>
+				<%= f.password_field :password %>
+			</p>
+
+			<div class="playerTwoLoginButton">
+				<%= f.submit 'Login' %>
+			</div>
+		<% end %>
+	</div>
+</div>

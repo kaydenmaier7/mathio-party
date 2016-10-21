@@ -1,6 +1,255 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<div class="profile-page-background">
 
-<p><%= User.find(1).percent('correct', '0times_table') %></p>
+  <% results = [] %>
+  <% @User.results.each do |result| %>
+    <% results << result %>
+  <% end %>
 
-<%= render 'partials/radarChart' %>
+    <div class='frogger-user-results-div'>
+
+        <h1><%= @User.username %>'s recent results:</h1>
+
+        <%= render 'partials/radarChart' %>
+
+          <table class='frogger-results-table'>
+
+              <tr class='skill-header'>
+                <th>Skill Type</th>
+                <th>Sub Skill</th>
+                <th>Correct</th>
+                <th>Incorrect</th>
+                <th>+ / -</th>
+              </tr>
+              <% names = [] %>
+              <% results.each do |result| %>
+              <% result.sub_skills.each do |skill| %>
+                <% names << skill %>
+              <% end %>
+              <% end %>
+
+              <% names = names.uniq { |n| n.name }.sort_by { |n| SubSkill.where(name: n.name, skill_name: n.skill_name, correct: 1).count - SubSkill.where(name: n.name, skill_name: n.skill_name, incorrect: 1).count }.reverse! %>
+
+              <% names.each do |n| %>
+                <tr>
+                  <td><%= n.skill_name %></td>
+                  <td><%= n.name %></td>
+                  <td><%= SubSkill.where(name: n.name, skill_name: n.skill_name, correct: 1).count %></td>
+                  <td><%= SubSkill.where(name: n.name, skill_name: n.skill_name, incorrect: 1).count %></td>
+                  <td><%= SubSkill.where(name: n.name, skill_name: n.skill_name, correct: 1).count - SubSkill.where(name: n.name, skill_name: n.skill_name, incorrect: 1).count %></td>
+                </tr>
+              <% end %>
+          </table>
+
+        </div>
+
+
+
+
+
+
+
+  <% results = [] %>
+  <% @User.results.each do |result| %>
+    <% results << result %>
+  <% end %>
+
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/data.js"></script>
+
+
+  <div id=<%= @User.id %> class="correct-incorrect-bar-chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+  <table id='<%= @User.id %>-table' class='hidden-table'>
+      <thead>
+          <tr>
+              <th></th>
+              <th>Correct</th>
+              <th>Incorrect</th>
+          </tr>
+      </thead>
+      <tbody>
+        <% skillNames = [] %>
+        <% results.each do |r| %>
+
+
+        <% r.sub_skills.each do |skill| %>
+            <% skillNames << skill %>
+        <% end %>
+        <% end %>
+        <% skillNames = skillNames.uniq { |skill| skill.name }.sort_by { |skill| skill.name } %>
+
+        <% skillNames.each do |skill| %>
+          <tr>
+              <th><p><%= skill.name.capitalize %></p></th>
+              <td><%= SubSkill.where(name: skill.name, skill_name: skill.skill_name, correct: 1).count %></td>
+              <td><%= SubSkill.where(name: skill.name, skill_name: skill.skill_name, incorrect: 1).count %></td>
+          </tr>
+        <% end %>
+      </tbody>
+  </table>
+
+  <script>$(function () {
+      $('#' + <%= @User.id %>).highcharts({
+          data: {
+              table: '<%= @User.id %>-table'
+          },
+          chart: {
+              type: 'column'
+          },
+          title: {
+              text: '<%= @User.username %>'
+          },
+          yAxis: {
+              allowDecimals: false,
+              title: {
+                  text: 'Count'
+              }
+          },
+          tooltip: {
+              formatter: function () {
+                  return '<b>' + this.series.name + '</b><br/>' +
+                      this.point.y + ' ' + this.point.name.toLowerCase();
+              }
+          }
+      });
+  });</script>
+
+
+
+
+
+  <div class="userHistory">
+    <script src="https://code.highcharts.com/modules/heatmap.js"></script>
+    <script src="https://code.highcharts.com/modules/treemap.js"></script>
+    <div id="tree"></div>
+
+    <script>
+
+      $(function () {
+        Highcharts.setOptions({
+            colors: ['#2f7ed8', '#0d233a', '#8bbc21', '#910000', '#1aadce',
+       '#492970', '#f28f43', '#77a1e5', '#c42525', '#a6c96a']
+        });
+        var data = {
+
+
+                <% subSkills = [] %>
+                <% SubSkill.all.each do |sub_skill| %>
+                  <% subSkills << sub_skill %>
+                <% end %>
+                <% subSkills = subSkills.uniq { |s| s.name } %>
+                <% skills = [] %>
+                <% subSkills.each do |sub_skill| %>
+                    <% skills << sub_skill.skill_name %>
+                  <% end %>
+                  <% skills = skills.uniq %>
+
+
+                  <% skills.each do |skill| %>
+                  <% sub_skills = [] %>
+
+                    '<%= skill %>': {
+                      <% sub_skills << SubSkill.where(skill_name: skill) %>
+                      <% sub_skills = sub_skills.uniq { |s| s.name } %>
+
+                      <% sub_skills.each do |sub_skill| %>
+                      <% sub_skill.each do |s| %>
+                      '<%= s.name %>': {
+                        'Correct': '<%= SubSkill.where(name: s.name, skill_name: skill, correct: 1).count %>',
+                        'Incorrect': '<%= SubSkill.where(name: s.name, skill_name: skill, incorrect: 1).count %>'
+                      },
+                      <% end %>
+
+                    <% end %>
+                  },
+                  <% end %>
+
+            },
+            points = [],
+            skillP,
+            skillVal,
+            skillI = 0,
+            subSkillP,
+            subSkillI,
+            causeP,
+            causeI,
+            skill,
+            subSkill,
+            cause,
+            causeName = {
+                'Incorrect': 'Incorrect',
+                'Correct': 'Correct'
+            };
+
+        for (skill in data) {
+            if (data.hasOwnProperty(skill)) {
+                skillVal = 0;
+                skillP = {
+                    id: 'id_' + skillI,
+                    name: skill,
+                    color: Highcharts.getOptions().colors[skillI]
+                };
+                subSkillI = 0;
+                for (subSkill in data[skill]) {
+                    if (data[skill].hasOwnProperty(subSkill)) {
+                        subSkillP = {
+                            id: skillP.id + '_' + subSkillI,
+                            name: subSkill,
+                            parent: skillP.id
+                        };
+                        points.push(subSkillP);
+                        causeI = 0;
+                        for (cause in data[skill][subSkill]) {
+                            if (data[skill][subSkill].hasOwnProperty(cause)) {
+                                causeP = {
+                                    id: subSkillP.id + '_' + causeI,
+                                    name: causeName[cause],
+                                    parent: subSkillP.id,
+                                    value: Math.round(+data[skill][subSkill][cause])
+                                };
+                                skillVal += causeP.value;
+                                points.push(causeP);
+                                causeI = causeI + 1;
+                            }
+                        }
+                        subSkillI = subSkillI + 1;
+                    }
+                }
+                skillP.value = Math.round(skillVal / subSkillI);
+                points.push(skillP);
+                skillI = skillI + 1;
+            }
+        }
+        $('#tree').highcharts({
+            series: [{
+                type: 'treemap',
+                layoutAlgorithm: 'sliceAndDice',
+                allowDrillToNode: true,
+                animationLimit: 1000,
+                dataLabels: {
+                    enabled: false
+                },
+                levelIsConstant: false,
+                levels: [{
+                    level: 1,
+                    dataLabels: {
+                        enabled: true
+                    },
+                    borderWidth: 5
+                }],
+                data: points
+            }],
+            subtitle: {
+                text: 'Click category for detailed breakdown'
+            },
+            title: {
+                text: 'User History'
+            }
+        });
+
+
+    });
+
+    </script>
+  </div>
+</div>

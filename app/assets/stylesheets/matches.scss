@@ -1,0 +1,90 @@
+// Place all the styles related to the Matches controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+
+
+
+
+
+.frogger-results-table {
+
+  margin: 10px auto;
+  background: white;
+  text-align: center;
+  width: 75%;
+  box-shadow: 2px 2px 2px black;
+  border: 1px solid black;
+
+  tr:nth-child(even){
+    background-color: whitesmoke;
+  }
+
+
+  th {
+    font-size: 2.5em;
+    padding: 10px;
+  }
+
+  td {
+    width: 20%;
+    font-size: 2em;
+    padding: 7px;
+  }
+
+
+
+  .skill-header {
+    text-decoration: underline;
+  }
+
+}
+
+.frogger-user-results-div {
+  text-align: center;
+  width: 80%;
+  margin: auto;
+
+  h1 {
+    font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+    color: #E0E0E0;
+    font-size: 3em;
+    padding: 10px;
+    margin: 0;
+  }
+}
+
+.frogger-results-table:hover {
+  box-shadow: 4px 4px 4px black;
+
+  th {
+    text-decoration: underline;
+  }
+
+  td:nth-child(3), th:nth-child(3) {
+    color: green;
+  }
+
+  td:nth-child(4), th:nth-child(4) {
+    color: red;
+  }
+
+}
+
+.hidden-table {
+  display: none;
+}
+
+.highcharts-color-0 {
+  fill: green;
+}
+
+.highcharts-color-1 {
+  fill: red;
+}
+
+.results-page-background {
+  background-image: url("http://www.pixelstalk.net/wp-content/uploads/2016/05/Formula-math-text-texture-wallpaper.jpg");
+  background-size: 100% 100%;
+}

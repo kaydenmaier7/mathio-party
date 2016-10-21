@@ -14,6 +14,7 @@
  *= require_self
  */
 html, body {
+  font: 10px sans-serif;
   margin: 0;
   padding: 0;
   height: 100%;
@@ -32,13 +33,15 @@ body {
   text-align: center;
   padding-top: 1em;
   padding-bottom: 1em;
+  margin-bottom: 2px;
 }
 
 .title {
   margin: 0;
+  display: inline-block;
 }
 
-.title a {
+.navBar a {
   color: inherit;
   text-decoration: none;
 }
@@ -63,7 +66,7 @@ body {
   box-shadow: 10px 10px 10px #888888;
 }
 
-#frogger h1 {
+#frogger h1, #flappy-bird h1 {
   padding-top: 25%;
   font-size: 6em;
   color: white;
@@ -71,19 +74,347 @@ body {
 
 #flappy-bird {
   width: 1000px;
+  height: 910px;
+  background-color: white;
   margin: auto;
+  text-align: center;
 }
 
 #frogger-button {
+  display: none;
+}
+
+#flappy-button {
+  margin-top: 45%;
+}
+
+
+.game-start-button {
   width: 25%;
-  margin-top: 300px;
   padding: 10px 20px;
   font-size: 2em;
   border-radius: 5px;
-
 }
 
-#frogger-button:hover {
+.game-start-button:hover {
   font-weight: bold;
   box-shadow: 5px 5px 5px #888888;
+}
+
+#mode {
+  margin-top: 25%;
+  margin-bottom: 5px;
+  font-size: 1.5em;
+}
+
+
+/*Line graph styling*/
+path.line {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1.5px;
+}
+
+path.area {
+  fill: #e7e7e7;
+}
+
+.axis {
+  shape-rendering: crispEdges;
+}
+
+.x.axis line {
+  stroke: #fff;
+}
+
+.x.axis .minor {
+  stroke-opacity: .5;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.y.axis line, .y.axis path {
+  fill: none;
+  stroke: #000;
+}
+.guideline {
+  margin-right: 100px;
+  float: right;
+}
+
+#hidden_match_button {
+  padding: 10px 30px;
+  border-radius: 10px;
+  display: none;
+}
+
+#hidden_match_button a, a:visited{
+  color: black;
+  text-decoration: none;
+  font-size: 2.5em;
+}
+
+#hidden_match_button:hover a{
+  font-weight: bold;
+}
+
+#hidden_match_button:hover{
+  box-shadow: 2px 2px 2px #888888;
+}
+
+.invasion-questions {
+  width: 1000px;
+  height: 180px;
+  margin: auto;
+}
+
+.equation {
+  margin: 1%;
+  border-radius: 1em;
+  display: inline-block;
+  padding: 1%, 2%, 1%, 2%;
+  width: 47%;
+  font-size: xx-large;
+  text-align: center;
+  box-shadow: 10px 10px 10px #888888;
+}
+
+.p1 {
+  float: left;
+  background-color: #544E36;
+}
+
+.p2 {
+  float: right;
+  background-color: #C62A47;
+}
+
+#invasion {
+  width: 1000px;
+  height: 600px;
+  background-color: white;
+  margin: 1% auto;
+  text-align: center;
+  box-shadow: 10px 10px 10px #888888;
+}
+
+.deviseLogin, .playerTwoLogin {
+  background-image: url("http://2.bp.blogspot.com/-5tSsahBREd0/T9Ocr-4p5UI/AAAAAAAAAEg/3pNQqFfAS0U/s1600/1339215668258.jpg");
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 95%;
+  margin: -20px auto;
+  background-size: 100% 100%;
+  color: white;
+  font-size: large;
+  text-align: center;
+}
+
+.flash-errors {
+  color: red;
+  margin: 1em;
+}
+
+.deviseLogin h2, .deviseForgotPassword h2, .playerTwoLogin h2 {
+  padding-top: 10%;
+  color: #515B63;
+  margin-bottom: 0;
+}
+
+.deviseSignUp h2 {
+  padding-top: 1%;
+}
+
+.new_user {
+  background-color: #353535;
+  color: white;
+  width: 15%;
+  margin: 1% auto;
+  opacity: 0.9;
+  border: 2px solid #B9C0C4;
+  border-radius: 5%;
+}
+
+.new_user .field {
+  margin: 2% auto;
+  padding: 5%;
+  width: 80%;
+  opacity: 1;
+}
+
+.actions input, .playerTwoLoginButton input {
+  width: 100%;
+  height: 4em;
+  background-color: #00BFE9;
+  font-size: medium;
+  font-weight: bold;
+}
+
+.actions input:hover {
+  background-color: #36609f;
+}
+
+.new_user label {
+  padding: 10px;
+}
+
+.deviseLogin a {
+  display: block;
+}
+
+.deviseSignUp {
+  background-image: url("http://cdn.wallpapersafari.com/22/21/8bXrLQ.jpg");
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 95%;
+  margin: -20px auto;
+  text-align: center;
+  background-size: 100% 100%;
+  color: white;
+  font-size: large;
+}
+
+.deviseSignUp .new_user {
+  width: 20%;
+}
+
+.deviseSignUp .new_user .field input {
+  width: 80%;
+  height: 1.5em;
+}
+
+.deviseForgotPassword {
+  background-image: url("http://www.etouchcontrol.com/images/category/pages%20artwork/security/security-background.jpg");
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 95%;
+  margin: -20px auto;
+  text-align: center;
+  background-size: 100% 100%;
+  color: white;
+  font-size: large;
+}
+
+.deviseForgotPassword .new_user {
+  width: 20%;
+  border-radius: 10px;
+}
+
+.deviseForgotPassword a {
+  display: block;
+}
+
+.login {
+  width: 40%;
+  float: right;
+  display: inline-block;
+  text-align: right;
+  padding-right: 20px;
+  margin-top: -15px;
+}
+
+.login a, .games-links a, .navbar-left a {
+  margin: 0 5px 0 5px;
+}
+
+.navbar-left {
+  width: 40%;
+  float: left;
+  text-align: left;
+  padding-left: 20px;
+  margin-top: -15px;
+}
+
+.navBar a {
+  font-size: medium;
+}
+
+.title a {
+  font-size: xx-large;
+}
+
+.game-show {
+  background-image: url("http://hdwallpaperbackgrounds.net/wp-content/uploads/2016/07/white-background.jpg");
+  background-size: 100% 100%;
+  margin-top: -19px;
+}
+
+.game-show h1 {
+  text-align: center;
+  padding-top: 10px;
+  font-size: xx-large;
+}
+
+.game-info {
+  background-color: #E0E0E0;
+  width: 100%;
+  text-align: center;
+  font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+  font-size: medium;
+}
+
+.game-directions {
+  display: block;
+  width: 1000px;
+  margin: auto;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.game-directions h2, .player-info h2 {
+  padding-top: 5px;
+}
+
+.player1-info, .player2-info {
+  width: 49.5%;
+  display: inline-block;
+}
+
+.player1-info {
+  margin-right: 5px;
+}
+
+.player2-info {
+  float: right;
+}
+
+.player-info {
+  width: 1000px;
+  margin: auto;
+}
+
+.player1-controls {
+  border-bottom-left-radius: 10px;
+}
+
+.player2-controls {
+  border-bottom-right-radius: 10px;
+}
+
+.player1-controls, .player2-controls, .player1-character, .player2-character {
+  padding-bottom: 5px;
+}
+
+.spacer {
+  height: 20px;
+}
+
+.radarChartDescription {
+  text-align: center;
+  font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+  color: #E0E0E0;
+  font-size: 1.3em;
+}
+
+.profile-page-background {
+  background-image: url("http://www.pixelstalk.net/wp-content/uploads/2016/05/Formula-math-text-texture-wallpaper.jpg");
+  background-size: 100% 100%;
+}
+
+.correct-incorrect-bar-chart, .userHistory {
+  width: 60%;
+  margin:  10px auto;
+  margin-bottom: 0;
 }

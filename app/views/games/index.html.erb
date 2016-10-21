@@ -1,2 +1,24 @@
 
 <div class="games-main"></div>
+
+<div id='frogger-frontpage-div' class='hidden-frontpage'>
+  <h1>Frogger</h1>
+  <% game = Game.find(1) %>
+  <p><%= game.description %></p>
+</div>
+
+<div id='flappy-frontpage-div' class='hidden-frontpage'>
+    <h1>Flappy Math</h1>
+     <% game = Game.find(2) %>
+    <p><%= game.description %></p>
+
+</div>
+
+<div id='invasion-frontpage-div' class='hidden-frontpage'>
+      <h1>Invasion</h1>
+      <% game = Game.find(3) %>
+     <p><%= game.description %></p>
+
+
+</div>
+
