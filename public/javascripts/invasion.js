@@ -33,8 +33,10 @@ var assets = [
 ];
 
 for (var i = 0; i <= 10; i++) {
-  assets.push(['cow' + i, '/images/invasion/cowl' + i + '.png']);
+  assets.push(['cowL' + i, '/images/invasion/cowL' + i + '.png']);
+  assets.push(['cowR' + i, '/images/invasion/cowR' + i + '.png']);
 };
+console.log(assets)
 
 // add game window to page
 var loadGame = function(){
@@ -112,7 +114,7 @@ function spawnCow(){
     var x = Math.random()*(game.width - 100);
     var y = Math.random()*(game.height/2) + game.height* 0.3;
     var randomValue = Math.floor( Math.random() * 11 );
-    var newCow = cow.create(x, y, 'cow' + randomValue);
+    var newCow = cow.create(x, y, 'cowL' + randomValue);
     newCow.value = randomValue;
     cowValues.push(newCow.value);
     newCow.speed = cowSpeedOptions[Math.floor(Math.random()*cowSpeedOptions.length)];
@@ -120,6 +122,17 @@ function spawnCow(){
     newCow.body.collideWorldBounds = true;
     newCow.area = newCow.getBounds();
   };
+};
+
+// create a cow with set parameters
+function spawnSpecificCow(x, y, value, image, speed, interval){
+  var newCow = cow.create(x, y, image);
+  newCow.value = value;
+  newCow.speed = speed;
+  newCow.interval = interval;
+  newCow.body.collideWorldBounds = true;
+  newCow.area = newCow.getBounds();
+  return newCow;
 };
 
 function createPlayer1(x, y, id){
@@ -188,7 +201,6 @@ function shootBeam(x, id){
   beamPosition = x;
 };
 
-// move cow horizontally at intervals
 function moveCow(){
   cow.forEach(function(c){
     c.body.velocity.x = 0;
@@ -197,9 +209,22 @@ function moveCow(){
       beamPosition < c.position.x &&
       c.position.x < (beamPosition + 100) ){
         c.body.velocity.y = -200;
+    // move cow horizontally at intervals
     } else if (timer % c.interval == 0) {
       c.body.velocity.x = c.speed;
       c.area = c.getBounds();
+      // change the cow image so they face the direction they move in
+      if (c.speed > 0) {
+        var newCow = spawnSpecificCow(c.x, c.y, c.value, 'cowR'+c.value, c.speed, c.interval);
+        newCow.body.velocity.x = c.speed;
+        c.kill();
+        c.destroy();
+      } else {
+        var newCow = spawnSpecificCow(c.x, c.y, c.value, 'cowL'+c.value, c.speed, c.interval);
+        newCow.body.velocity.x = c.speed;
+        c.kill();
+        c.destroy();
+      };
     };
   });
 };
