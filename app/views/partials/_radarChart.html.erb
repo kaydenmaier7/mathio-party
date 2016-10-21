@@ -4,7 +4,6 @@
   </div>
 </div>
 
-
 <script>
   // Set-Up
   var margin = {top: 100, right: 100, bottom: 100, left: 100},
@@ -15,17 +14,19 @@
   var data = [
         [//match 1
         <% 8.times do |num| %>
-          <% val = User.find(1).percent('correct', 'multiplication', "#{num} times table", 1)%>
+        <% p "$" * 500 %>
+        <% p user %>
+          <% val = user.percent('correct', skill, "#{num} times table", 1)%>
           {axis:<%= num %>,value:<%= val %>},
         <% end %>
-        {axis:"9",value:<%=User.find(1).percent('correct', 'multiplication', "9 times table", 1)%>}
+        {axis:"9",value:<%=user.percent('correct', skill, "9 times table", 1)%>}
         ],
         [//match 2
         <% 8.times do |num| %>
-          <% val = User.find(1).percent('correct', 'multiplication', "#{num} times table", 2)%>
+          <% val = user.percent('correct', skill, "#{num} times table", 2)%>
           {axis:<%= num %>,value:<%= val %>},
         <% end %>
-        {axis:"9",value:<%=User.find(1).percent('correct', 'multiplication', "9 times table", 2)%>}
+        {axis:"9",value:<%=user.percent('correct', skill, "9 times table", 2)%>}
         ]
       ];
 

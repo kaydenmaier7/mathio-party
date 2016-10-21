@@ -9,7 +9,7 @@
 
         <h1><%= @User.username %>'s recent results:</h1>
 
-        <%= render 'partials/radarChart' %>
+        <%= render partial: 'partials/radarChart', locals: {user: @User, skill: "multiplication"} %>
 
           <table class='frogger-results-table'>
 
