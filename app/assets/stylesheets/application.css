@@ -60,7 +60,7 @@ body {
 #frogger {
   width: 1000px;
   height: 600px;
-/*  background-color: white;*/
+  background-color: black;
   background-image: url('/images/frogger-background.png');
   background-size: 600px 400px;
   background-repeat: no-repeat;
@@ -102,7 +102,7 @@ body {
 
 .game-start-button:hover {
   font-weight: bold;
-  box-shadow: 5px 5px 5px #888888;
+  box-shadow: 3px 3px 3px #888888;
 }
 
 #mode {
