@@ -235,7 +235,7 @@ path.area {
 }
 
 .deviseLogin, .playerTwoLogin {
-  background-image: url("http://2.bp.blogspot.com/-5tSsahBREd0/T9Ocr-4p5UI/AAAAAAAAAEg/3pNQqFfAS0U/s1600/1339215668258.jpg");
+  background-image: url(/images/backgrounds/login_background.jpg);
   background-repeat: no-repeat;
   width: 100%;
   height: 95%;
