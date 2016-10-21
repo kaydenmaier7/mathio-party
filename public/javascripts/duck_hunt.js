@@ -446,10 +446,10 @@ var mainState= {
     }
 
     for (var i=0 ; i < this.score2.length ; i++){
-      if (this.score1[i] === 1){
+      if (this.score2[i] === 1){
         game.add.sprite(655-(i*30),830,'blueScore');
-      } else if (this.score1[1] === 0){
-        game.add.sprite(655+(i*30),830,'noScore');
+      } else if (this.score2[1] === 0){
+        game.add.sprite(655-(i*30),830,'noScore');
       }
     }
   },
@@ -472,11 +472,9 @@ var mainState= {
     this.reload();
     this.quacks.play();
     this.spawnQuestions();
-    console.log(this.ducks);
   },
 
   showRound: function(round){
-    console.log('Round shown');
     var roundText = game.add.text(game.world.centerX, game.world.centerY, "Round "+ round.toString(), { font: "64px Arial", fill: "#000000", align: "center" });
     roundText.anchor.setTo(.5,.5);
     setTimeout(function(){ roundText.text = ""},1000);
@@ -487,12 +485,15 @@ var mainState= {
   endRound: function(){
     console.log(this.ducks)
     hits = this.ducks.length;
+
+    if (this.score1.length < this.round){this.score1.push(0)}
+    if (this.score2.length < this.round){this.score2.push(0)}
+
     for ( var i=0 ; i < this.ducks.length ; i++ )
     {
       this.ducks[i].speed = 10;
-      var that = this;
-      // setTimeout(function(){that.ducks[i].destroy;console.log(that.ducks.length)}, 750);
     }
+    this.renderScore();
     this.callDog(hits);
   },
 
@@ -538,8 +539,6 @@ var mainState= {
       num3= Math.floor(Math.random()*10);
       num4= Math.floor(Math.random()*10);
     }
-    console.log(num1 + " + " + num2);
-    console.log(num3 + " + " + num4);
     this.oneDuck(num1+num2);
     this.oneDuck(num3+num4);
 
