@@ -25,11 +25,6 @@ class User < ApplicationRecord
       # .where(match: match)
 
     total = correct + incorrect
-                p "$" * 100
-                p correct
-                p incorrect
-                p total
-                p (correct.to_f / total.to_f).round(2)
 
     if result == 'correct'
       (correct.to_f / total.to_f).round(2)
