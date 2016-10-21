@@ -90,7 +90,8 @@ var mainState= {
     //set stage
     game.stage.backgroundColor = '#40bdff';
     this.background = game.add.sprite( 0, 0, 'stage');
-    // this.dog = game.add.sprite(450,700,'laugh1');
+    // this.dog = game.add.sprite(475,700,'laugh1');
+    // this.dog.anchor.setTo(.5,.5)
 
     //enable physics
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -367,9 +368,9 @@ var mainState= {
 
     for (var i=0 ; i < this.score2.length ; i++){
       if (this.score2[i] === 1){
-        game.add.sprite(655-(i*30 + 20),830,'blueScore');
+        game.add.sprite(655-(i*30 + 10),830,'blueScore');
       } else if (this.score2[i] === 0){
-        game.add.sprite(655-(i*30 + 20),830,'noScore');
+        game.add.sprite(655-(i*30 + 10),830,'noScore');
       }
     }
   },
@@ -445,6 +446,7 @@ var mainState= {
     this.p2.bringToTop();
     this.p1Question.bringToTop();
     this.p2Question.bringToTop();
+    this.dog.bringToTop();
     this.renderScore();
   },
 
@@ -555,8 +557,9 @@ var mainState= {
   },
 
   callDog: function(hits){
+    while(this.dog.y <)
     var that = this;
-    if (this.round <= 5){
+    if (this.round <= 4){
       setTimeout(function(){that.spawnDucks() },3000);
     } else {
       this.gameOver()
