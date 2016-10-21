@@ -215,16 +215,15 @@ function moveCow(){
       c.area = c.getBounds();
       // change the cow image so they face the direction they move in
       if (c.speed > 0) {
-        var newCow = spawnSpecificCow(c.x, c.y, c.value, 'cowR'+c.value, c.speed, c.interval);
-        newCow.body.velocity.x = c.speed;
-        c.kill();
-        c.destroy();
+        direction = 'cowR';
       } else {
-        var newCow = spawnSpecificCow(c.x, c.y, c.value, 'cowL'+c.value, c.speed, c.interval);
-        newCow.body.velocity.x = c.speed;
-        c.kill();
-        c.destroy();
+        direction = 'cowL';
       };
+      var newCow = spawnSpecificCow(c.x, c.y, c.value, direction + c.value, c.speed, c.interval);
+      newCow.body.velocity.x = c.speed;
+      newCow.body.velocity.y = c.body.velocity.y;
+      c.kill();
+      c.destroy();
     };
   });
 };
