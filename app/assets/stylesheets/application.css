@@ -375,7 +375,7 @@ path.area {
 }
 
 .game-show {
-  background-image: url("http://hdwallpaperbackgrounds.net/wp-content/uploads/2016/07/white-background.jpg");
+  background-image: url(/images/backgrounds/white_background.jpg);
   background-size: 100% 100%;
   margin-top: -19px;
 }
@@ -448,7 +448,7 @@ path.area {
 }
 
 .profile-page-background {
-  background-image: url("http://www.pixelstalk.net/wp-content/uploads/2016/05/Formula-math-text-texture-wallpaper.jpg");
+  background-image: url(/images/backgrounds/white_background);
   background-size: 100% 100%;
 }
 
