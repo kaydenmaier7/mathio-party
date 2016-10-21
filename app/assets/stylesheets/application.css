@@ -327,8 +327,13 @@ path.area {
   margin-top: -15px;
 }
 
-.navBar a {
+.navBar a, a:visited {
   font-size: medium;
+  color: white;
+}
+
+.navBar a:hover {
+  color: whitesmoke;
 }
 
 .title a {
