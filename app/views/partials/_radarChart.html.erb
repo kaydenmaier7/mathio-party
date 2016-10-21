@@ -15,17 +15,17 @@
   var data = [
         [//match 1
         <% 8.times do |num| %>
-          <% val = User.find(1).percent('correct', 'multiplication', "#{num} times tables", 1)%>
+          <% val = User.find(1).percent('correct', 'multiplication', "#{num} times table", 1)%>
           {axis:<%= num %>,value:<%= val %>},
         <% end %>
-        {axis:"9",value:<%=User.find(1).percent('correct', 'multiplication', "9 times tables", 1)%>}
+        {axis:"9",value:<%=User.find(1).percent('correct', 'multiplication', "9 times table", 1)%>}
         ],
         [//match 2
         <% 8.times do |num| %>
-          <% val = User.find(1).percent('correct', 'multiplication', "#{num} times tables", 2)%>
+          <% val = User.find(1).percent('correct', 'multiplication', "#{num} times table", 2)%>
           {axis:<%= num %>,value:<%= val %>},
         <% end %>
-        {axis:"9",value:<%=User.find(1).percent('correct', 'multiplication', "9 times tables", 2)%>}
+        {axis:"9",value:<%=User.find(1).percent('correct', 'multiplication', "9 times table", 2)%>}
         ]
       ];
 
