@@ -8,7 +8,7 @@ $(document).ready(function(){
       ['flappy_bird', 'http://files.gamebanana.com/img/ico/sprays/538578b593b47.gif'],
       ['frogger', 'http://andyluvsdonna.com/wp-content/uploads/2015/02/frogger-1.png'],
       ['invasion', 'http://www.pngmart.com/files/3/Spaceship-PNG-Pic.png'],
-      ['othergame', 'http://vignette3.wikia.nocookie.net/metalslug/images/d/d7/192064fb7b55d9f8569231678ee1e333.jpg.gif/revision/latest?cb=20160109031801&path-prefix=es'],
+      ['duck_hunt', 'http://vignette3.wikia.nocookie.net/metalslug/images/d/d7/192064fb7b55d9f8569231678ee1e333.jpg.gif/revision/latest?cb=20160109031801&path-prefix=es'],
       ['leaderboards', "https://badgeos.org/wp-content/uploads/edd/2013/11/leaderboard-300x300.png"]
     ]
 
@@ -74,6 +74,10 @@ $(document).ready(function(){
             $('#invasion-frontpage-div').show(500)
           } else if ($(this).hasClass('flappy_bird')){
             $('#flappy-frontpage-div').show(500)
+          } else if ($(this).hasClass('duck_hunt')){
+            $('#duck-frontpage-div').show(500)
+          } else if ($(this).hasClass('leaderboards')){
+            $('#leaderboards-frontpage-div').show(500)
           }
 
       })
@@ -91,6 +95,10 @@ $(document).ready(function(){
                   $('#invasion-frontpage-div').hide(500)
                 } else if ($(this).hasClass('flappy_bird')){
                   $('#flappy-frontpage-div').hide(500)
+                } else if ($(this).hasClass('duck_hunt')){
+                  $('#duck-frontpage-div').hide(500)
+                } else if ($(this).hasClass('leaderboards')){
+                  $('#leaderboards-frontpage-div').hide(500)
                 }
       });
   };
@@ -106,6 +114,10 @@ $(document).ready(function(){
           var gameUrl = 'games/2'
         } else if ($(this).hasClass("invasion")) {
           var gameUrl = 'games/3'
+        } else if ($(this).hasClass("duck_hunt")) {
+          var gameUrl = 'games/4'
+        } else if ($(this).hasClass("leaderboards")) {
+          var gameUrl = '/users'
         }
         // add in more conditionals for future games
         $.ajax({
