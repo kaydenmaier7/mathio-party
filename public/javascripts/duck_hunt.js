@@ -446,7 +446,7 @@ var mainState= {
     this.p2.bringToTop();
     this.p1Question.bringToTop();
     this.p2Question.bringToTop();
-    this.dog.bringToTop();
+    // this.dog.bringToTop();
     this.renderScore();
   },
 
@@ -557,7 +557,7 @@ var mainState= {
   },
 
   callDog: function(hits){
-    while(this.dog.y <)
+    // while(this.dog.y <)
     var that = this;
     if (this.round <= 4){
       setTimeout(function(){that.spawnDucks() },3000);
