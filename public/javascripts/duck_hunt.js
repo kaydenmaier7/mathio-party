@@ -1,9 +1,9 @@
 var game = new Phaser.Game(1000,910, Phaser.auto, 'math-hunt');
 
-function Duck(val) {
+function Duck(val, round) {
   this.xMove = 0;
   this.yMove = 0;
-  this.speed = 1;
+  this.speed = 1 * round * .5 ;
 
   if(val === 1){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '1')}
   else if(val === 2){ this.sprite = game.add.sprite(Math.floor(Math.random()*800)+100, 650, '2')}
@@ -261,9 +261,11 @@ var mainState= {
   },
 
   checkOverlap: function(spriteA, duck) {
-    var boundsA = spriteA.getBounds();
-    var boundsB = duck.sprite.getBounds();
-    return Phaser.Rectangle.intersects(boundsA, boundsB);
+    if (duck){
+      var boundsA = spriteA.getBounds();
+      var boundsB = duck.sprite.getBounds();
+      return Phaser.Rectangle.intersects(boundsA, boundsB);
+    }
   },
 
   reload: function(){
@@ -439,17 +441,17 @@ var mainState= {
   renderScore: function(){
     for (var i=0 ; i < this.score1.length ; i++){
       if (this.score1[i] === 1){
-        game.add.sprite(311+(i*30),830,'redScore');
-      } else if (this.score1[1] === 0){
-        game.add.sprite(312+(i*30),830,'noScore');
+        game.add.sprite(311+(i*30 + 10),830,'redScore');
+      } else if (this.score1[i] === 0){
+        game.add.sprite(312+(i*30 +10),830,'noScore');
       }
     }
 
     for (var i=0 ; i < this.score2.length ; i++){
       if (this.score2[i] === 1){
-        game.add.sprite(655-(i*30),830,'blueScore');
-      } else if (this.score2[1] === 0){
-        game.add.sprite(655-(i*30),830,'noScore');
+        game.add.sprite(655-(i*30 + 20),830,'blueScore');
+      } else if (this.score2[i] === 0){
+        game.add.sprite(655-(i*30 + 20),830,'noScore');
       }
     }
   },
@@ -466,12 +468,19 @@ var mainState= {
     if (this.round < 6){
       this.showRound(this.round);
     } else {
-      this.gameOver;
+      this.gameOver();
     }
     this.ducks = [];
     this.reload();
     this.quacks.play();
     this.spawnQuestions();
+  },
+
+  gameOver: function(){
+    var text = game.add.text(game.world.centerX, game.world.centerY, "Game Over", { font: "64px Arial", fill: "#000000", align: "center" });
+    text.anchor.setTo(.5,.5);
+
+
   },
 
   showRound: function(round){
@@ -483,7 +492,6 @@ var mainState= {
   },
 
   endRound: function(){
-    console.log(this.ducks)
     hits = this.ducks.length;
 
     if (this.score1.length < this.round){this.score1.push(0)}
@@ -502,7 +510,7 @@ var mainState= {
   },
 
   oneDuck: function(val){
-    this.duck = new Duck(val);
+    this.duck = new Duck(val, this.round);
     this.duck.init();
     this.ducks.push(this.duck);
     game.time.events.loop(1, this.duck.move, this);
@@ -533,6 +541,58 @@ var mainState= {
     var num3 = 100;
     var num4 = 100;
 
+      // switch(p2skill){
+
+      //   case "Addition":
+      //   p2text = param1.toString() + " + " + param2.toString()
+      //     this.problem2.text = p2text
+      //     var that = this;
+      //     return (param1 + param2);
+      //     break;
+
+      //   case "Subtraction":
+      //     param2 = param1 + param2;
+      //     this.problem2.text = param2.toString() + " - " + param1.toString()
+      //     var that = this;
+      //     return (param2 - param1);
+      //     break;
+
+      //   case "Multiplication":
+      //     this.problem2.text = param1.toString() + " * " + param2.toString()
+      //     var that = this;
+      //     return (param1 * param2);
+      //     break;
+
+      //   case "Division":
+      //     this.problem2.text = (param1*param2).toString() + " / " + param1.toString()
+      //     var that = this;
+      //     return (param2);
+      //     break;
+
+      //   case "All":
+      //     var select = Math.random();
+      //     if (select < .25){
+      //       this.problem2.text = param1.toString() + " + " + param2.toString()
+      //       var that = this;
+      //       return (param1 + param2);
+
+      //     } else if (select < .5) {
+      //       param2 = param1 + Math.floor(Math.random()*10);
+      //       this.problem2.text = param2.toString() + " - " + param1.toString()
+      //       var that = this;
+      //       return (param2 - param1);
+
+      //     } else if (select < .75) {
+      //       this.problem2.text = param1.toString() + " * " + param2.toString()
+      //       var that = this;
+      //       return (param1 * param2);
+
+      //     } else {
+      //       this.problem2.text = (param1*param2).toString() + " / " + param2.toString()
+      //       var that = this;
+      //       return (param1);
+      //     }
+      //   break;
     while (num1+num2 > 50 || num3+num4 > 50 || num3+num4 === num1+num2){
       num1= Math.floor(Math.random()*10);
       num2= Math.floor(Math.random()*10);
@@ -546,12 +606,16 @@ var mainState= {
     this.p2Question.text = num3.toString() + " + " + num4.toString();
 
     var rand = Math.floor(Math.random()*20);
+    while ( rand === num3+num4 || rand === num1+num2){
+      rand = Math.floor(Math.random()*20);
+    }
     this.oneDuck(rand);
     this.reorderSprites();
   },
 
   callDog: function(hits){
-    this.spawnDucks();
+    var that = this;
+    setTimeout(function(){that.spawnDucks() },3000);
   }
 };
 
