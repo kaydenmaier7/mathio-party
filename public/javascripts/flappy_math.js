@@ -8,6 +8,11 @@ var p2skill;
 var mainState= {
   preload: function(){
     game.load.audio('jump', '/sounds/flappy_math/jump.wav');
+    game.load.audio('clang', '/sounds/flappy_math/clang.wav');
+    game.load.audio('hit', '/sounds/flappy_math/panHit.wav');
+    game.load.audio('coin', '/sounds/flappy_math/coin1.wav');
+    game.load.audio('coin2', '/sounds/flappy_math/coin2.wav');
+
     game.load.image('bird', '/images/flappy_math/bird.png');
     game.load.image('blueBird', '/images/flappy_math/blueBird.png');
     game.load.image('pipe', '/images/flappy_math/pipe.png');
@@ -18,6 +23,10 @@ var mainState= {
     this.problem2 = game.add.text(20,130, "", { font: '30px Arial', fill: '#ffffff#' });
 
     this.jumpSound = game.add.audio('jump');
+    this.clang = game.add.audio('clang');
+    this.hit = game.add.audio('hit');
+    this.coin = game.add.audio('coin');
+    this.coin2 = game.add.audio('coin2');
 
     this.p1score = 0;
     this.p2score = 0;
@@ -53,7 +62,7 @@ var mainState= {
 
     this.timer = game.time.events.loop(4500, this.addRowOfPipes, this);
     this.timer = game.time.events.loop(3000, this.spawnCloud, this);
-    this.time = 1000;
+    this.time = 3000;
 
     this.timer = game.add.text(800,20, this.time, { font: "64px Arial", fill: "#ffffff", align: "center" });
 
@@ -134,8 +143,6 @@ var mainState= {
       game_id: 2
     }
 
-
-
     var request = $.ajax({
       url: '/results',
       type: 'post',
@@ -146,12 +153,9 @@ var mainState= {
       console.log('success')
       setTimeout(function(){
       ($('#hidden_match_button')).css('margin-top', '40%')
-      $('#flappy-bird').css('background', '#37edf8').html($('#hidden_match_button'))
-      $('#hidden_match_button').slideToggle(1000)
-
+        $('#flappy-bird').css('background', '#37edf8').html($('#hidden_match_button'))
+        $('#hidden_match_button').slideToggle(1000)
       }, 2000)
-
-
     })
 
     request.fail(function(response){
@@ -191,7 +195,7 @@ var mainState= {
       if (this.bird.alive === false){
         return;
       }
-      // this.bird.alive = false;
+      this.clang.play();
       this.takeDamage(1);
   },
 
@@ -199,7 +203,7 @@ var mainState= {
       if (this.blueBird.alive === false){
         return;
       }
-      // this.blueBird.alive = false;
+      this.clang.play();
       this.takeDamage(2);
   },
 
@@ -265,6 +269,7 @@ var mainState= {
 
   p1Score: function(){
     if ( this.bird.canScore ){
+      this.coin.play();
       this.bird.canScore = false;
       this.p1score  += 1;
       this.player1score.text = "Player 1: "+this.p1score;
@@ -275,6 +280,7 @@ var mainState= {
 
   p2Score: function(){
     if ( this.blueBird.canScore ){
+      this.coin2.play();
       this.blueBird.canScore = false;
       this.p2score  += 1;
       this.player2score.text = "Player 2: "+this.p2score;
@@ -466,7 +472,7 @@ var mainState= {
       var loc1 =  Math.floor(Math.random()*count)
       var loc2 =  Math.floor(Math.random()*count)
     }
-    var answers = []
+    var answers = [];
 
     for (var i=0 ; i < count ; i++){
       if (i === loc1){
@@ -484,7 +490,7 @@ var mainState= {
       }
       else if(config[i] !== 0){
         config[i] = answers.pop()
-        this.spawnAnswer(1005, i*60+15, config[i], config[i]===a1, config[i]===a2 );
+        this.spawnAnswer(1000, i*60+15, config[i], config[i]===a1, config[i]===a2 );
       }
     }
   }

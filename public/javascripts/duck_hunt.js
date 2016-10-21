@@ -129,8 +129,8 @@ var mainState= {
     //set stage
     game.stage.backgroundColor = '#40bdff';
     this.background = game.add.sprite( 0, 0, 'stage');
-    // this.dog = game.add.sprite(475,700,'laugh1');
-    // this.dog.anchor.setTo(.5,.5)
+    this.dog = game.add.sprite(475,700,'laugh1');
+    this.dog.anchor.setTo(.5,.5)
 
     //enable physics
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -297,7 +297,6 @@ var mainState= {
       if (this.ducks.length > 0){
         if (this.checkOverlap(this.inner1, this.ducks[0])){
           this.ducks[0].sprite.kill();
-          // this.ducks.splice(0,1);
           p1correct.push(this.p1Question.text)
           this.hitBird1()
         } else if (this.checkOverlap(this.inner1, this.ducks[1])){
@@ -333,7 +332,6 @@ var mainState= {
           p2incorrect.push(this.p2Question.text)
         } else if (this.checkOverlap(this.inner2, this.ducks[1])){
           this.ducks[1].sprite.kill();
-          // this.ducks.splice(1,1);
           p2correct.push(this.p2Question.text)
           this.hitBird2(this.ducks[1])
         } else if (this.checkOverlap(this.inner2, this.ducks[2])){
@@ -438,9 +436,6 @@ var mainState= {
   },
 
   duckAjaxCall(){
-    console.log(p1incorrect)
-    console.log(p2incorrect)
-
 
     this.formatQuestions()
 
@@ -452,8 +447,6 @@ var mainState= {
       game_id: 4
     }
 
-    console.log(data)
-
     var request = $.ajax({
       url: '/results',
       type: 'post',
@@ -461,15 +454,11 @@ var mainState= {
     })
 
     request.done(function(response){
-      console.log('success')
       setTimeout(function(){
       ($('#hidden_match_button')).css('margin-top', '40%')
       $('#math-hunt').css('background', '#40bdff').html($('#hidden_match_button'))
       $('#hidden_match_button').slideToggle(1000)
-
       }, 2000)
-
-
     })
 
     request.fail(function(response){
@@ -554,7 +543,7 @@ var mainState= {
     this.p2.bringToTop();
     this.p1Question.bringToTop();
     this.p2Question.bringToTop();
-    // this.dog.bringToTop();
+    this.dog.bringToTop();
     this.renderScore();
   },
 
@@ -649,9 +638,6 @@ var mainState= {
           this.p2Question.text = num3.toString() + " + " + num4.toString();
         }
     }
-
-    console.log(answer1);
-    console.log(answer2);
 
     this.oneDuck(answer1);
     this.oneDuck(answer2);
