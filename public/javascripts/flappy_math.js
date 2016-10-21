@@ -120,20 +120,71 @@ var mainState= {
   },
 
   flappyAjaxCall: function(){
+
+    player1wrong = $(p1incorrect).not(p1correct).get()
+    player2wrong = $(p2incorrect).not(p2correct).get()
+
+    this.formatQuestions()
+
+    data = {
+      player1correct: p1correct,
+      player2correct: p2correct,
+      player1wrong: player1wrong,
+      player2wrong: player2wrong,
+      game_id: 2
+    }
+
+
+
     var request = $.ajax({
       url: '/results',
-      type: 'post'
+      type: 'post',
+      data: data
     })
 
     request.done(function(response){
       console.log('success')
-      $('#flappy-bird').append($('#hidden_match_button'))
+      setTimeout(function(){
+      ($('#hidden_match_button')).css('margin-top', '40%')
+      $('#flappy-bird').css('background', '#37edf8').html($('#hidden_match_button'))
       $('#hidden_match_button').slideToggle(1000)
+
+      }, 2000)
+
+
     })
 
     request.fail(function(response){
       console.log('failed')
     })
+  },
+
+  formatQuestions: function(){
+    player1wrong = player1wrong.map(function(p){
+        return mainState.parseEquation(p)
+    })
+     player2wrong = player2wrong.map(function(p){
+        return mainState.parseEquation(p)
+    })
+      p1correct = p1correct.map(function(p){
+        return mainState.parseEquation(p)
+    })
+      p2correct = p2correct.map(function(p){
+        return mainState.parseEquation(p)
+    })
+  },
+
+  parseEquation: function(equation){
+      equation = equation.split(' ')
+      if (equation[1] === '+'){
+        return (equation[0] + ' ' + equation[1] + ' ' + equation[2] + ' = ' + (parseInt(equation[0]) +parseInt(equation[2])))
+      } else if (equation[1] === '-'){
+        return (equation[0] + ' ' + equation[1] + ' ' + equation[2] + ' = ' + (parseInt(equation[0]) - parseInt(equation[2])))
+      } else if (equation[1] === '*') {
+        return (equation[0] + ' ' + equation[1] + ' ' + equation[2] + ' = ' + (parseInt(equation[0]) * parseInt(equation[2])))
+      } else {
+        return (equation[0] + ' ' + equation[1] + ' ' + equation[2] + ' = ' + (parseInt(equation[0]) / parseInt(equation[2])))
+      }
   },
 
   hitPipe1: function(){
@@ -401,6 +452,8 @@ var mainState= {
   addRowOfPipes: function() {
     a1 = this.spawnQuestion1();
     a2 = this.spawnQuestion2();
+    p1incorrect.push(this.problem1.text)
+    p2incorrect.push(this.problem2.text)
 
     var config = this.currentConfig();
 
