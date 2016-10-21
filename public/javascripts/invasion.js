@@ -63,7 +63,7 @@ function create(){
   cow.enableBody = true;
   // spawn starting cows
   for (var i = 0; i < startingCows; i++){
-    spawnCow(Math.random()*(game.width - 100) , Math.random()*(game.height/2) + game.height* 0.3);
+    spawnCow();
   }
 
   // make the two starting equations
@@ -99,20 +99,27 @@ function update(){
   moveCow();
   removeCow();
   endGame();
+  if (cowValues.length < 3) {
+    spawnCow();
+  }
 
   game.physics.arcade.overlap(players, cow, captureCow, null, this);
 };
 
 // create a cow
-function spawnCow(x, y){
-  var randomValue = Math.floor( Math.random() * 11 );
-  var newCow = cow.create(x, y, 'cow' + randomValue);
-  newCow.value = randomValue;
-  cowValues.push(newCow.value);
-  newCow.speed = cowSpeedOptions[Math.floor(Math.random()*cowSpeedOptions.length)];
-  newCow.interval = cowMovementIntervals[Math.floor(Math.random()*cowMovementIntervals.length)];
-  newCow.body.collideWorldBounds = true;
-  newCow.area = newCow.getBounds();
+function spawnCow(){
+  if (cowValues.length < 4){
+    var x = Math.random()*(game.width - 100);
+    var y = Math.random()*(game.height/2) + game.height* 0.3;
+    var randomValue = Math.floor( Math.random() * 11 );
+    var newCow = cow.create(x, y, 'cow' + randomValue);
+    newCow.value = randomValue;
+    cowValues.push(newCow.value);
+    newCow.speed = cowSpeedOptions[Math.floor(Math.random()*cowSpeedOptions.length)];
+    newCow.interval = cowMovementIntervals[Math.floor(Math.random()*cowMovementIntervals.length)];
+    newCow.body.collideWorldBounds = true;
+    newCow.area = newCow.getBounds();
+  };
 };
 
 function createPlayer1(x, y, id){
@@ -209,7 +216,7 @@ function removeCow() {
       c.kill();
       c.destroy();
       // make a new cow object after 2.5 seconds
-      setTimeout(function(){spawnCow(Math.random()*(game.width - 100) , Math.random()*(game.height/2) + game.height* 0.3)}, 2500);
+      setTimeout( spawnCow, 2500 );
     };
   });
 };
@@ -226,7 +233,7 @@ function captureCow(player, cow) {
   cow.kill();
   cow.destroy();
   // make a new cow object after 2.5 seconds
-  setTimeout(function(){spawnCow(Math.random()*(game.width - 100) , Math.random()*(game.height/2) + game.height* 0.3)}, 2500);
+  setTimeout( spawnCow, 2500 );
 };
 
 // make a new question when a cow that answers a question is destroyed
