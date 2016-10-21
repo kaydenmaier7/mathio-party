@@ -5,11 +5,11 @@ $(document).ready(function(){
   var buttonSize = 120;
   var buttonY = height * 0.665;
   var games = [
-      ['flappy_bird', 'http://files.gamebanana.com/img/ico/sprays/538578b593b47.gif'],
-      ['frogger', 'http://andyluvsdonna.com/wp-content/uploads/2015/02/frogger-1.png'],
-      ['invasion', 'http://www.pngmart.com/files/3/Spaceship-PNG-Pic.png'],
-      ['duck_hunt', 'http://vignette3.wikia.nocookie.net/metalslug/images/d/d7/192064fb7b55d9f8569231678ee1e333.jpg.gif/revision/latest?cb=20160109031801&path-prefix=es'],
-      ['leaderboards', "https://badgeos.org/wp-content/uploads/edd/2013/11/leaderboard-300x300.png"]
+      ['flappy_bird', '/images/game_icons/flappy_bird.gif'],
+      ['frogger', '/images/game_icons/frogger.png'],
+      ['invasion', '/images/game_icons/invasion.png'],
+      ['duck_hunt', '/images/game_icons/duck_hunt.gif'],
+      ['leaderboards', '/images/game_icons/leaderboard.png']
     ]
 
   // generate svg element
