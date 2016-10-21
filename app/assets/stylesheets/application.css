@@ -70,7 +70,7 @@ body {
   box-shadow: 10px 10px 10px #888888;
 }
 
-#frogger h1, #flappy-bird h1 {
+#frogger h1, #flappy-bird h1, #math-hunt h1 {
   padding-top: 25%;
   font-size: 6em;
   color: white;
@@ -120,6 +120,25 @@ body {
   margin-top: 35%;
   width: 12.5%;
 }
+
+#math-hunt {
+  width: 1000px;
+  height: 910px;
+  margin: 20px auto;
+  text-align: center;
+  color: white;
+  background-color: black;
+  background-image: url('/images/duck-background.png');
+  background-size: 700px 600px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#hunt-button {
+  margin-top: 40%;
+}
+
+
 
 
 

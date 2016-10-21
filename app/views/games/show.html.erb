@@ -91,6 +91,14 @@
   <% elsif @game.id == 3 %>
     <div class="invasion-questions"></div>
     <div id='invasion'></div>
+
+    <% elsif @game.id == 4 %>
+
+
+<div id='math-hunt'>
+  <button id='hunt-button' class='game-start-button'>start</button>
+</div>
+
   <% end %>
   <script type="text/javascript" src="<%= @game.src %>"></script>
 
