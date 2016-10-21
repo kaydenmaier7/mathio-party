@@ -203,27 +203,29 @@ function shootBeam(x, id){
 
 function moveCow(){
   cow.forEach(function(c){
-    c.body.velocity.x = 0;
-    // move cow vertically if hit with a beam
-    if (beamPosition &&
-      beamPosition < c.position.x &&
-      c.position.x < (beamPosition + 100) ){
-        c.body.velocity.y = -200;
-    // move cow horizontally at intervals
-    } else if (timer % c.interval == 0) {
-      c.body.velocity.x = c.speed;
-      c.area = c.getBounds();
-      // change the cow image so they face the direction they move in
-      if (c.speed > 0) {
-        direction = 'cowR';
-      } else {
-        direction = 'cowL';
+    if (c.recentTurn != timer){
+      c.body.velocity.x = 0;
+      // move cow vertically if hit with a beam
+      if (beamPosition &&
+        beamPosition < c.position.x &&
+        c.position.x < (beamPosition + 100) ){
+          c.body.velocity.y = -200;
+      // move cow horizontally at intervals
+      } else if (timer % c.interval == 0) {
+        c.body.velocity.x = c.speed;
+        // change the cow image so they face the direction they move in
+        if (c.speed > 0) {
+          direction = 'cowR';
+        } else {
+          direction = 'cowL';
+        };
+        var newCow = spawnSpecificCow(c.x, c.y, c.value, direction + c.value, c.speed, c.interval);
+        newCow.body.velocity.x = c.speed;
+        newCow.body.velocity.y = c.body.velocity.y;
+        newCow.recentTurn = timer;
+        c.kill();
+        c.destroy();
       };
-      var newCow = spawnSpecificCow(c.x, c.y, c.value, direction + c.value, c.speed, c.interval);
-      newCow.body.velocity.x = c.speed;
-      newCow.body.velocity.y = c.body.velocity.y;
-      c.kill();
-      c.destroy();
     };
   });
 };
