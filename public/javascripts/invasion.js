@@ -24,25 +24,21 @@ setInterval(setCowSpeed, 1000);
 // locations
 var player1Location, player2Location, beamPosition;
 
+// sounds
+var moo;
+
 // declare static assets
 var assets = [
   ["background", "/images/invasion/farm.png"],
-  ['cow', '/images/invasion/cow.png'],
   ['ufo1', '/images/invasion/ufo1.png'],
   ['ufo2', '/images/invasion/ufo2.png'],
-  ['beam', '/images/invasion/beam.png'],
-  ['cow0', '/images/invasion/cow0.png'],
-  ['cow1', '/images/invasion/cow1.png'],
-  ['cow2', '/images/invasion/cow2.png'],
-  ['cow3', '/images/invasion/cow3.png'],
-  ['cow4', '/images/invasion/cow4.png'],
-  ['cow5', '/images/invasion/cow5.png'],
-  ['cow6', '/images/invasion/cow6.png'],
-  ['cow7', '/images/invasion/cow7.png'],
-  ['cow8', '/images/invasion/cow8.png'],
-  ['cow9', '/images/invasion/cow9.png'],
-  ['cow10', '/images/invasion/cow10.png']
+  ['beam', '/images/invasion/beam.png']
 ];
+
+for (var i = 0; i <= 10; i++) {
+  assets.push(['cowL' + i, '/images/invasion/cowL' + i + '.png']);
+  assets.push(['cowR' + i, '/images/invasion/cowR' + i + '.png']);
+};
 
 // add game window to page
 var loadGame = function(){
@@ -56,12 +52,16 @@ function preload() {
     var name = asset[0];
     var location = asset[1];
     game.load.image(name, location);
+    game.load.audio('moo', '/sounds/invasion_sounds/moo.wav');
   });
 };
 
 function create(){
   // add background to the game
   game.add.tileSprite(0, 0, 1000, 600, 'background');
+
+  // add sounds
+  moo = game.add.audio('moo');
 
   // add physics engine
   game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -71,7 +71,7 @@ function create(){
   cow.enableBody = true;
   // spawn starting cows
   for (var i = 0; i < startingCows; i++){
-    spawnCow(Math.random()*(game.width - 100) , Math.random()*(game.height/2) + game.height* 0.3);
+    spawnCow();
   }
 
   // make the two starting equations
@@ -84,8 +84,8 @@ function create(){
   // create the players
   players = game.add.group();
   players.enableBody = true;
-  createPlayer1(400, 10, 'ufo1');
-  createPlayer2(200, 10, 'ufo2');
+  createPlayer1(180, 10, 'ufo1');
+  createPlayer2(680, 10, 'ufo2');
 
   // add beams group
   beams = game.add.group();
@@ -95,6 +95,9 @@ function create(){
   one = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
   two = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
   three = game.input.keyboard.addKey(Phaser.Keyboard.THREE);
+
+  // game over text
+  finalScoreText = game.add.text(200, 400, '', { font: '50px Arial', fill: 'black', align: 'left'});
 };
 
 function update(){
@@ -103,20 +106,39 @@ function update(){
   playerBeam();
   moveCow();
   removeCow();
+  endGame();
+  if (cowValues.length < 3) {
+    spawnCow();
+  }
 
   game.physics.arcade.overlap(players, cow, captureCow, null, this);
 };
 
 // create a cow
-function spawnCow(x, y){
-  var randomValue = Math.floor( Math.random() * 11 );
-  var newCow = cow.create(x, y, 'cow' + randomValue);
-  newCow.value = randomValue;
-  cowValues.push(newCow.value);
-  newCow.speed = cowSpeedOptions[Math.floor(Math.random()*cowSpeedOptions.length)];
-  newCow.interval = cowMovementIntervals[Math.floor(Math.random()*cowMovementIntervals.length)];
+function spawnCow(){
+  if (cowValues.length < 4){
+    var x = Math.random()*(game.width - 100);
+    var y = Math.random()*(game.height/2) + game.height* 0.3;
+    var randomValue = Math.floor( Math.random() * 11 );
+    var newCow = cow.create(x, y, 'cowL' + randomValue);
+    newCow.value = randomValue;
+    cowValues.push(newCow.value);
+    newCow.speed = cowSpeedOptions[Math.floor(Math.random()*cowSpeedOptions.length)];
+    newCow.interval = cowMovementIntervals[Math.floor(Math.random()*cowMovementIntervals.length)];
+    newCow.body.collideWorldBounds = true;
+    newCow.area = newCow.getBounds();
+  };
+};
+
+// create a cow with set parameters
+function spawnSpecificCow(x, y, value, image, speed, interval){
+  var newCow = cow.create(x, y, image);
+  newCow.value = value;
+  newCow.speed = speed;
+  newCow.interval = interval;
   newCow.body.collideWorldBounds = true;
   newCow.area = newCow.getBounds();
+  return newCow;
 };
 
 function createPlayer1(x, y, id){
@@ -179,24 +201,38 @@ function shootBeam(x, id){
   if (id === 'ufo1'){
     var beam = beams.create(x - 39, 120, 'beam');
   } else if (id === 'ufo2'){
-    var beam = beams.create(x -11, 145, 'beam');
+    var beam = beams.create(x -35, 120, 'beam');
   };
   beam.alpha = 0.4;
   beamPosition = x;
 };
 
-// move cow horizontally at intervals
 function moveCow(){
   cow.forEach(function(c){
-    c.body.velocity.x = 0;
-    // move cow vertically if hit with a beam
-    if (beamPosition &&
-      beamPosition < c.position.x &&
-      c.position.x < (beamPosition + 100) ){
-        c.body.velocity.y = -200;
-    } else if (timer % c.interval == 0) {
-      c.body.velocity.x = c.speed;
-      c.area = c.getBounds();
+    if (c.recentTurn != timer){
+      c.body.velocity.x = 0;
+      // move cow vertically if hit with a beam
+      if (beamPosition &&
+        beamPosition < c.position.x &&
+        c.position.x < (beamPosition + 100) ){
+          c.body.velocity.y = -200;
+          moo.play();
+      // move cow horizontally at intervals
+      } else if (timer % c.interval == 0) {
+        c.body.velocity.x = c.speed;
+        // change the cow image so they face the direction they move in
+        if (c.speed > 0) {
+          direction = 'cowR';
+        } else {
+          direction = 'cowL';
+        };
+        var newCow = spawnSpecificCow(c.x, c.y, c.value, direction + c.value, c.speed, c.interval);
+        newCow.body.velocity.x = c.speed;
+        newCow.body.velocity.y = c.body.velocity.y;
+        newCow.recentTurn = timer;
+        c.kill();
+        c.destroy();
+      };
     };
   });
 };
@@ -213,7 +249,7 @@ function removeCow() {
       c.kill();
       c.destroy();
       // make a new cow object after 2.5 seconds
-      setTimeout(function(){spawnCow(Math.random()*(game.width - 100) , Math.random()*(game.height/2) + game.height* 0.3)}, 2500);
+      setTimeout( spawnCow, 2500 );
     };
   });
 };
@@ -230,7 +266,7 @@ function captureCow(player, cow) {
   cow.kill();
   cow.destroy();
   // make a new cow object after 2.5 seconds
-  setTimeout(function(){spawnCow(Math.random()*(game.width - 100) , Math.random()*(game.height/2) + game.height* 0.3)}, 2500);
+  setTimeout( spawnCow, 2500 );
 };
 
 // make a new question when a cow that answers a question is destroyed
@@ -317,3 +353,19 @@ function changeScore(player, cow){
     };
   };
 };
+
+function endGame(){
+  if (playerOneScore >= 10 || playerTwoScore >= 10){
+    players.forEach(function(p){
+      p.body.velocity.y = -20;
+    });
+
+    var winner;
+    if (playerOneScore > playerTwoScore){
+      winner = 'Player 1'
+    } else {
+      winner = 'Player 2'
+    }
+    finalScoreText.text = 'Game over, ' + winner +  ' wins!'
+  }
+}
