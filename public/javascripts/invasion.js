@@ -84,8 +84,8 @@ function create(){
   // create the players
   players = game.add.group();
   players.enableBody = true;
-  createPlayer1(400, 10, 'ufo1');
-  createPlayer2(200, 10, 'ufo2');
+  createPlayer1(180, 10, 'ufo1');
+  createPlayer2(680, 10, 'ufo2');
 
   // add beams group
   beams = game.add.group();
@@ -179,7 +179,7 @@ function shootBeam(x, id){
   if (id === 'ufo1'){
     var beam = beams.create(x - 39, 120, 'beam');
   } else if (id === 'ufo2'){
-    var beam = beams.create(x -11, 145, 'beam');
+    var beam = beams.create(x -35, 120, 'beam');
   };
   beam.alpha = 0.4;
   beamPosition = x;
