@@ -32,11 +32,12 @@ gem 'jbuilder', '~> 2.5'
 # Use devise to handle User Authentication
 gem 'devise'
 
+# Make pry the default console
+gem 'pry-rails'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
-  # Make pry the default console
-  gem 'pry-rails'
 end
 
 group :development do

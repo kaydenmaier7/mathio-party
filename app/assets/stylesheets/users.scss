@@ -1,3 +1,75 @@
 // Place all the styles related to the users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#leaderboard-table {
+  font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+  margin: auto;
+  text-align: center;
+  background-color: black;
+  font-size: 1.5em;
+
+
+
+
+  tr:hover {
+    background-color: #242424;
+
+    td {
+          color: green;
+    }
+
+  }
+
+  th {
+    color: white;
+    padding: 15px;
+    min-width: 100px;
+    border-bottom: 1px solid white;
+  }
+
+  td {
+    padding: 20px;
+    color: yellow;
+    border-right: 1px solid green;
+  }
+
+  td:last-child {
+    border-right: none;
+  }
+
+
+
+
+}
+
+
+  #table-title {
+    margin: auto;
+    border-bottom: none;
+    font-size: 3em;
+    color: yellow;
+    background-color: #242424;
+    text-align: center;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    letter-spacing: 2px;
+
+  }
+
+  #leaderboard-div {
+    display: table;
+    margin: 30px auto;
+    box-shadow: 5px 5px 5px #242424;
+    border-radius: 10px;
+  }
+
+
+.leaderboard-background {
+  background-image: url("http://orig02.deviantart.net/4c3f/f/2008/059/f/0/brown_gradient_by_keff85.png");
+  background-size: 100% 100%;
+  padding-top: 20px;
+  width: 100%;
+  height: 100%;
+}
