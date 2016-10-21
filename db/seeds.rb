@@ -34,8 +34,8 @@ game2 = {
   directions: "Fly through the Pipe with the correct answer to your equation to gain points. Don't hit the green pipes, fly too high, or fly too low. Doing so will temporarily knock your character out of the game- giving your opponent a major advantage. The player with the most points when the timer hits 0, wins.",
   player1_character: 'Yellow Bird',
   player2_character: 'Blue Bird',
-  player1_controls: 'Up Arrow: Move up, Down Arrow: Move Down, Left Arrow: Move Left, Right Arrow: Move Right',
-  player2_controls: 'W: Move Up, S: Move Down, A: Move Left, D: Move Right'
+  player1_controls: 'Spacebar: Flap Up',
+  player2_controls: '1: Flap Up'
 }
 
 game3 = {
@@ -54,10 +54,10 @@ game4 = {
   src: '/javascripts/duck_hunt.js',
   description: 'Duck hunt....with MATH!!',
   directions: 'The ducks had it coming',
-  player1_character: "placeholder text",
-  player2_character: "placeholder text",
-  player1_controls: "placeholder text",
-  player2_controls: "placeholder text",
+  player1_character: "Red Target",
+  player2_character: "Blue Target",
+  player1_controls: "Up Arrow: Move Up, Down Arrow: Move Down, Left Arrow: Move Left, Right Arrow: Move Right, Enter: Shoot Gun",
+  player2_controls: "W: Move Up, S: Move Down, A: Move Left, D: Move Right, Spacebar: Shoot Gun",
 }
 
 User.create(user1)
