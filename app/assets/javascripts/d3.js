@@ -2,13 +2,13 @@ $(document).ready(function(){
 
   var width = $('.games-main').width();
   var height = $('.games-main').height();
-  var buttonSize = 120;
+  var buttonSize = 200;
   var buttonY = height * 0.665;
   var games = [
       ['flappy_bird', '/images/game_icons/flappy_bird.gif'],
       ['frogger', '/images/game_icons/frogger.png'],
-      ['invasion', '/images/game_icons/invasion.png'],
-      ['duck_hunt', '/images/game_icons/duck_hunt.gif'],
+      ['invasion', 'http://bestanimations.com/Animals/Mammals/Bulls&Cows/cute-cartoon-cow-animation-3.gif'],
+      ['duck_hunt', 'http://rs273.pbsrc.com/albums/jj224/Vistico/duck_hunt_bird.gif~c200'],
       ['leaderboards', '/images/game_icons/leaderboard.png']
     ]
 
