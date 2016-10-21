@@ -320,7 +320,7 @@ path.area {
 }
 
 .deviseForgotPassword {
-  background-image: url("http://www.etouchcontrol.com/images/category/pages%20artwork/security/security-background.jpg");
+  background-image: url(/images/backgrounds/forgot_password_background.jpg);
   background-repeat: no-repeat;
   width: 100%;
   height: 95%;
@@ -361,7 +361,7 @@ path.area {
   margin-top: -15px;
 }
 
-.navBar a, a:visited {
+.navBar a, .navBar a:visited {
   font-size: medium;
   color: white;
 }
