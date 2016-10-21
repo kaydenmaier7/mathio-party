@@ -3,7 +3,7 @@ $(document).ready(function(){
   var width = $('.games-main').width();
   var height = $('.games-main').height();
   var buttonSize = 200;
-  var buttonY = height * 0.665;
+  var buttonY = height * 0.6;
   var games = [
       ['flappy_bird', '/images/game_icons/flappy_bird.gif'],
       ['frogger', '/images/game_icons/frogger.png'],
@@ -30,7 +30,7 @@ $(document).ready(function(){
       .enter()
       .append("image")
       .attr("y", 100)
-      .attr("x", -100)
+      .attr("x", -200)
       .attr("class", function(d){ return d[0] })
       .classed('game', true)
       .attr('xlink:href', function(d){ return d[1] })
@@ -43,16 +43,16 @@ $(document).ready(function(){
   function moveImageRight() {
     svg.selectAll('.game')
       .transition()
-      .delay( function(d, i){ return 150 * i } )
+      .delay( function(d, i){ return 250 * i } )
       .duration(1500)
-      .attr('x', function(d, i){ return width - ((i + 0.5) * (width / games.length)) });
+      .attr('x', function(d, i){ return width - ((i + 0.5) * (width / games.length)) -100 });
   }
 
   // move the images down to their final positions
   function moveImageDown() {
     svg.selectAll('.game')
       .transition()
-      .delay( function(d, i){ return 50 * i })
+      .delay( function(d, i){ return 150 * i })
       .duration(1000)
       .attr('y', buttonY);
   }
