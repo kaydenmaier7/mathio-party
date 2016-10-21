@@ -24,6 +24,9 @@ setInterval(setCowSpeed, 1000);
 // locations
 var player1Location, player2Location, beamPosition;
 
+// sounds
+var moo;
+
 // declare static assets
 var assets = [
   ["background", "/images/invasion/farm.png"],
@@ -36,7 +39,6 @@ for (var i = 0; i <= 10; i++) {
   assets.push(['cowL' + i, '/images/invasion/cowL' + i + '.png']);
   assets.push(['cowR' + i, '/images/invasion/cowR' + i + '.png']);
 };
-console.log(assets)
 
 // add game window to page
 var loadGame = function(){
@@ -50,12 +52,16 @@ function preload() {
     var name = asset[0];
     var location = asset[1];
     game.load.image(name, location);
+    game.load.audio('moo', '/sounds/invasion_sounds/moo.wav');
   });
 };
 
 function create(){
   // add background to the game
   game.add.tileSprite(0, 0, 1000, 600, 'background');
+
+  // add sounds
+  moo = game.add.audio('moo');
 
   // add physics engine
   game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -210,6 +216,7 @@ function moveCow(){
         beamPosition < c.position.x &&
         c.position.x < (beamPosition + 100) ){
           c.body.velocity.y = -200;
+          moo.play();
       // move cow horizontally at intervals
       } else if (timer % c.interval == 0) {
         c.body.velocity.x = c.speed;
