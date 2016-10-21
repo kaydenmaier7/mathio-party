@@ -61,7 +61,7 @@ body {
   width: 1000px;
   height: 600px;
   background-color: black;
-  background-image: url('/images/frogger-background.png');
+  background-image: url('/images/frogger/frogger-background.png');
   background-size: 600px 400px;
   background-repeat: no-repeat;
   background-position: center;
