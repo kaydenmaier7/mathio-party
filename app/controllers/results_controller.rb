@@ -3,8 +3,6 @@ class ResultsController < ApplicationController
   include ResultsHelper
 
   def create
-    p params
-
     if request.xhr?
       create_match(params)
     end
