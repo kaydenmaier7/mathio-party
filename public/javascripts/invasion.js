@@ -52,7 +52,7 @@ function preload() {
     var name = asset[0];
     var location = asset[1];
     game.load.image(name, location);
-    game.load.audio('moo', '/sounds/invasion_sounds/moo.wav');
+    game.load.audio('moo', '/sounds/invasion_sounds/Moo.wav');
   });
 };
 
