@@ -261,9 +261,11 @@ var mainState= {
   },
 
   checkOverlap: function(spriteA, duck) {
-    var boundsA = spriteA.getBounds();
-    var boundsB = duck.sprite.getBounds();
-    return Phaser.Rectangle.intersects(boundsA, boundsB);
+    if (duck){
+      var boundsA = spriteA.getBounds();
+      var boundsB = duck.sprite.getBounds();
+      return Phaser.Rectangle.intersects(boundsA, boundsB);
+    }
   },
 
   reload: function(){
@@ -491,15 +493,9 @@ var mainState= {
 
   endRound: function(){
     hits = this.ducks.length;
-    console.log("round = " + this.round);
-    console.log("score2 = " + this.score2.length);
-    console.log("score1 = " + this.score1.length);
 
     if (this.score1.length < this.round){this.score1.push(0)}
     if (this.score2.length < this.round){this.score2.push(0)}
-
-    console.log("score2 = " + this.score2.length);
-    console.log("score1 = " + this.score1.length);
 
     for ( var i=0 ; i < this.ducks.length ; i++ )
     {
@@ -545,6 +541,58 @@ var mainState= {
     var num3 = 100;
     var num4 = 100;
 
+      // switch(p2skill){
+
+      //   case "Addition":
+      //   p2text = param1.toString() + " + " + param2.toString()
+      //     this.problem2.text = p2text
+      //     var that = this;
+      //     return (param1 + param2);
+      //     break;
+
+      //   case "Subtraction":
+      //     param2 = param1 + param2;
+      //     this.problem2.text = param2.toString() + " - " + param1.toString()
+      //     var that = this;
+      //     return (param2 - param1);
+      //     break;
+
+      //   case "Multiplication":
+      //     this.problem2.text = param1.toString() + " * " + param2.toString()
+      //     var that = this;
+      //     return (param1 * param2);
+      //     break;
+
+      //   case "Division":
+      //     this.problem2.text = (param1*param2).toString() + " / " + param1.toString()
+      //     var that = this;
+      //     return (param2);
+      //     break;
+
+      //   case "All":
+      //     var select = Math.random();
+      //     if (select < .25){
+      //       this.problem2.text = param1.toString() + " + " + param2.toString()
+      //       var that = this;
+      //       return (param1 + param2);
+
+      //     } else if (select < .5) {
+      //       param2 = param1 + Math.floor(Math.random()*10);
+      //       this.problem2.text = param2.toString() + " - " + param1.toString()
+      //       var that = this;
+      //       return (param2 - param1);
+
+      //     } else if (select < .75) {
+      //       this.problem2.text = param1.toString() + " * " + param2.toString()
+      //       var that = this;
+      //       return (param1 * param2);
+
+      //     } else {
+      //       this.problem2.text = (param1*param2).toString() + " / " + param2.toString()
+      //       var that = this;
+      //       return (param1);
+      //     }
+      //   break;
     while (num1+num2 > 50 || num3+num4 > 50 || num3+num4 === num1+num2){
       num1= Math.floor(Math.random()*10);
       num2= Math.floor(Math.random()*10);
