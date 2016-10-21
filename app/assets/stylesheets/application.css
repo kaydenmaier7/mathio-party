@@ -60,7 +60,11 @@ body {
 #frogger {
   width: 1000px;
   height: 600px;
-  background-color: white;
+/*  background-color: white;*/
+  background-image: url('/images/frogger-background.png');
+  background-size: 600px 400px;
+  background-repeat: no-repeat;
+  background-position: center;
   margin: 50px auto;
   text-align: center;
   box-shadow: 10px 10px 10px #888888;
@@ -104,8 +108,10 @@ body {
 #mode {
   margin-top: 25%;
   margin-bottom: 5px;
-  font-size: 1.5em;
+  font-size: 2em;
+  width: 20%;
 }
+
 
 
 /*Line graph styling*/
