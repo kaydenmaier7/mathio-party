@@ -32,16 +32,16 @@ var assets = [
   ['ufo2', '/images/invasion/ufo2.png'],
   ['beam', '/images/invasion/beam.png'],
   ['cow0', '/images/invasion/cow0.png'],
-  ['cow1', '/images/invasion/cow1.png'],
-  ['cow2', '/images/invasion/cow2.png'],
-  ['cow3', '/images/invasion/cow3.png'],
-  ['cow4', '/images/invasion/cow4.png'],
-  ['cow5', '/images/invasion/cow5.png'],
-  ['cow6', '/images/invasion/cow6.png'],
-  ['cow7', '/images/invasion/cow7.png'],
-  ['cow8', '/images/invasion/cow8.png'],
-  ['cow9', '/images/invasion/cow9.png'],
-  ['cow10', '/images/invasion/cow10.png']
+  ['cow1', '/images/invasion/cowl1.png'],
+  ['cow2', '/images/invasion/cowl2.png'],
+  ['cow3', '/images/invasion/cowl3.png'],
+  ['cow4', '/images/invasion/cowl4.png'],
+  ['cow5', '/images/invasion/cowl5.png'],
+  ['cow6', '/images/invasion/cowl6.png'],
+  ['cow7', '/images/invasion/cowl7.png'],
+  ['cow8', '/images/invasion/cowl8.png'],
+  ['cow9', '/images/invasion/cowl9.png'],
+  ['cow10', '/images/invasion/cowl10.png']
 ];
 
 // add game window to page
