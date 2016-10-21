@@ -87,6 +87,9 @@ function create(){
   one = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
   two = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
   three = game.input.keyboard.addKey(Phaser.Keyboard.THREE);
+
+  // game over text
+  finalScoreText = game.add.text(200, 400, '', { font: '50px Arial', fill: 'black', align: 'left'});
 };
 
 function update(){
@@ -95,6 +98,7 @@ function update(){
   playerBeam();
   moveCow();
   removeCow();
+  endGame();
 
   game.physics.arcade.overlap(players, cow, captureCow, null, this);
 };
@@ -309,3 +313,19 @@ function changeScore(player, cow){
     };
   };
 };
+
+function endGame(){
+  if (playerOneScore >= 10 || playerTwoScore >= 10){
+    players.forEach(function(p){
+      p.body.velocity.y = -20;
+    });
+
+    var winner;
+    if (playerOneScore > playerTwoScore){
+      winner = 'Player 1'
+    } else {
+      winner = 'Player 2'
+    }
+    finalScoreText.text = 'Game over, ' + winner +  ' wins!'
+  }
+}
