@@ -5,7 +5,46 @@ var p2incorrect =[];
 var p1skill;
 var p2skill;
 
-var game = new Phaser.Game(1000,910, Phaser.auto, 'math-hunt');
+$(document).ready(function(){
+  huntButtonClick()
+})
+
+var huntButtonClick = function(){
+  $('#hunt-button').on('click', function(){
+    $(this).remove()
+    load3()
+  })
+}
+
+var load3 = function(){
+  $('#math-hunt').css('background', 'black').html('<h1>3</h1>')
+  setTimeout(function(){
+      load2()
+    }, 1000)
+}
+
+var load2 = function(){
+  $('#math-hunt').html('<h1>2</h1>')
+  setTimeout(function(){
+      load1()
+    }, 1000)
+}
+
+var load1 = function(){
+  $('#math-hunt').html('<h1>1</h1>')
+  setTimeout(function(){
+      loadGame()
+    }, 1000)
+}
+
+var loadGame = function(){
+  $('#math-hunt').html('')
+  game = new Phaser.Game(1000,910, Phaser.auto, 'math-hunt');
+  game.state.add('main', mainState);
+  game.state.start('main');
+}
+
+
 
 function Duck(val, round) {
   this.xMove = 0;
@@ -90,7 +129,8 @@ var mainState= {
     //set stage
     game.stage.backgroundColor = '#40bdff';
     this.background = game.add.sprite( 0, 0, 'stage');
-    // this.dog = game.add.sprite(450,700,'laugh1');
+    this.dog = game.add.sprite(475,700,'laugh1');
+    this.dog.anchor.setTo(.5,.5)
 
     //enable physics
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -257,7 +297,6 @@ var mainState= {
       if (this.ducks.length > 0){
         if (this.checkOverlap(this.inner1, this.ducks[0])){
           this.ducks[0].sprite.kill();
-          this.ducks.splice(0,1);
           p1correct.push(this.p1Question.text)
           this.hitBird1()
         } else if (this.checkOverlap(this.inner1, this.ducks[1])){
@@ -290,18 +329,17 @@ var mainState= {
           x.anchor.setTo( 0.5, 0.5);
           setTimeout(function(){x.kill()},100);
           this.honk.play()
-          p2incorrect.push(this.p1Question.text)
+          p2incorrect.push(this.p2Question.text)
         } else if (this.checkOverlap(this.inner2, this.ducks[1])){
           this.ducks[1].sprite.kill();
-          this.ducks.splice(1,1);
-          p2correct.push(this.p1Question.text)
+          p2correct.push(this.p2Question.text)
           this.hitBird2(this.ducks[1])
         } else if (this.checkOverlap(this.inner2, this.ducks[2])){
           x = game.add.sprite(this.p2.x, this.p2.y, 'redX');
           x.anchor.setTo( 0.5, 0.5);
           setTimeout(function(){x.kill()},100);
           this.honk.play()
-          p2incorrect.push(this.p1Question.text)
+          p2incorrect.push(this.p2Question.text)
         }
       }
     }
@@ -367,9 +405,9 @@ var mainState= {
 
     for (var i=0 ; i < this.score2.length ; i++){
       if (this.score2[i] === 1){
-        game.add.sprite(655-(i*30 + 20),830,'blueScore');
+        game.add.sprite(655-(i*30 + 10),830,'blueScore');
       } else if (this.score2[i] === 0){
-        game.add.sprite(655-(i*30 + 20),830,'noScore');
+        game.add.sprite(655-(i*30 + 10),830,'noScore');
       }
     }
   },
@@ -394,6 +432,66 @@ var mainState= {
   gameOver: function(){
     var text = game.add.text(game.world.centerX, game.world.centerY, "Game Over", { font: "64px Arial", fill: "#000000", align: "center" });
     text.anchor.setTo(.5,.5);
+    this.duckAjaxCall()
+  },
+
+  duckAjaxCall(){
+
+    this.formatQuestions()
+
+    data = {
+      player1correct: p1correct,
+      player2correct: p2correct,
+      player1wrong: p1incorrect,
+      player2wrong: p2incorrect,
+      game_id: 4
+    }
+
+    var request = $.ajax({
+      url: '/results',
+      type: 'post',
+      data: data
+    })
+
+    request.done(function(response){
+      setTimeout(function(){
+      ($('#hidden_match_button')).css('margin-top', '40%')
+      $('#math-hunt').css('background', '#40bdff').html($('#hidden_match_button'))
+      $('#hidden_match_button').slideToggle(1000)
+      }, 2000)
+    })
+
+    request.fail(function(response){
+      console.log('failed')
+    })
+  },
+
+    formatQuestions: function(){
+    p1incorrect = p1incorrect.map(function(p){
+        return mainState.parseEquation(p)
+    })
+     p2incorrect = p2incorrect.map(function(p){
+        return mainState.parseEquation(p)
+    })
+      p1correct = p1correct.map(function(p){
+        return mainState.parseEquation(p)
+    })
+      p2correct = p2correct.map(function(p){
+        return mainState.parseEquation(p)
+    })
+  },
+
+  parseEquation: function(equation){
+      equation = equation.split(' ')
+      if (equation[1] === '+'){
+        return (equation[0] + ' ' + equation[1] + ' ' + equation[2] + ' = ' + (parseInt(equation[0]) +parseInt(equation[2])))
+      } else if (equation[1] === '-'){
+        return (equation[0] + ' ' + equation[1] + ' ' + equation[2] + ' = ' + (parseInt(equation[0]) - parseInt(equation[2])))
+      } else if (equation[1] === '*') {
+        return (equation[0] + ' ' + equation[1] + ' ' + equation[2] + ' = ' + (parseInt(equation[0]) * parseInt(equation[2])))
+      } else {
+        return (equation[0] + ' ' + equation[1] + ' ' + equation[2] + ' = ' + (parseInt(equation[0]) / parseInt(equation[2])))
+      }
   },
 
   showRound: function(round){
@@ -445,6 +543,7 @@ var mainState= {
     this.p2.bringToTop();
     this.p1Question.bringToTop();
     this.p2Question.bringToTop();
+    this.dog.bringToTop();
     this.renderScore();
   },
 
@@ -540,9 +639,6 @@ var mainState= {
         }
     }
 
-    console.log(answer1);
-    console.log(answer2);
-
     this.oneDuck(answer1);
     this.oneDuck(answer2);
 
@@ -555,14 +651,12 @@ var mainState= {
   },
 
   callDog: function(hits){
+    // while(this.dog.y <)
     var that = this;
-    if (this.round <= 5){
+    if (this.round <= 4){
       setTimeout(function(){that.spawnDucks() },3000);
     } else {
       this.gameOver()
     }
   }
 };
-
-game.state.add('main', mainState);
-game.state.start('main');

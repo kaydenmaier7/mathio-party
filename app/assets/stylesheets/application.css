@@ -60,13 +60,17 @@ body {
 #frogger {
   width: 1000px;
   height: 600px;
-  background-color: white;
+  background-color: black;
+  background-image: url('/images/frogger-background.png');
+  background-size: 600px 400px;
+  background-repeat: no-repeat;
+  background-position: center;
   margin: 50px auto;
   text-align: center;
   box-shadow: 10px 10px 10px #888888;
 }
 
-#frogger h1, #flappy-bird h1 {
+#frogger h1, #flappy-bird h1, #math-hunt h1 {
   padding-top: 25%;
   font-size: 6em;
   color: white;
@@ -75,7 +79,11 @@ body {
 #flappy-bird {
   width: 1000px;
   height: 910px;
-  background-color: white;
+  background-color: black;
+  background-image: url('/images/flappy2-background.png');
+  background-size: 700px 600px;
+  background-repeat: no-repeat;
+  background-position: center;
   margin: auto;
   text-align: center;
 }
@@ -85,7 +93,7 @@ body {
 }
 
 #flappy-button {
-  margin-top: 45%;
+  margin-top: 10px;
 }
 
 
@@ -98,14 +106,40 @@ body {
 
 .game-start-button:hover {
   font-weight: bold;
-  box-shadow: 5px 5px 5px #888888;
+  box-shadow: 3px 3px 3px #888888;
 }
 
 #mode {
   margin-top: 25%;
   margin-bottom: 5px;
-  font-size: 1.5em;
+  font-size: 2em;
+  width: 20%;
 }
+
+.flappy-select {
+  margin-top: 35%;
+  width: 12.5%;
+}
+
+#math-hunt {
+  width: 1000px;
+  height: 910px;
+  margin: 20px auto;
+  text-align: center;
+  color: white;
+  background-color: black;
+  background-image: url('/images/duck-background.png');
+  background-size: 700px 600px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#hunt-button {
+  margin-top: 40%;
+}
+
+
+
 
 
 /*Line graph styling*/
@@ -327,8 +361,13 @@ path.area {
   margin-top: -15px;
 }
 
-.navBar a {
+.navBar a, a:visited {
   font-size: medium;
+  color: white;
+}
+
+.navBar a:hover {
+  color: whitesmoke;
 }
 
 .title a {
