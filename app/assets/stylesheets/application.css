@@ -79,7 +79,11 @@ body {
 #flappy-bird {
   width: 1000px;
   height: 910px;
-  background-color: white;
+  background-color: black;
+  background-image: url('/images/flappy2-background.png');
+  background-size: 700px 600px;
+  background-repeat: no-repeat;
+  background-position: center;
   margin: auto;
   text-align: center;
 }
@@ -89,7 +93,7 @@ body {
 }
 
 #flappy-button {
-  margin-top: 45%;
+  margin-top: 10px;
 }
 
 
@@ -110,6 +114,11 @@ body {
   margin-bottom: 5px;
   font-size: 2em;
   width: 20%;
+}
+
+.flappy-select {
+  margin-top: 35%;
+  width: 12.5%;
 }
 
 
