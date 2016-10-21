@@ -1,3 +1,10 @@
+var p1correct = [];
+var p2correct = [];
+var p1incorrect =[];
+var p2incorrect =[];
+var p1skill;
+var p2skill;
+
 var game = new Phaser.Game(1000,910, Phaser.auto, 'math-hunt');
 
 function Duck(val, round) {
@@ -53,7 +60,7 @@ var mainState= {
     game.load.image('redX', '/images/duck_hunt/redX.png');
 
     //numbers
-    for ( var i=1 ; i<=50 ; i++ ){
+    for ( var i=0 ; i<=50 ; i++ ){
     game.load.image(i, '/images/duck_hunt/'+i+'.png');
     }
 
@@ -251,17 +258,20 @@ var mainState= {
         if (this.checkOverlap(this.inner1, this.ducks[0])){
           this.ducks[0].sprite.kill();
           this.ducks.splice(0,1);
+          p1correct.push(this.p1Question.text)
           this.hitBird1()
         } else if (this.checkOverlap(this.inner1, this.ducks[1])){
           x = game.add.sprite(this.p1.x, this.p1.y, 'redX');
           x.anchor.setTo( 0.5, 0.5);
           setTimeout(function(){x.kill()},100);
           this.honk.play()
+          p1incorrect.push(this.p1Question.text)
         } else if (this.checkOverlap(this.inner1, this.ducks[2])){
           x = game.add.sprite(this.p1.x, this.p1.y, 'redX');
           x.anchor.setTo( 0.5, 0.5);
           setTimeout(function(){x.kill()},100);
           this.honk.play();
+          p1incorrect.push(this.p1Question.text)
         }
       }
     }
@@ -280,15 +290,18 @@ var mainState= {
           x.anchor.setTo( 0.5, 0.5);
           setTimeout(function(){x.kill()},100);
           this.honk.play()
+          p2incorrect.push(this.p1Question.text)
         } else if (this.checkOverlap(this.inner2, this.ducks[1])){
           this.ducks[1].sprite.kill();
           this.ducks.splice(1,1);
+          p2correct.push(this.p1Question.text)
           this.hitBird2(this.ducks[1])
         } else if (this.checkOverlap(this.inner2, this.ducks[2])){
           x = game.add.sprite(this.p2.x, this.p2.y, 'redX');
           x.anchor.setTo( 0.5, 0.5);
           setTimeout(function(){x.kill()},100);
           this.honk.play()
+          p2incorrect.push(this.p1Question.text)
         }
       }
     }
@@ -370,11 +383,8 @@ var mainState= {
 
   spawnDucks: function(){
     this.round++
-    if (this.round < 6){
-      this.showRound(this.round);
-    } else {
-      this.gameOver();
-    }
+    this.showRound(this.round);
+
     this.ducks = [];
     this.reload();
     this.quacks.play();
@@ -384,8 +394,6 @@ var mainState= {
   gameOver: function(){
     var text = game.add.text(game.world.centerX, game.world.centerY, "Game Over", { font: "64px Arial", fill: "#000000", align: "center" });
     text.anchor.setTo(.5,.5);
-
-
   },
 
   showRound: function(round){
@@ -440,7 +448,7 @@ var mainState= {
     this.renderScore();
   },
 
-  spawnQuestions: function(skill1,skill2){
+  spawnQuestions: function(){
     var answer1 = 100;
     var answer2 = 100;
     var num1 = 100;
@@ -448,13 +456,13 @@ var mainState= {
     var num3 = 100;
     var num4 = 100;
 
-    while ( answer1 > 50 || answer2 > 50 || answer1 !== answer2 ){
+    while ( answer1 > 50 || answer2 > 50 || answer1 === answer2 ){
       num1= Math.floor(Math.random()*10);
       num2= Math.floor(Math.random()*10);
       num3= Math.floor(Math.random()*10);
       num4= Math.floor(Math.random()*10);
 
-      switch(skill1){
+      switch(p1skill){
         case "Addition":
           answer1 = num1 + num2;
           this.p1Question.text = num1.toString() + " + " + num2.toString();
@@ -493,7 +501,7 @@ var mainState= {
             this.p1Question.text = num1.toString() + " + " + num2.toString();
         }
 
-        switch(skill2){
+        switch(p2skill){
         case "Addition":
           answer2 = num3 + num4;
           this.p2Question.text = num3.toString() + " + " + num4.toString();
@@ -532,6 +540,9 @@ var mainState= {
         }
     }
 
+    console.log(answer1);
+    console.log(answer2);
+
     this.oneDuck(answer1);
     this.oneDuck(answer2);
 
@@ -545,7 +556,11 @@ var mainState= {
 
   callDog: function(hits){
     var that = this;
-    setTimeout(function(){that.spawnDucks() },3000);
+    if (this.round <= 5){
+      setTimeout(function(){that.spawnDucks() },3000);
+    } else {
+      this.gameOver()
+    }
   }
 };
 
