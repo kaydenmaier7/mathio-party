@@ -9,18 +9,27 @@ class User < ApplicationRecord
   has_many :sub_skills, through: :results
 
   def percent(result, skill, sub_skill, match)
-    results = self.sub_skills
+
+    collection = self.sub_skills
       .where(skill_name: skill)
       .where(name: sub_skill)
-      .where(match: match)
-    correct = results.pluck(:correct).inject { |sum, n| sum + n }.to_f
-    incorrect = results.pluck(:incorrect).inject { |sum, n| sum + n }.to_f
+
+    correct = collection
+      .where(correct: 1)
+      .count()
+
+    incorrect = collection
+      .where(incorrect: 1)
+      .count
+      # add this line to get a specific match
+      # .where(match: match)
+
     total = correct + incorrect
 
     if result == 'correct'
-      (correct / total).round(2)
+      (correct.to_f / total.to_f).round(2)
     else
-      (incorrect / total).round(2)
+      (incorrect.to_f / total.to_f).round(2)
     end
   end
 end
