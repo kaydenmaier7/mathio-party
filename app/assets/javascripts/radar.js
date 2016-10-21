@@ -99,7 +99,7 @@ function RadarChart(id, data, options) {
      .attr("y", function(d){return -d*radius/cfg.levels;})
      .attr("dy", "0.4em")
      .style("font-size", "15px")
-     .attr("fill", "#e0e0e0")
+     .attr("fill", "black")
      .text(function(d,i) { return Math.floor((maxValue * d/cfg.levels) * 100) + "%"; });
 
   /////////////////////////////////////////////////////////
@@ -126,7 +126,7 @@ function RadarChart(id, data, options) {
   axis.append("text")
     .attr("class", "legend")
     .style("font-size", "20px")
-    .style("fill", "#e0e0e0")
+    .style("fill", "black")
     .attr("text-anchor", "middle")
     .attr("dy", "0.35em")
     .attr("x", function(d, i){ return rScale(maxValue * cfg.labelFactor) * Math.cos(angleSlice*i - Math.PI/2); })
@@ -229,7 +229,7 @@ function RadarChart(id, data, options) {
         .transition().duration(200)
         .style('opacity', 1)
         .style("font-size", "30px")
-        .style('fill', "#e0e0e0");
+        .style('fill', "black");
     })
     .on("mouseout", function(){
       tooltip.transition().duration(200)
