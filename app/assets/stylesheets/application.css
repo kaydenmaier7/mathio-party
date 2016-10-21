@@ -60,13 +60,17 @@ body {
 #frogger {
   width: 1000px;
   height: 600px;
-  background-color: white;
+  background-color: black;
+  background-image: url('/images/frogger/frogger-background.png');
+  background-size: 600px 400px;
+  background-repeat: no-repeat;
+  background-position: center;
   margin: 50px auto;
   text-align: center;
   box-shadow: 10px 10px 10px #888888;
 }
 
-#frogger h1, #flappy-bird h1 {
+#frogger h1, #flappy-bird h1, #math-hunt h1 {
   padding-top: 25%;
   font-size: 6em;
   color: white;
@@ -75,7 +79,11 @@ body {
 #flappy-bird {
   width: 1000px;
   height: 910px;
-  background-color: white;
+  background-color: black;
+  background-image: url('/images/flappy_math/flappy2-background.png');
+  background-size: 700px 600px;
+  background-repeat: no-repeat;
+  background-position: center;
   margin: auto;
   text-align: center;
 }
@@ -85,7 +93,7 @@ body {
 }
 
 #flappy-button {
-  margin-top: 45%;
+  margin-top: 10px;
 }
 
 
@@ -98,14 +106,40 @@ body {
 
 .game-start-button:hover {
   font-weight: bold;
-  box-shadow: 5px 5px 5px #888888;
+  box-shadow: 3px 3px 3px #888888;
 }
 
 #mode {
   margin-top: 25%;
   margin-bottom: 5px;
-  font-size: 1.5em;
+  font-size: 2em;
+  width: 20%;
 }
+
+.flappy-select {
+  margin-top: 35%;
+  width: 12.5%;
+}
+
+#math-hunt {
+  width: 1000px;
+  height: 910px;
+  margin: 20px auto;
+  text-align: center;
+  color: white;
+  background-color: black;
+  background-image: url('/images/duck_hunt/duck-screenshot.png');
+  background-size: 700px 600px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#hunt-button {
+  margin-top: 40%;
+}
+
+
+
 
 
 /*Line graph styling*/
@@ -201,7 +235,7 @@ path.area {
 }
 
 .deviseLogin, .playerTwoLogin {
-  background-image: url("http://2.bp.blogspot.com/-5tSsahBREd0/T9Ocr-4p5UI/AAAAAAAAAEg/3pNQqFfAS0U/s1600/1339215668258.jpg");
+  background-image: url(/images/backgrounds/login_background.jpg);
   background-repeat: no-repeat;
   width: 100%;
   height: 95%;
@@ -265,7 +299,7 @@ path.area {
 }
 
 .deviseSignUp {
-  background-image: url("http://cdn.wallpapersafari.com/22/21/8bXrLQ.jpg");
+  background-image: url(/images/backgrounds/sign_up_background.jpg);
   background-repeat: no-repeat;
   width: 100%;
   height: 95%;
@@ -286,7 +320,7 @@ path.area {
 }
 
 .deviseForgotPassword {
-  background-image: url("http://www.etouchcontrol.com/images/category/pages%20artwork/security/security-background.jpg");
+  background-image: url(/images/backgrounds/forgot_password_background.jpg);
   background-repeat: no-repeat;
   width: 100%;
   height: 95%;
@@ -327,8 +361,13 @@ path.area {
   margin-top: -15px;
 }
 
-.navBar a {
+.navBar a, .navBar a:visited {
   font-size: medium;
+  color: white;
+}
+
+.navBar a:hover {
+  color: whitesmoke;
 }
 
 .title a {
@@ -336,7 +375,7 @@ path.area {
 }
 
 .game-show {
-  background-image: url("http://hdwallpaperbackgrounds.net/wp-content/uploads/2016/07/white-background.jpg");
+  background-image: url(/images/backgrounds/white_background.jpg);
   background-size: 100% 100%;
   margin-top: -19px;
 }
@@ -404,12 +443,12 @@ path.area {
 .radarChartDescription {
   text-align: center;
   font-family: Copperplate, "Copperplate Gothic Light", fantasy;
-  color: #E0E0E0;
+  color: black;
   font-size: 1.3em;
 }
 
 .profile-page-background {
-  background-image: url("http://www.pixelstalk.net/wp-content/uploads/2016/05/Formula-math-text-texture-wallpaper.jpg");
+  background-image: url(/images/backgrounds/white_background.jpg);
   background-size: 100% 100%;
 }
 
